@@ -18,6 +18,7 @@
 
 #### UI Library
 - react-native-svg
+- react-native-vector-icons
 
 #### Util Library
 
