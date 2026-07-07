@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Cloudsofa_namgim-Regular.ttf",
+      "sha1": "80a2fc02f94448c191ee84b64abed6ac19c5c913"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Bold.woff",
+      "sha1": "569d9310a72743ded479417b43f6d33bd63f949a"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Regular.woff",
+      "sha1": "c43ca80bc31e66bd4872cae8c224fe802075cf3f"
+    }
+  ]
+}
