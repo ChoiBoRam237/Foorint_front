@@ -1,11 +1,11 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "@/styles/colors";
 
 /**
  * @brief 로그인 스타일
  */
 
-export const styles = StyleSheet.create({
+export const loginStyles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
 
     buttonWrapper: {
         position: "absolute",
-        bottom: 60,
+        bottom: 20,
         width: "100%",
         flexDirection: "column",
         alignItems: "center",

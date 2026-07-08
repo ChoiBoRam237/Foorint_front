@@ -1,6 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Cloud1, Cloud2, Cloud3 } from "@/assets/images";
+import Cloud1 from "@/assets/images/cloud1.svg";
+import Cloud2 from "@/assets/images/cloud2.svg";
+import Cloud3 from "@/assets/images/cloud3.svg";
 
 /**
  * @brief 구름 컴포넌트
@@ -27,15 +29,15 @@ export const CloudComponent = (props: Props) => {
         <>
             {props.target === "one" ? (
                 <View style={styles.cloud}>
-                    <Cloud1 size={{ width: props.width, height: props.height }}/>
+                    <Cloud1 width={props.width} height={props.height} />
                 </View>
             ) : props.target === "two" ? (
                 <View style={styles.cloud}>
-                    <Cloud2 size={{ width: props.width, height: props.height }}/>
+                    <Cloud2 width={props.width} height={props.height} />
                 </View>
             ) : (
                 <View style={styles.cloud}>
-                    <Cloud3 size={{ width: props.width, height: props.height }}/>
+                    <Cloud3 width={props.width} height={props.height} />
                 </View>
             )}
         </>

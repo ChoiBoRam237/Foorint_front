@@ -5,7 +5,7 @@ import { colors } from "@/styles/colors";
  * @brief 스플래시 스타일
  */
 
-export const styles = StyleSheet.create({
+export const splashStyles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
