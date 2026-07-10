@@ -17,6 +17,7 @@ export const mainHeaderStyles = StyleSheet.create({
         justifyContent: "space-between",
         padding: 16,
         backgroundColor: colors.primary,
+        zIndex: 10,
     },
 
     logoWrapper: {

@@ -19,8 +19,12 @@
 #### UI Library
 - react-native-svg
 - react-native-vector-icons
+- react-native-reanimated-carousel
+- react-native-date-picker
+- react-native-element-dropdown
 
 #### Util Library
+- date-fns
 
 #### Tools
 - VSCode
