@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 
 /**
  * @brief 로그인 스타일
@@ -29,14 +30,14 @@ export const loginStyles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: "Cloudsofa_namgim-Regular",
+        fontFamily: fonts.Cloudsofa,
         fontSize: 60,
         color: colors.thirdDark,
         zIndex: 1,
     },
 
     subTitle: {
-        fontFamily: "Griun_Cocochoitoon-Rg",
+        fontFamily: fonts.Griun,
         fontSize: 20,
         color: colors.thirdDark,
         zIndex: 1,

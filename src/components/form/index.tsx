@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
 import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
 import { useSharedValue } from "react-native-reanimated";
-import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-date-picker';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -21,12 +21,20 @@ import { formStyles } from './indexStyles';
  * @brief 폼 컴포넌트
  */
 
+export interface IFile {
+    uri?: string;
+    name?: string;
+    type?: string;
+    size?: number;
+    isUploadButton?: boolean;
+}
+
 interface Props {
     screenTitle: string;
     btnTitle: string;
 
-    imgList: File[];
-    setImgList: React.Dispatch<React.SetStateAction<File[]>>;
+    imgList: IFile[];
+    setImgList: React.Dispatch<React.SetStateAction<IFile[]>>;
     title: string;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
     place: string;
@@ -41,47 +49,68 @@ interface Props {
     setAddCategory: React.Dispatch<React.SetStateAction<string>>;
     content: string;
     setContent: React.Dispatch<React.SetStateAction<string>>;
+
+    onClick: () => void;
 }
 
 export const FormComponent = (props: Props) => {
     const insets = useSafeAreaInsets();
-    const [value, setValue] = useState<ImagePickerResponse>();
     const [startDateOpen, setStartDateOpen] = useState<boolean>(false); // 시작 날짜 선택 모달
     const [endDateOpen, setEndDateOpen] = useState<boolean>(false); // 종료 날짜 선택 모달
     const [focusedField, setFocusedField] = useState<string | null>(null);
     const [addCategory, setAddCategory] = useState<boolean>(false); // 카테고리 추가 여부
     const imgRef = useRef<ICarouselInstance>(null);
     const imgProgress = useSharedValue<number>(0);
+    const [isProcessing, setIsProcessing] = useState(false);
     
     const onChoosePhoto = async () => {
-        const result = await launchImageLibrary({
-            mediaType: 'photo',
-            quality: 0.9,
-        });
+        if (isProcessing) return;
+        setIsProcessing(true);
 
-        if (result.didCancel) {
-            console.log('유저 캔슬');
-        } else if (result.errorMessage) {
-            console.error('에러 :' + result.errorMessage);
-            setValue(result);
-        } else {
-            console.log("이미지", result);
-            setValue(result);
+        try {
+            const images = await ImageCropPicker.openPicker({
+                multiple: true,
+                maxFiles: 5,
+                mediaType: 'photo',
+            });
+
+            const newFiles = images.map((image, index) => {
+                const fileName = image.filename || `image_${Date.now()}_${index}.jpg`;
+                
+                return {
+                    uri: Platform.OS === 'ios' 
+                        ? image.path.replace('file://', '') 
+                        : image.path,
+                    name: fileName,
+                    type: image.mime,
+                    size: image.size,
+                };
+            });
+
+            props.setImgList(prev => [...prev, ...newFiles]);
+        } catch (e) {
+            console.error("에러 : ", e);
+        } finally {
+            setIsProcessing(false);
         }
     };
-      
+
+    const carouselData = 
+        props.imgList.length < 5 
+            ? [...props.imgList, { isUploadButton: true }] 
+            : props.imgList;
+
     return (
         <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={[
                 formStyles.container,
                 {
-                    paddingTop: insets.top + 40,
+                    paddingTop: insets.top + 76,
                     paddingBottom: insets.bottom + 30,
                 },
             ]}
         >
-            <View>{JSON.stringify(value)}</View>
             <View style={formStyles.wrapper}>
                 <View style={formStyles.titleWrapper}>
                     <View style={formStyles.titleInnerWrapper}>
@@ -110,43 +139,52 @@ export const FormComponent = (props: Props) => {
                             <Text style={formStyles.itemSubTitle}>(최대 5장)</Text>
                         </View>
 
-                        <Carousel
-                            ref={imgRef}
-                            width={100}
-                            onProgressChange={imgProgress}
-                            data={props.imgList}
-                            renderItem={(item) => (
-                                <View style={formStyles.imageItemWrapper}>
-                                    <Image
-                                        style={formStyles.imageItem}
-                                        src={URL.createObjectURL(item.item)}
-                                    />
+                        <View style={{ flex: 1 }}>
+                            <Carousel
+                                ref={imgRef}
+                                width={Dimensions.get('window').width - 32}
+                                height={241}
+                                onProgressChange={imgProgress}
+                                data={carouselData}
+                                renderItem={(item) => {
+                                    if (item.item.isUploadButton) {
+                                        return (
+                                            <TouchableOpacity
+                                                activeOpacity={1}
+                                                onPress={onChoosePhoto}
+                                            >
+                                                <View style={formStyles.imageUpload}>
+                                                    <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
+                                                    <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        )
+                                    }
 
-                                    <Pagination.Basic
-                                        dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
-                                        containerStyle={formStyles.imagePagination}
-                                        progress={imgProgress}
-                                        data={props.imgList}
-                                        onPress={(index) => (
-                                            imgRef.current?.scrollTo({
-                                                count: index - imgProgress.value,
-                                                animated: true,
-                                            })
-                                        )}
-                                    />
-                                </View>
-                            )}
-                        />
-
-                        {/* <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={onChoosePhoto}
-                        >
-                            <View style={formStyles.imageUpload}>
-                                <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
-                                <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
-                            </View>
-                        </TouchableOpacity> */}
+                                    return(
+                                        <View style={formStyles.imageItemWrapper}>
+                                            <Image
+                                                style={formStyles.imageItem}
+                                                source={{ uri: item.item.uri }}
+                                            />
+        
+                                            <Pagination.Basic
+                                                dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
+                                                containerStyle={formStyles.imagePagination}
+                                                progress={imgProgress}
+                                                data={props.imgList}
+                                                onPress={(index) => (
+                                                    imgRef.current?.scrollTo({
+                                                        count: index - imgProgress.value,
+                                                        animated: true,
+                                                    })
+                                                )}
+                                            />
+                                        </View>
+                                    )
+                                }}
+                            />
+                        </View>
                     </View>
 
                     <View style={formStyles.itemWrapper}>
@@ -380,6 +418,7 @@ export const FormComponent = (props: Props) => {
 
             <TouchableOpacity
                 style={formStyles.saveButton}
+                onPress={props.onClick}
             >
                 <Text style={formStyles.buttonText}>{props.btnTitle}</Text>
             </TouchableOpacity>

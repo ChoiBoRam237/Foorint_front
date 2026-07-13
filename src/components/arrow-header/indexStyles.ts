@@ -1,12 +1,12 @@
+import { StyleSheet } from "react-native";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { StyleSheet } from "react-native";
 
 /**
- * @brief 메인 헤더 컴포넌트 스타일
+ * @brief 화살표 헤더 컴포넌트 스타일
  */
 
-export const mainHeaderStyles = StyleSheet.create({
+export const arrowHeaderStyles = StyleSheet.create({
     container: {
         position: "absolute",
         left: 0,
@@ -17,24 +17,26 @@ export const mainHeaderStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         padding: 16,
+        borderBottomWidth: 1,
+        borderStyle: "solid",
+        borderBottomColor: colors.thirdDark,
         backgroundColor: colors.primary,
         zIndex: 10,
     },
 
-    logoWrapper: {
+    wrapper: {
+        position: "relative",
+        width: "100%",
+        height: "100%",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
     },
 
-    logoImg: {
-        marginBottom: -5,
-        transform: [{ rotate: '-14deg' }],
-    },
-
-    logoTitle: {
-        fontFamily: fonts.Cloudsofa,
+    title: {
+        position: "absolute",
+        fontFamily: fonts.PretendardBold,
         fontSize: 20,
-        color: colors.thirdDark,
+        color: colors.textSecond,
     }
 });

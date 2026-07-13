@@ -35,6 +35,8 @@ export const GenerateScreen = () => {
                 setAddCategory={controller.setAddCategory}
                 content={controller.content}
                 setContent={controller.setContent}
+
+                onClick={controller.onGenerate}
             />
         </SafeAreaView>
     )

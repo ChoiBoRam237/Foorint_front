@@ -6,6 +6,7 @@ export const colors = {
     thirdDark: "#4ABAFF",
 
     textPrimary: "#2E9BDE",
+    textSecond: "#1C4489",
     placeholder: "#72C9FF",
 
     border: "#A9DEFF",
@@ -13,6 +14,7 @@ export const colors = {
 
     yellow: "#FEDC00",
     yellowHover: "#F2D200;",
+    red: "#FF3C3C",
 
     white70: "rgba(255, 255, 255, 0.7)",
     whiteHover: "#F1F1F1",

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 
 export const formStyles = StyleSheet.create({
     container: {
@@ -30,7 +31,7 @@ export const formStyles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: "Griun_Cocochoitoon-Rg",
+        fontFamily: fonts.Griun,
         fontSize: 22,
         color: colors.textPrimary,
     },
@@ -65,13 +66,13 @@ export const formStyles = StyleSheet.create({
     },
 
     itemTitle: {
-        fontFamily: "Pretendard-SemiBold",
+        fontFamily: fonts.PretendardSemiBold,
         fontSize: 16,
         color: colors.textPrimary,
     },
 
     itemSubTitle: {
-        fontFamily: "Pretendard-SemiBold",
+        fontFamily: fonts.PretendardSemiBold,
         fontSize: 11,
         color: colors.textPrimary,
         marginBottom: 2,
@@ -89,18 +90,18 @@ export const formStyles = StyleSheet.create({
     },
 
     imageUploadTitle: {
-        fontFamily: "Pretendard-SemiBold",
+        fontFamily: fonts.PretendardSemiBold,
         fontSize: 16,
         color: colors.textPrimary,
     },
 
     imageItemWrapper: {
-        flex: 1,
+        width: "100%",
         position: "relative",
     },
 
     imageItem: {
-        flex: 1,
+        width: "100%",
         height: 241,
     },
 
@@ -271,7 +272,7 @@ export const formStyles = StyleSheet.create({
     },
 
     buttonText: {
-        fontFamily: "Pretendard-SemiBold",
+        fontFamily: fonts.PretendardSemiBold,
         fontSize: 14,
         color: colors.textPrimary
     }

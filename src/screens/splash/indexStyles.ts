@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 
 /**
  * @brief 스플래시 스타일
@@ -23,7 +24,7 @@ export const splashStyles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: "Cloudsofa_namgim-Regular",
+        fontFamily: fonts.Cloudsofa,
         fontSize: 60,
         color: colors.thirdDark,
         zIndex: 1,

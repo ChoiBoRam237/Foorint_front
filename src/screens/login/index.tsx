@@ -17,7 +17,7 @@ export default function LoginScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const onClick = () => {
-        navigation.navigate("Generate");
+        navigation.replace("Generate");
     }
 
     return (
