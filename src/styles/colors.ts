@@ -13,7 +13,7 @@ export const colors = {
     borderActive: "#2E9BDE",
 
     yellow: "#FEDC00",
-    yellowHover: "#F2D200;",
+    yellowHover: "#F2D200",
     red: "#FF3C3C",
 
     white70: "rgba(255, 255, 255, 0.7)",

@@ -13,7 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Octicons from 'react-native-vector-icons/Octicons';
 import { format } from 'date-fns';
 import { colors } from '@/styles/colors';
-import { IDropdown } from '@/types/dropdown';
+import { ISelection } from '@/types/selection';
 import { CloudComponent } from '../cloud';
 import { formStyles } from './indexStyles';
 
@@ -43,8 +43,8 @@ interface Props {
     setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
     endDate: Date | null;
     setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
-    category: IDropdown | null;
-    setCategory: React.Dispatch<React.SetStateAction<IDropdown | null>>;
+    category: ISelection | null;
+    setCategory: React.Dispatch<React.SetStateAction<ISelection | null>>;
     addCategory: string;
     setAddCategory: React.Dispatch<React.SetStateAction<string>>;
     content: string;

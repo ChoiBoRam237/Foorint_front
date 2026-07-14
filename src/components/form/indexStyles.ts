@@ -198,7 +198,7 @@ export const formStyles = StyleSheet.create({
         shadowRadius: 8,
         shadowColor: "black",
         shadowOpacity: 0.2,
-        elevation: 6,
+        elevation: 8,
     },
 
     dropdownItem: {

@@ -5,6 +5,8 @@
 여행의 모든 순간을 발자국으로 남기는 여행 기록 앱
 ```
 
+### 개발환경 : Windows
+
 ### Language
 - React-Native (v0.86.0)
 - Typescript

@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/types";
 import { IFile } from "@/components/form";
-import { IDropdown } from "@/types/dropdown";
+import { ISelection } from "@/types/selection";
 
 /**
  * @brief 발자국 등록 컨트롤
@@ -16,7 +16,7 @@ export const useControlGenerate = () => {
     const [place, setPlace] = useState<string>(""); // 여행 장소
     const [startDate, setStartDate] = useState<Date | null>(null); // 시작 날짜
     const [endDate, setEndDate] = useState<Date | null>(null); // 종료 날짜
-    const [category, setCategory] = useState<IDropdown | null>(null); // 카테고리
+    const [category, setCategory] = useState<ISelection | null>(null); // 카테고리
     const [addCategory, setAddCategory] = useState<string>(""); // 추가할 카테고리
     const [content, setContent] = useState<string>(""); // 내용
 

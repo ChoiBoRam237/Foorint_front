@@ -1,8 +1,8 @@
 /**
- * @brief 드롭다운 타입
+ * @brief 선택 타입
  */
 
-export interface IDropdown {
+export interface ISelection {
     code: number;
     name: string;
     color?: string;

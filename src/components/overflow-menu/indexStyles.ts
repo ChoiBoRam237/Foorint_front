@@ -43,7 +43,7 @@ export const overflowMenuStyles = StyleSheet.create({
         shadowRadius: 6,
         shadowColor: "black",
         shadowOpacity: 0.2,
-        elevation: 6,
+        elevation: 8,
     },
 
     menuItem: {
