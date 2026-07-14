@@ -18,7 +18,7 @@ export default function LoginScreen() {
 
     // TODO : 로그인 후 홈으로 이동
     const onClick = () => {
-        navigation.replace("Generate");
+        navigation.replace("List");
     }
 
     return (

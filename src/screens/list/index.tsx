@@ -8,6 +8,7 @@ import { FilterComponent } from "@/components/filter";
 import { TripItemComponent } from "@/components/trip-item";
 import { useControlList } from "./index.control";
 import { listStyles } from "./indexStyles";
+import { FooterComponent } from "@/components/footer";
 
 /**
  * @brief 리스트
@@ -53,6 +54,26 @@ const data = [
             color: "red"
         },
         description: "오늘 빠지로 놀러갔다."
+    },
+    {
+        code: 5,
+        title: "빠지 야호~",
+        category: {
+            code: 1,
+            name: "국내 여행",
+            color: "red"
+        },
+        description: "오늘 빠지로 놀러갔다."
+    },
+    {
+        code: 6,
+        title: "빠지 야호~",
+        category: {
+            code: 1,
+            name: "국내 여행",
+            color: "red"
+        },
+        description: "오늘 빠지로 놀러갔다."
     }
 ]
 
@@ -64,12 +85,12 @@ export default function ListScreen() {
         <SafeAreaView style={commonStyles.container}>
             <MainHeaderComponent />
 
-            <ScrollView
-                contentContainerStyle={[
+            <View
+                style={[
                     listStyles.wrapper,
                     {
                         paddingTop: insets.top + 76,
-                        paddingBottom: insets.bottom + 10,
+                        paddingBottom: insets.bottom + 62 + 16,
                     }
                 ]}
             >
@@ -115,7 +136,9 @@ export default function ListScreen() {
                         <TripItemComponent data={item} />
                     )}
                 />
-            </ScrollView>
+            </View>
+
+            <FooterComponent target="List" />
         </SafeAreaView>
     )
 }

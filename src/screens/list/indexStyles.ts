@@ -8,6 +8,7 @@ import { fonts } from "@/styles/fonts";
 
 export const listStyles = StyleSheet.create({
     wrapper: {
+        flex: 1,
         width: "100%",
         display: "flex",
         flexDirection: "column",
