@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Dimensions, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
 import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
@@ -149,15 +149,12 @@ export const FormComponent = (props: Props) => {
                                 renderItem={(item) => {
                                     if (item.item.isUploadButton) {
                                         return (
-                                            <TouchableOpacity
-                                                activeOpacity={1}
-                                                onPress={onChoosePhoto}
-                                            >
+                                            <Pressable onPress={onChoosePhoto}>
                                                 <View style={formStyles.imageUpload}>
                                                     <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
                                                     <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
                                                 </View>
-                                            </TouchableOpacity>
+                                            </Pressable>
                                         )
                                     }
 
@@ -235,8 +232,7 @@ export const FormComponent = (props: Props) => {
 
                         <View style={formStyles.calendarWrapper}>
                             <View style={formStyles.calendar}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
+                                <Pressable
                                     style={formStyles.calendarSelection}
                                     onPress={() => {
                                         setEndDateOpen(false);
@@ -249,7 +245,7 @@ export const FormComponent = (props: Props) => {
                                         <Text style={formStyles.calendarPlaceholder}>시작 날짜</Text>
                                     )}
                                     <Ionicons name="calendar-outline" color={colors.placeholder} size={14} />
-                                </TouchableOpacity>
+                                </Pressable>
 
                                 <DatePicker
                                     mode="date"
@@ -266,8 +262,7 @@ export const FormComponent = (props: Props) => {
                             </View>
 
                             <View style={formStyles.calendar}>
-                                <TouchableOpacity
-                                    activeOpacity={1}
+                                <Pressable
                                     style={formStyles.calendarSelection}
                                     onPress={() => {
                                         setStartDateOpen(false);
@@ -280,7 +275,7 @@ export const FormComponent = (props: Props) => {
                                         <Text style={formStyles.calendarPlaceholder}>종료 날짜</Text>
                                     )}
                                     <Ionicons name="calendar-outline" color={colors.placeholder} size={14} />
-                                </TouchableOpacity>
+                                </Pressable>
 
                                 <DatePicker
                                     mode="date"
@@ -371,28 +366,29 @@ export const FormComponent = (props: Props) => {
                                         onChangeText={props.setAddCategory}
                                     />
 
-                                    <TouchableOpacity
-                                        activeOpacity={0.8}
-                                        style={formStyles.categoryAddButton}
+                                    <Pressable
+                                        style={({ pressed }) => [
+                                            formStyles.categoryAddButton,
+                                            pressed && { backgroundColor: "#88CEFA" }
+                                        ]}
                                         onPress={() => {
                                             setAddCategory(false);
                                         }}
                                     >
                                         <Octicons name="check" color={colors.textPrimary} size={24} />
-                                    </TouchableOpacity>
+                                    </Pressable>
                                 </View>
                             )}
                         </View>
 
                         {!addCategory && (
-                            <TouchableOpacity
-                                activeOpacity={0.8}
+                            <Pressable
                                 style={formStyles.categoryAddTextWrapper}
                                 onPress={() => setAddCategory(true)}
                             >
                                 <AntDesign name="plus" color={colors.textPrimary} size={16} />
                                 <Text style={formStyles.categoryAddText}>카테고리 추가하기</Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         )}
                     </View>
 
@@ -416,12 +412,15 @@ export const FormComponent = (props: Props) => {
                 </View>
             </View>
 
-            <TouchableOpacity
-                style={formStyles.saveButton}
+            <Pressable
+                style={({ pressed }) => [
+                    formStyles.saveButton,
+                    pressed && { backgroundColor: "#8EDAF7" }
+                ]}
                 onPress={props.onClick}
             >
                 <Text style={formStyles.buttonText}>{props.btnTitle}</Text>
-            </TouchableOpacity>
+            </Pressable>
         </ScrollView>
     )
 }

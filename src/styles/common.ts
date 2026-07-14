@@ -1,11 +1,11 @@
-import { colors } from "@/styles/colors";
 import { StyleSheet } from "react-native";
+import { colors } from "./colors";
 
 /**
- * @brief 발자국 등록 스타일
+ * @brief 공통 스타일
  */
 
-export const generateStyles = StyleSheet.create({
+export const commonStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.primary,

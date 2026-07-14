@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -16,6 +16,7 @@ import { loginStyles } from "./indexStyles";
 export default function LoginScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+    // TODO : 로그인 후 홈으로 이동
     const onClick = () => {
         navigation.replace("Generate");
     }
@@ -43,23 +44,27 @@ export default function LoginScreen() {
                 </View>
 
                 <View style={loginStyles.buttonWrapper}>
-                    <TouchableOpacity
-                        style={loginStyles.googleButton}
-                        activeOpacity={0.8}
+                    <Pressable
+                        style={({ pressed }) => [
+                            loginStyles.googleButton,
+                            pressed && loginStyles.activeGoogleButton
+                        ]}
                         onPress={onClick}
                     >
                         <Google width={20} height={20} />
                         <Text style={loginStyles.buttonText}>구글로 시작하기</Text>
-                    </TouchableOpacity>
+                    </Pressable>
 
-                    <TouchableOpacity
-                        style={loginStyles.kakaoButton}
-                        activeOpacity={0.8}
+                    <Pressable
+                        style={({ pressed }) => [
+                            loginStyles.kakaoButton,
+                            pressed && loginStyles.activeKakaoButton
+                        ]}
                         onPress={onClick}
                     >
                         <Kakao width={20} height={20} />
                         <Text style={loginStyles.buttonText}>카카오로 시작하기</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </SafeAreaView>
         </View>

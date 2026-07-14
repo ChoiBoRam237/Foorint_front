@@ -1,19 +1,19 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MainHeader } from "@/components/main-header";
-import { generateStyles } from "./indexStyles";
+import { MainHeaderComponent } from "@/components/main-header";
 import { FormComponent } from "@/components/form";
+import { commonStyles } from "@/styles/common";
 import { useControlGenerate } from "./index.control";
 
 /**
  * @brief 발자국 등록
  */
 
-export const GenerateScreen = () => {
+export default function GenerateScreen() {
     const controller = useControlGenerate();
 
     return (
-        <SafeAreaView style={generateStyles.container}>
-            <MainHeader />
+        <SafeAreaView style={commonStyles.container}>
+            <MainHeaderComponent />
 
             <FormComponent
                 screenTitle="발자국 등록"

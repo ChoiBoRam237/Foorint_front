@@ -38,5 +38,15 @@ export const arrowHeaderStyles = StyleSheet.create({
         fontFamily: fonts.PretendardBold,
         fontSize: 20,
         color: colors.textSecond,
-    }
+    },
+
+    dots: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    dot: {
+        marginRight: -6,
+    },
 });

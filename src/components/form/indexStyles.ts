@@ -125,6 +125,7 @@ export const formStyles = StyleSheet.create({
         borderRadius: 8,
         padding: 12,
 
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: "black",
     },
@@ -154,11 +155,13 @@ export const formStyles = StyleSheet.create({
     },
 
     calendarPlaceholder: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: colors.placeholder,
     },
 
     calendarText: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: "black",
     },
@@ -207,11 +210,13 @@ export const formStyles = StyleSheet.create({
     },
 
     dropdownPlaceholder: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: colors.placeholder,
     },
 
     dropdownLabel: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: "black",
     },
@@ -224,6 +229,7 @@ export const formStyles = StyleSheet.create({
     },
 
     categoryAddText: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 14,
         color: colors.textPrimary,
     },
@@ -256,6 +262,7 @@ export const formStyles = StyleSheet.create({
         paddingHorizontal: 12,
         textAlignVertical: "top",
 
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: "black",
     },

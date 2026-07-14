@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -12,7 +12,7 @@ import { mainHeaderStyles } from "./indexStyles"
  * @brief 메인 헤더 컴포넌트
  */
 
-export const MainHeader = () => {
+export const MainHeaderComponent = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
 
@@ -23,7 +23,7 @@ export const MainHeader = () => {
                 { top: insets.top }
             ]}    
         >
-            <TouchableOpacity 
+            <Pressable 
                 style={mainHeaderStyles.logoWrapper}
                 onPress={() => navigation.navigate("Home")}
             >
@@ -33,15 +33,15 @@ export const MainHeader = () => {
                     style={mainHeaderStyles.logoImg}
                 />
                 <Text style={mainHeaderStyles.logoTitle}>foorint</Text>
-            </TouchableOpacity>
+            </Pressable>
 
-            <TouchableOpacity>
+            <Pressable>
                 <AntDesign
                     name="customerservice"
                     color={colors.thirdDark}
                     size={24}
                 />
-            </TouchableOpacity>
+            </Pressable>
         </View>
     )
 }

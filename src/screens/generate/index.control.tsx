@@ -20,8 +20,9 @@ export const useControlGenerate = () => {
     const [addCategory, setAddCategory] = useState<string>(""); // 추가할 카테고리
     const [content, setContent] = useState<string>(""); // 내용
 
+    // TODO : 저장 후 상세화면으로 이동
     const onGenerate = () => {
-        navigation.navigate("Detail");
+        navigation.navigate("Detail", { code: 1 });
     }
 
     return {

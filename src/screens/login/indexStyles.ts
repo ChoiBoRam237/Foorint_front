@@ -81,6 +81,10 @@ export const loginStyles = StyleSheet.create({
         backgroundColor: "white",
     },
 
+    activeGoogleButton: {
+        backgroundColor: colors.whiteHover,
+    },
+
     kakaoButton: {
         width: "100%",
         height: "auto",
@@ -92,8 +96,13 @@ export const loginStyles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: colors.yellow,
     },
+
+    activeKakaoButton: {
+        backgroundColor: colors.yellowHover,
+    },
     
     buttonText: {
+        fontFamily: fonts.PretendardRegular,
         fontSize: 16,
         color: "black",
     }
