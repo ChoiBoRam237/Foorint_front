@@ -38,7 +38,14 @@ export const FooterComponent = (props: Props) => {
                     ) : (
                         <Ionicons name="home-outline" color="white" size={25} />
                     )}
-                    <Text style={footerStyles.itemText}>Home</Text>
+                    <Text 
+                        style={[
+                            footerStyles.itemText,
+                            props.target === "Home" && { color: colors.textPrimary }
+                        ]}
+                    >
+                        Home
+                    </Text>
                 </Pressable>
 
                 <Pressable
@@ -46,7 +53,14 @@ export const FooterComponent = (props: Props) => {
                     onPress={() => navigation.navigate("List")}
                 >
                     <Feather name="list" color={props.target === "List" ? colors.thirdDark : "white"} size={25} />
-                    <Text style={footerStyles.itemText}>List</Text>
+                    <Text 
+                        style={[
+                            footerStyles.itemText,
+                            props.target === "List" && { color: colors.textPrimary }
+                        ]}
+                    >
+                        List
+                    </Text>
                 </Pressable>
 
                 <Pressable
@@ -58,20 +72,35 @@ export const FooterComponent = (props: Props) => {
 
                 <Pressable
                     style={footerStyles.item}
+                    onPress={() => navigation.navigate("Search")}
                 >
                     <AntDesign name="search1" color={props.target === "Search" ? colors.thirdDark : "white"} size={25} />
-                    <Text style={footerStyles.itemText}>Search</Text>
+                    <Text 
+                        style={[
+                            footerStyles.itemText,
+                            props.target === "Search" && { color: colors.textPrimary }
+                        ]}
+                    >
+                        Search
+                    </Text>
                 </Pressable>
 
                 <Pressable
                     style={footerStyles.item}
                 >
-                    {props.target === "Mypage" ? (
+                    {props.target === "My" ? (
                         <Ionicons name="person" color={colors.thirdDark} size={25} />
                     ) : (
                         <Ionicons name="person-outline" color="white" size={25} />
                     )}
-                    <Text style={footerStyles.itemText}>My</Text>
+                    <Text 
+                        style={[
+                            footerStyles.itemText,
+                            props.target === "My" && { color: colors.textPrimary }
+                        ]}
+                    >
+                        My
+                    </Text>
                 </Pressable>
             </View>
         </View>

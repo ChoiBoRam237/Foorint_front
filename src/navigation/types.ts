@@ -5,4 +5,5 @@ export type RootStackParamList = {
     Generate: undefined;
     Detail: { code: number };
     List: undefined;
+    Search: undefined;
 }
