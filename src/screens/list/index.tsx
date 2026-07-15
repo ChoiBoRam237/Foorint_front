@@ -89,7 +89,7 @@ export default function ListScreen() {
                 style={[
                     listStyles.wrapper,
                     {
-                        paddingTop: insets.top + 76,
+                        paddingTop: insets.top + 60 + 16,
                         paddingBottom: insets.bottom + 62 + 16,
                     }
                 ]}

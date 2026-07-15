@@ -87,8 +87,9 @@ export const FooterComponent = (props: Props) => {
 
                 <Pressable
                     style={footerStyles.item}
+                    onPress={() => navigation.navigate("Mypage")}
                 >
-                    {props.target === "My" ? (
+                    {props.target === "Mypage" ? (
                         <Ionicons name="person" color={colors.thirdDark} size={25} />
                     ) : (
                         <Ionicons name="person-outline" color="white" size={25} />
@@ -96,10 +97,10 @@ export const FooterComponent = (props: Props) => {
                     <Text 
                         style={[
                             footerStyles.itemText,
-                            props.target === "My" && { color: colors.textPrimary }
+                            props.target === "Mypage" && { color: colors.textPrimary }
                         ]}
                     >
-                        My
+                        Mypage
                     </Text>
                 </Pressable>
             </View>

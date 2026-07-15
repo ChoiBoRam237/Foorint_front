@@ -6,4 +6,5 @@ export type RootStackParamList = {
     Detail: { code: number };
     List: undefined;
     Search: undefined;
+    Mypage: undefined;
 }

@@ -5,6 +5,7 @@ import GenerateScreen from "@/screens/generate";
 import DetailScreen from "@/screens/detail";
 import ListScreen from "@/screens/list";
 import SearchScreen from "@/screens/search";
+import MypageScreen from "@/screens/mypage";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function RootNavigator() {
             <Stack.Screen name="Detail" component={DetailScreen} />
             <Stack.Screen name="List" component={ListScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="Mypage" component={MypageScreen} />
         </Stack.Navigator>
     )
 }

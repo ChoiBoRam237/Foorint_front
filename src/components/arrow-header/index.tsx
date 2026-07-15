@@ -3,8 +3,8 @@ import { Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/types";
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 import { colors } from "@/styles/colors";
 import { arrowHeaderStyles } from "./indexStyles";
 import { OverflowMenuComponent } from "../overflow-menu";
@@ -35,7 +35,7 @@ export const ArrowHeaderComponent = (props: Props) => {
                     }
                 }}
             >
-                <SimpleLineIcons name="arrow-left" color={colors.thirdDark} size={18} />
+                <Feather name="chevron-left" color={colors.thirdDark} size={28} />
             </Pressable>
 
             {props.title && (
