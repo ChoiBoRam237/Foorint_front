@@ -1,25 +1,18 @@
 import { Text, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/navigation/types";
 import { CloudComponent } from "@/components/cloud";
 import Google from "@/assets/images/google.svg";
 import Kakao from "@/assets/images/kakao.svg";
 import { cloudList } from "./index.constants";
 import { loginStyles } from "./indexStyles";
+import { useControlLogin } from "./index.control";
 
 /**
  * @brief 로그인
  */
 
 export default function LoginScreen() {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-    // TODO : 로그인 후 홈으로 이동
-    const onClick = () => {
-        navigation.replace("List");
-    }
+    const controller = useControlLogin();
 
     return (
         <View style={loginStyles.container}>
@@ -49,7 +42,8 @@ export default function LoginScreen() {
                             loginStyles.googleButton,
                             pressed && loginStyles.activeGoogleButton
                         ]}
-                        onPress={onClick}
+                        disabled={controller.loginLoading}
+                        onPress={controller.onGoogleLogin}
                     >
                         <Google width={20} height={20} />
                         <Text style={loginStyles.buttonText}>구글로 시작하기</Text>
@@ -60,7 +54,8 @@ export default function LoginScreen() {
                             loginStyles.kakaoButton,
                             pressed && loginStyles.activeKakaoButton
                         ]}
-                        onPress={onClick}
+                        disabled={controller.loginLoading}
+                        onPress={controller.onKakaoLogin}
                     >
                         <Kakao width={20} height={20} />
                         <Text style={loginStyles.buttonText}>카카오로 시작하기</Text>

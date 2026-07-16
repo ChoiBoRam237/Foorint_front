@@ -18,6 +18,10 @@
 ### Build Tool
 - Gradle
 
+### Social Login Library
+- @react-native-seoul/kakao-login
+- @react-native-google-signin/google-signin
+
 #### UI Library
 - react-native-svg
 - react-native-vector-icons
@@ -26,6 +30,8 @@
 - react-native-element-dropdown
 
 #### Util Library
+- react-native-keychain
+- react-native-dotenv
 - date-fns
 
 #### Tools
