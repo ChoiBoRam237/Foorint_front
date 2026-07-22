@@ -1,20 +1,24 @@
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Foundation from 'react-native-vector-icons/Foundation';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { RootStackParamList } from "@/navigation/types";
 import { commonStyles } from "@/styles/common";
 import { colors } from "@/styles/colors";
 import { MainHeaderComponent } from "@/components/main-header";
-import { mypageStyles } from "./indexStyles";
 import { FooterComponent } from "@/components/footer";
+import { mypageStyles } from "./indexStyles";
 
 /**
  * @brief 마이페이지
  */
 
 export default function MypageScreen() {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
 
     return (
@@ -59,6 +63,7 @@ export default function MypageScreen() {
 
                             <Pressable
                                 style={mypageStyles.statisticsItem}
+                                onPress={() => navigation.navigate("Place")}
                             >
                                 <View style={mypageStyles.statisticsItemArrow}>
                                     <Feather name="chevron-right" color={colors.textPrimary} size={16} />

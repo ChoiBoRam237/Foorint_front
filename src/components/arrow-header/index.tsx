@@ -28,38 +28,37 @@ export const ArrowHeaderComponent = (props: Props) => {
 
     return (
         <View style={arrowHeaderStyles.container}>
-            <Pressable
-                onPress={() => {
-                    if (navigation.canGoBack()) {
-                        navigation.goBack();
-                    }
-                }}
-            >
-                <Feather name="chevron-left" color={colors.thirdDark} size={28} />
-            </Pressable>
-
-            {props.title && (
-                <View style={arrowHeaderStyles.wrapper}>
-                    <Text style={arrowHeaderStyles.title}>{props.title}</Text>
-                </View>
-            )}
-
-            {(props.options && props.options.length > 0) && (
+            <View style={arrowHeaderStyles.wrapper}>
                 <Pressable
-                    style={arrowHeaderStyles.dots}
-                    onPress={() => setMenuOpen(true)}
+                    style={{ position: "absolute", left: 0 }}
+                    onPress={() => {
+                        if (navigation.canGoBack()) {
+                            navigation.goBack();
+                        }
+                    }}
                 >
-                    <Entypo name="dot-single" color={colors.thirdDark} size={16} style={arrowHeaderStyles.dot} />
-                    <Entypo name="dot-single" color={colors.thirdDark} size={16} style={arrowHeaderStyles.dot} />
-                    <Entypo name="dot-single" color={colors.thirdDark} size={16} />
+                    <Feather name="chevron-left" color={colors.thirdDark} size={28} />
                 </Pressable>
-            )}
 
-            <OverflowMenuComponent
-                open={menuOpen}
-                setOpen={setMenuOpen}
-                options={props.options ?? []}
-            />
+                {props.title && <Text style={arrowHeaderStyles.title}>{props.title}</Text>}
+
+                {(props.options && props.options.length > 0) && (
+                    <Pressable
+                        style={arrowHeaderStyles.dots}
+                        onPress={() => setMenuOpen(true)}
+                    >
+                        <Entypo name="dot-single" color={colors.thirdDark} size={16} style={arrowHeaderStyles.dot} />
+                        <Entypo name="dot-single" color={colors.thirdDark} size={16} style={arrowHeaderStyles.dot} />
+                        <Entypo name="dot-single" color={colors.thirdDark} size={16} />
+                    </Pressable>
+                )}
+
+                <OverflowMenuComponent
+                    open={menuOpen}
+                    setOpen={setMenuOpen}
+                    options={props.options ?? []}
+                />
+            </View>
         </View>
     )
 }

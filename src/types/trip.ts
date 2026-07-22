@@ -10,3 +10,9 @@ export interface ITrip {
     category: ISelection;
     description: string;
 }
+
+export interface ITripPlace {
+    code: number;
+    placeName: string;
+    visitCount: number;
+}

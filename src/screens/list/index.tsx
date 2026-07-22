@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { MainHeaderComponent } from "@/components/main-header";
 import { commonStyles } from "@/styles/common";
@@ -6,9 +6,9 @@ import { CloudComponent } from "@/components/cloud";
 import { YearSelectionComponent } from "@/components/year-selection";
 import { FilterComponent } from "@/components/filter";
 import { TripItemComponent } from "@/components/trip-item";
+import { FooterComponent } from "@/components/footer";
 import { useControlList } from "./index.control";
 import { listStyles } from "./indexStyles";
-import { FooterComponent } from "@/components/footer";
 
 /**
  * @brief 리스트
@@ -88,10 +88,7 @@ export default function ListScreen() {
             <View
                 style={[
                     listStyles.wrapper,
-                    {
-                        paddingTop: insets.top + 60 + 16,
-                        paddingBottom: insets.bottom + 62 + 16,
-                    }
+                    { paddingTop: insets.top + 60 + 16 }
                 ]}
             >
                 <View style={listStyles.titleWrapper}>
@@ -127,7 +124,10 @@ export default function ListScreen() {
                 <FlatList
                     key={"2"}
                     style={{ flex: 1 }}
-                    contentContainerStyle={{ gap: 12 }}
+                    contentContainerStyle={{ 
+                        gap: 12,
+                        paddingBottom: insets.bottom + 62 + 16,
+                    }}
                     columnWrapperStyle={{ gap: 12 }}
                     keyExtractor={item => item.code.toString()}
                     data={data}
