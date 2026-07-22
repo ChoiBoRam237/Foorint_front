@@ -76,6 +76,7 @@ export default function MypageScreen() {
 
                             <Pressable
                                 style={mypageStyles.statisticsItem}
+                                onPress={() => navigation.navigate("UploadPhoto")}
                             >
                                 <View style={mypageStyles.statisticsItemArrow}>
                                     <Feather name="chevron-right" color={colors.textPrimary} size={16} />

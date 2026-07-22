@@ -8,4 +8,5 @@ export type RootStackParamList = {
     Search: undefined;
     Mypage: undefined;
     Place: undefined;
+    UploadPhoto: undefined;
 }
