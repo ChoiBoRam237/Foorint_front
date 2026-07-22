@@ -32,7 +32,7 @@ export const arrowHeaderStyles = StyleSheet.create({
     title: {
         position: "absolute",
         fontFamily: fonts.PretendardBold,
-        fontSize: 20,
+        fontSize: 18,
         color: colors.textSecond,
     },
 

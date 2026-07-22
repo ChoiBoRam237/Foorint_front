@@ -128,7 +128,7 @@ export const placeModalStyles = StyleSheet.create({
 
     buttonOutlineText: {
         fontFamily: fonts.PretendardBold,
-        fontSize: 8,
+        fontSize: 12,
         color: colors.thirdDark,
     },
 
@@ -144,7 +144,7 @@ export const placeModalStyles = StyleSheet.create({
 
     buttonFillText: {
         fontFamily: fonts.PretendardBold,
-        fontSize: 8,
+        fontSize: 12,
         color: "white",
     },
 });
