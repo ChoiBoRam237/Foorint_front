@@ -18,4 +18,6 @@ export const colors = {
 
     white70: "rgba(255, 255, 255, 0.7)",
     whiteHover: "#F1F1F1",
+
+    black30: "rgba(0, 0, 0, 0.3)",
 }

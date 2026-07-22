@@ -11,7 +11,7 @@ const yearList = [
     { code: 3, name: "2025" },
 ]
 
-export const useControlPlaceList = () => {
+export const useControlPlace = () => {
     const [selectedYear, setSelectedYear] = useState<ISelection>(yearList[0]);
 
     return {

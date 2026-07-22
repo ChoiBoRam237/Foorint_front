@@ -4,8 +4,8 @@ import { commonStyles } from "@/styles/common";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { YearSelectionComponent } from "@/components/year-selection";
 import { PlaceItem } from "./_components/item";
+import { useControlPlace } from "./index.control";
 import { placeStyles } from "./indexStyles";
-import { useControlPlaceList } from "./index.control";
 
 /**
  * @brief 여행 장소
@@ -19,7 +19,7 @@ const data = [
 
 export default function PlaceScreen() {
     const insets = useSafeAreaInsets();
-    const controller = useControlPlaceList();
+    const controller = useControlPlace();
 
     return (
         <SafeAreaView style={commonStyles.container}>
