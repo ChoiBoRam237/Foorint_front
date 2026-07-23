@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { fonts } from "@/styles/fonts";
+import { colors } from "@/styles/colors";
 
 /**
  * @brief 여행 상세 화면 스타일
@@ -29,7 +30,7 @@ export const detailStyles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: fonts.PretendardSemiBold,
+        fontFamily: fonts.PretendardBold,
         fontSize: 20,
         color: "black",
     },
@@ -49,19 +50,22 @@ export const detailStyles = StyleSheet.create({
 
     categoryName: {
         fontFamily: fonts.PretendardRegular,
-        fontSize: 11,
+        fontSize: 12,
         color: "black",
     },
 
     infoText: {
         fontFamily: fonts.PretendardRegular,
-        fontSize: 12,
+        fontSize: 13,
         color: "black",
     },
 
     imageWrapper: {
         width: "100%",
-        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        rowGap: 8,
     },
 
     image: {
@@ -71,13 +75,18 @@ export const detailStyles = StyleSheet.create({
     },
 
     imagePagination: {
-        position: "absolute",
-        bottom: 8,
         display: "flex",
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
         gap: 6,
+    },
+
+    imagePaginationDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 50,
+        backgroundColor: colors.thirdLight,
     },
 
     contentWrapper: {

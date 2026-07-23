@@ -2,7 +2,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/types";
-import { ITrip } from "@/types/trip";
+import { ITripResponse } from "@/types/response/trip";
 import { tripItemStyles } from "./indexStyles";
 
 /**
@@ -10,7 +10,7 @@ import { tripItemStyles } from "./indexStyles";
  */
 
 interface Props {
-    data: ITrip;
+    data: ITripResponse;
 }
 
 export const TripItemComponent = (props: Props) => {

@@ -12,6 +12,8 @@ export const colors = {
     border: "#A9DEFF",
     borderActive: "#2E9BDE",
 
+    disabled: "#DCDCDC",
+
     yellow: "#FEDC00",
     yellowHover: "#F2D200",
     red: "#FF3C3C",

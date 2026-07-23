@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { Dimensions, Image, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, Dimensions, Image, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
-import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
-import { useSharedValue } from "react-native-reanimated";
+import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-date-picker';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -16,6 +15,7 @@ import { colors } from '@/styles/colors';
 import { ISelection } from '@/types/selection';
 import { CloudComponent } from '../cloud';
 import { formStyles } from './indexStyles';
+import { useControlForm } from './index.control';
 
 /**
  * @brief 폼 컴포넌트
@@ -32,40 +32,33 @@ export interface IFile {
 interface Props {
     screenTitle: string;
     btnTitle: string;
+    isLoading: boolean;
 
     imgList: IFile[];
     setImgList: React.Dispatch<React.SetStateAction<IFile[]>>;
     title: string;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
-    place: string;
-    setPlace: React.Dispatch<React.SetStateAction<string>>;
+    location: string;
+    setLocation: React.Dispatch<React.SetStateAction<string>>;
     startDate: Date | null;
     setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
     endDate: Date | null;
     setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
     category: ISelection | null;
     setCategory: React.Dispatch<React.SetStateAction<ISelection | null>>;
-    addCategory: string;
-    setAddCategory: React.Dispatch<React.SetStateAction<string>>;
-    content: string;
-    setContent: React.Dispatch<React.SetStateAction<string>>;
+    description: string;
+    setDescription: React.Dispatch<React.SetStateAction<string>>;
 
     onClick: () => void;
 }
 
 export const FormComponent = (props: Props) => {
     const insets = useSafeAreaInsets();
-    const [startDateOpen, setStartDateOpen] = useState<boolean>(false); // 시작 날짜 선택 모달
-    const [endDateOpen, setEndDateOpen] = useState<boolean>(false); // 종료 날짜 선택 모달
-    const [focusedField, setFocusedField] = useState<string | null>(null);
-    const [addCategory, setAddCategory] = useState<boolean>(false); // 카테고리 추가 여부
-    const imgRef = useRef<ICarouselInstance>(null);
-    const imgProgress = useSharedValue<number>(0);
-    const [isProcessing, setIsProcessing] = useState(false);
+    const controller = useControlForm();
     
     const onChoosePhoto = async () => {
-        if (isProcessing) return;
-        setIsProcessing(true);
+        if (controller.isProcessing) return;
+        controller.setIsProcessing(true);
 
         try {
             const images = await ImageCropPicker.openPicker({
@@ -91,14 +84,23 @@ export const FormComponent = (props: Props) => {
         } catch (e) {
             console.error("에러 : ", e);
         } finally {
-            setIsProcessing(false);
+            controller.setIsProcessing(false);
         }
     };
 
-    const carouselData = 
-        props.imgList.length < 5 
-            ? [...props.imgList, { isUploadButton: true }] 
-            : props.imgList;
+    const dataCheck = () => {
+        return props.title !== "" 
+            && props.location !== ""
+            && props.startDate !== null
+            && props.endDate !== null;
+    }
+
+    const carouselData = [
+        ...props.imgList,
+        ...(props.imgList.length < 5
+            ? [{ isUploadButton: true }]
+            : []),
+    ];
 
     return (
         <ScrollView
@@ -140,48 +142,59 @@ export const FormComponent = (props: Props) => {
                         </View>
 
                         <View style={{ flex: 1 }}>
-                            <Carousel
-                                ref={imgRef}
-                                width={Dimensions.get('window').width - 32}
-                                height={241}
-                                onProgressChange={imgProgress}
-                                data={carouselData}
-                                renderItem={(item) => {
-                                    if (item.item.isUploadButton) {
-                                        return (
-                                            <Pressable onPress={onChoosePhoto}>
-                                                <View style={formStyles.imageUpload}>
-                                                    <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
-                                                    <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
-                                                </View>
-                                            </Pressable>
-                                        )
-                                    }
-
-                                    return(
-                                        <View style={formStyles.imageItemWrapper}>
-                                            <Image
-                                                style={formStyles.imageItem}
-                                                source={{ uri: item.item.uri }}
-                                            />
-        
-                                            <Pagination.Basic
-                                                dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
-                                                containerStyle={formStyles.imagePagination}
-                                                progress={imgProgress}
-                                                data={props.imgList}
-                                                onPress={(index) => (
-                                                    imgRef.current?.scrollTo({
-                                                        count: index - imgProgress.value,
-                                                        animated: true,
-                                                    })
-                                                )}
-                                            />
-                                        </View>
-                                    )
-                                }}
-                            />
+                            {props.imgList.length > 0 ? (
+                                <Carousel
+                                    ref={controller.imgRef}
+                                    width={Dimensions.get('window').width - 32}
+                                    height={241}
+                                    loop={false}
+                                    data={carouselData}
+                                    onProgressChange={controller.imgProgress}
+                                    renderItem={(item) => {
+                                        if (item.item.isUploadButton) {
+                                            return (
+                                                <Pressable onPress={onChoosePhoto}>
+                                                    <View style={formStyles.imageUpload}>
+                                                        <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
+                                                        <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
+                                                    </View>
+                                                </Pressable>
+                                            )
+                                        } else {
+                                            return(
+                                                <Image
+                                                    style={formStyles.imageItem}
+                                                    source={{ uri: item.item.uri }}
+                                                />
+                                            )
+                                        }
+                                    }}
+                                />
+                            ) : (
+                                <Pressable onPress={onChoosePhoto}>
+                                    <View style={formStyles.imageUpload}>
+                                        <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
+                                        <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
+                                    </View>
+                                </Pressable>
+                            )}
                         </View>
+
+                        {props.imgList.length > 0 && (
+                            <Pagination.Basic
+                                dotStyle={formStyles.imagePaginationDot}
+                                activeDotStyle={{ backgroundColor: colors.thirdDark }}
+                                containerStyle={formStyles.imagePagination}
+                                progress={controller.imgProgress}
+                                data={carouselData}
+                                onPress={(index) => (
+                                    controller.imgRef.current?.scrollTo({
+                                        count: index - controller.imgProgress.value,
+                                        animated: true,
+                                    })
+                                )}
+                            />
+                        )}
                     </View>
 
                     <View style={formStyles.itemWrapper}>
@@ -195,12 +208,12 @@ export const FormComponent = (props: Props) => {
                             placeholderTextColor={colors.placeholder}
                             style={[
                                 formStyles.input,
-                                focusedField === "title" && formStyles.focusedInput
+                                controller.focusedField === "title" && formStyles.focusedInput
                             ]}
                             value={props.title}
                             onChangeText={props.setTitle}
-                            onFocus={() => setFocusedField("title")}
-                            onBlur={() => setFocusedField(null)}
+                            onFocus={() => controller.setFocusedField("title")}
+                            onBlur={() => controller.setFocusedField(null)}
                         />
                     </View>
 
@@ -215,12 +228,12 @@ export const FormComponent = (props: Props) => {
                             placeholderTextColor={colors.placeholder}
                             style={[
                                 formStyles.input,
-                                focusedField === "place" && formStyles.focusedInput
+                                controller.focusedField === "location" && formStyles.focusedInput
                             ]}
-                            value={props.place}
-                            onChangeText={props.setPlace}
-                            onFocus={() => setFocusedField("place")}
-                            onBlur={() => setFocusedField(null)}
+                            value={props.location}
+                            onChangeText={props.setLocation}
+                            onFocus={() => controller.setFocusedField("location")}
+                            onBlur={() => controller.setFocusedField(null)}
                         />
                     </View>
 
@@ -235,8 +248,8 @@ export const FormComponent = (props: Props) => {
                                 <Pressable
                                     style={formStyles.calendarSelection}
                                     onPress={() => {
-                                        setEndDateOpen(false);
-                                        setStartDateOpen(true);
+                                        controller.setEndDateOpen(false);
+                                        controller.setStartDateOpen(true);
                                     }}
                                 >
                                     {props.startDate ? (
@@ -244,20 +257,20 @@ export const FormComponent = (props: Props) => {
                                     ) : (
                                         <Text style={formStyles.calendarPlaceholder}>시작 날짜</Text>
                                     )}
-                                    <Ionicons name="calendar-outline" color={colors.placeholder} size={14} />
+                                    <Ionicons name="calendar-outline" color={colors.placeholder} size={18} />
                                 </Pressable>
 
                                 <DatePicker
                                     mode="date"
                                     modal={true}
-                                    open={startDateOpen}
+                                    open={controller.startDateOpen}
                                     title="시작 날짜"
                                     date={props.startDate ?? new Date()}
                                     onConfirm={(date) => {
-                                        setStartDateOpen(false);
+                                        controller.setStartDateOpen(false);
                                         props.setStartDate(date);
                                     }}
-                                    onCancel={() => setStartDateOpen(false)}
+                                    onCancel={() => controller.setStartDateOpen(false)}
                                 />
                             </View>
 
@@ -265,8 +278,8 @@ export const FormComponent = (props: Props) => {
                                 <Pressable
                                     style={formStyles.calendarSelection}
                                     onPress={() => {
-                                        setStartDateOpen(false);
-                                        setEndDateOpen(true);
+                                        controller.setStartDateOpen(false);
+                                        controller.setEndDateOpen(true);
                                     }}
                                 >
                                     {props.endDate ? (
@@ -274,20 +287,20 @@ export const FormComponent = (props: Props) => {
                                     ) : (
                                         <Text style={formStyles.calendarPlaceholder}>종료 날짜</Text>
                                     )}
-                                    <Ionicons name="calendar-outline" color={colors.placeholder} size={14} />
+                                    <Ionicons name="calendar-outline" color={colors.placeholder} size={18} />
                                 </Pressable>
 
                                 <DatePicker
                                     mode="date"
                                     modal={true}
-                                    open={endDateOpen}
+                                    open={controller.endDateOpen}
                                     title="종료 날짜"
                                     date={props.endDate ?? new Date()}
                                     onConfirm={(date) => {
-                                        setEndDateOpen(false);
+                                        controller.setEndDateOpen(false);
                                         props.setEndDate(date);
                                     }}
-                                    onCancel={() => setEndDateOpen(false)}
+                                    onCancel={() => controller.setEndDateOpen(false)}
                                 />
                             </View>
                         </View>
@@ -305,19 +318,16 @@ export const FormComponent = (props: Props) => {
                                 placeholderStyle={formStyles.dropdownPlaceholder}
                                 selectedTextStyle={formStyles.dropdownLabel}
                                 activeColor={colors.thirdLight}
-                                data={[
-                                    { code: 1, name: "국내여행", color: "#FF0000" },
-                                    { code: 2, name: "해외여행", color: "#FF7B00" }
-                                ]}
+                                data={controller.categoryList}
                                 search={false}
                                 maxHeight={170}
                                 valueField="code"
                                 labelField="name"
                                 value={props.category}
-                                onFocus={() => setFocusedField("category")}
-                                onBlur={() => setFocusedField(null)}
+                                onFocus={() => controller.setFocusedField("category")}
+                                onBlur={() => controller.setFocusedField(null)}
                                 onChange={(item) => {
-                                    setFocusedField(null);
+                                    controller.setFocusedField(null);
                                     props.setCategory(item);
                                 }}
                                 renderRightIcon={() => (
@@ -325,6 +335,17 @@ export const FormComponent = (props: Props) => {
                                         name="angle-down" 
                                         color={colors.placeholder} 
                                         size={20}
+                                    />
+                                )}
+                                renderLeftIcon={() => props.category && (
+                                    <View 
+                                        style={{
+                                            width: 8,
+                                            height: 8,
+                                            borderRadius: 50,
+                                            backgroundColor: props.category?.color,
+                                            marginRight: 8,
+                                        }}
                                     />
                                 )}
                                 renderItem={(item) => (
@@ -350,20 +371,20 @@ export const FormComponent = (props: Props) => {
                                 )}
                             />
 
-                            {addCategory && (
+                            {controller.addCategory && (
                                 <View style={formStyles.categoryAddWrapper}>
                                     <TextInput
                                         style={[
                                             formStyles.input,
-                                            focusedField === "add-category" && formStyles.focusedInput,
+                                            controller.focusedField === "add-category" && formStyles.focusedInput,
                                             { flex: 1 }
                                         ]}
                                         placeholder="카테고리 이름을 작성해 주세요"
                                         placeholderTextColor={colors.placeholder}
-                                        value={props.addCategory}
-                                        onFocus={() => setFocusedField("add-category")}
-                                        onBlur={() => setFocusedField(null)}
-                                        onChangeText={props.setAddCategory}
+                                        value={controller.categoryName}
+                                        onFocus={() => controller.setFocusedField("add-category")}
+                                        onBlur={() => controller.setFocusedField(null)}
+                                        onChangeText={controller.setCategoryName}
                                     />
 
                                     <Pressable
@@ -372,7 +393,7 @@ export const FormComponent = (props: Props) => {
                                             pressed && { backgroundColor: "#88CEFA" }
                                         ]}
                                         onPress={() => {
-                                            setAddCategory(false);
+                                            controller.setAddCategory(false);
                                         }}
                                     >
                                         <Octicons name="check" color={colors.textPrimary} size={24} />
@@ -381,10 +402,10 @@ export const FormComponent = (props: Props) => {
                             )}
                         </View>
 
-                        {!addCategory && (
+                        {!controller.addCategory && (
                             <Pressable
                                 style={formStyles.categoryAddTextWrapper}
-                                onPress={() => setAddCategory(true)}
+                                onPress={() => controller.setAddCategory(true)}
                             >
                                 <AntDesign name="plus" color={colors.textPrimary} size={16} />
                                 <Text style={formStyles.categoryAddText}>카테고리 추가하기</Text>
@@ -401,12 +422,12 @@ export const FormComponent = (props: Props) => {
                             placeholderTextColor={colors.placeholder}
                             style={[
                                 formStyles.textarea,
-                                focusedField === "content" && formStyles.focusedInput
+                                controller.focusedField === "description" && formStyles.focusedInput
                             ]}
-                            value={props.content}
-                            onChangeText={props.setContent}
-                            onFocus={() => setFocusedField("content")}
-                            onBlur={() => setFocusedField(null)}
+                            value={props.description}
+                            onChangeText={props.setDescription}
+                            onFocus={() => controller.setFocusedField("description")}
+                            onBlur={() => controller.setFocusedField(null)}
                         />
                     </View>
                 </View>
@@ -415,11 +436,24 @@ export const FormComponent = (props: Props) => {
             <Pressable
                 style={({ pressed }) => [
                     formStyles.saveButton,
-                    pressed && { backgroundColor: "#8EDAF7" }
+                    !dataCheck() && { backgroundColor: colors.disabled },
+                    (pressed && dataCheck()) && { backgroundColor: "#8EDAF7" }
                 ]}
+                disabled={!dataCheck() || props.isLoading}
                 onPress={props.onClick}
             >
-                <Text style={formStyles.buttonText}>{props.btnTitle}</Text>
+                {!props.isLoading ? (
+                    <Text
+                        style={[
+                            formStyles.buttonText,
+                            !dataCheck() && { color: "white" },
+                        ]}
+                    >
+                        {props.btnTitle}
+                    </Text>
+                ) : (
+                    <ActivityIndicator size="small" color="white" />
+                )}
             </Pressable>
         </ScrollView>
     )

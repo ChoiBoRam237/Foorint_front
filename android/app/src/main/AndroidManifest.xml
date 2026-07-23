@@ -42,5 +42,8 @@
             android:scheme="kakao6f4d793494a2d65084632a9746c66a69" />
         </intent-filter>
     </activity>
+    <meta-data
+      android:name="com.kakao.sdk.AppKey"
+      android:value="6f4d793494a2d65084632a9746c66a69" />
     </application>
 </manifest>

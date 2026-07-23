@@ -6,7 +6,7 @@ import { login } from "@react-native-seoul/kakao-login";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query"
 import { RootStackParamList } from "@/navigation/types";
-import { GOOGLE_WEB_CLIENT_ID } from "@env";
+import { BASE_URL, GOOGLE_WEB_CLIENT_ID } from "@env";
 import { keychain } from "@/util/keychain";
 import { postLoginApi } from "./_api/POST"
 
@@ -26,19 +26,20 @@ export const useControlLogin = () => {
     // 카카오 로그인 api
     const postKakaoLogin = useMutation({
         mutationFn: async (accessToken: string) => await postLoginApi.postKakaoLogin(accessToken),
-        onSuccess: (data) => {
-            keychain.setKeychain("user", JSON.stringify({
-                userCode: data.userCode,
-                name: data.name,
-                email: data.email,
-                profileImgUrl: data.profileImgUrl,
-                loginType: data.loginType,
-            }));
-
-            keychain.setKeychain("token", JSON.stringify({
-                accessToken: data.accessToken,
-                refreshToken: data.refreshToken,
-            }));
+        onSuccess: async (data) => {
+            await keychain.setKeychain(
+                JSON.stringify({
+                    userCode: data.userCode,
+                    name: data.name,
+                    email: data.email,
+                    profileImgUrl: data.profileImgUrl,
+                    loginType: data.loginType,
+                }),
+                JSON.stringify({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                })
+            );
 
             setLoginLoading(false);
 
@@ -52,19 +53,20 @@ export const useControlLogin = () => {
     // 구글 로그인 api
     const postGoogleLogin = useMutation({
         mutationFn: async (idToken: string) => await postLoginApi.postGoogleLogin(idToken),
-        onSuccess: (data) => {
-            keychain.setKeychain("user", JSON.stringify({
-                userCode: data.userCode,
-                name: data.name,
-                email: data.email,
-                profileImgUrl: data.profileImgUrl,
-                loginType: data.loginType,
-            }));
-
-            keychain.setKeychain("token", JSON.stringify({
-                accessToken: data.accessToken,
-                refreshToken: data.refreshToken,
-            }));
+        onSuccess: async (data) => {
+            await keychain.setKeychain(
+                JSON.stringify({
+                    userCode: data.userCode,
+                    name: data.name,
+                    email: data.email,
+                    profileImgUrl: data.profileImgUrl,
+                    loginType: data.loginType,
+                }),
+                JSON.stringify({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                })
+            );
 
             setLoginLoading(false);
 
@@ -94,7 +96,6 @@ export const useControlLogin = () => {
             const user = await GoogleSignin.signIn();
             
             if (user.data?.idToken) {
-                console.log(user.data?.idToken);
                 postGoogleLogin.mutate(user.data?.idToken);
             }
         } catch (e) {

@@ -2,7 +2,10 @@ import { Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel, { Pagination } from "react-native-reanimated-carousel";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { format } from "date-fns";
+import { BASE_URL } from "@env";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
+import { LoadingComponent } from "@/components/loading";
 import { colors } from "@/styles/colors";
 import { commonStyles } from "@/styles/common";
 import { detailStyles } from "./indexStyles";
@@ -15,6 +18,10 @@ import { useControlDetail } from "./index.control";
 export default function DetailScreen() {
     const insets = useSafeAreaInsets();
     const controller = useControlDetail();
+
+    if (controller.isLoading || !controller.foorintDetail) {
+        return <LoadingComponent />;
+    }
 
     return (
         <SafeAreaView style={commonStyles.container}>
@@ -37,72 +44,70 @@ export default function DetailScreen() {
             >
                 <View style={detailStyles.infoContainer}>
                     <View style={detailStyles.infoWrapper}>
-                        <Text style={detailStyles.title}>빠지 야호~</Text>
+                        <Text style={detailStyles.title}>{controller.foorintDetail.title}</Text>
 
-                        <View style={detailStyles.info}>
-                            <View
-                                style={[
-                                    detailStyles.categoryCircle,
-                                    { backgroundColor: colors.red }
-                                ]}
-                            />
+                        {controller.foorintDetail.category && (
+                            <View style={detailStyles.info}>
+                                <View
+                                    style={[
+                                        detailStyles.categoryCircle,
+                                        { backgroundColor: controller.foorintDetail.category.color }
+                                    ]}
+                                />
 
-                            <Text style={detailStyles.categoryName}>국내여행</Text>
-                        </View>
+                                <Text style={detailStyles.categoryName}>{controller.foorintDetail.category.name}</Text>
+                            </View>
+                        )}
                     </View>
 
                     <View style={detailStyles.info}>
                         <Ionicons name="location-outline" color={colors.textPrimary} size={14} />
-                        <Text style={detailStyles.infoText}>경기도 가평</Text>
+                        <Text style={detailStyles.infoText}>{controller.foorintDetail.location}</Text>
                     </View>
 
                     <View style={detailStyles.info}>
                         <Ionicons name="calendar-outline" color={colors.textPrimary} size={14} />
-                        <Text style={detailStyles.infoText}>2026.01.01 ~ 2026.01.03</Text>
+                        <Text style={detailStyles.infoText}>
+                            {format(controller.foorintDetail.startDate, "yyyy.MM.dd")} ~ {format(controller.foorintDetail.endDate, "yyyy.MM.dd")}
+                        </Text>
                     </View>
                 </View>
 
-                <View style={{ flex: 1 }}>
-                    <Carousel
-                        ref={controller.imgRef}
-                        width={Dimensions.get('window').width}
-                        height={412}
-                        data={[ { code: 1, imgUrl: "aaa.png" } ]}
-                        renderItem={(item) => (
-                            <View style={detailStyles.imageWrapper}>
+                <View style={detailStyles.imageWrapper}>
+                    <View style={{ flex: 1 }}>
+                        <Carousel
+                            ref={controller.imgRef}
+                            width={Dimensions.get('window').width}
+                            height={412}
+                            loop={false}
+                            data={controller.foorintDetail?.imgList ?? []}
+                            onProgressChange={controller.imgProgress}
+                            renderItem={(item) => (
                                 <Image
                                     style={detailStyles.image}
-                                    source={{ uri: item.item.imgUrl }}
-                                />
+                                    src={`${BASE_URL}${item.item.folderName}${item.item.imgUrl}`}
+                                /> 
+                            )}
+                        />
+                    </View>
 
-                                <Pagination.Basic
-                                    dotStyle={{ width: 6, height: 6, backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
-                                    containerStyle={detailStyles.imagePagination}
-                                    progress={controller.imgProgress}
-                                    data={[ { code: 1, imgUrl: "aaa.png" } ]}
-                                    onPress={(index) => (
-                                        controller.imgRef.current?.scrollTo({
-                                            count: index - controller.imgProgress.value,
-                                            animated: true,
-                                        })
-                                    )}
-                                />
-                            </View>
+                    <Pagination.Basic
+                        dotStyle={detailStyles.imagePaginationDot}
+                        containerStyle={detailStyles.imagePagination}
+                        activeDotStyle={{ backgroundColor: colors.thirdDark }}
+                        progress={controller.imgProgress}
+                        data={controller.foorintDetail?.imgList ?? []}
+                        onPress={(index) => (
+                            controller.imgRef.current?.scrollTo({
+                                count: index - controller.imgProgress.value,
+                                animated: true,
+                            })
                         )}
                     />
                 </View>
 
                 <View style={detailStyles.contentWrapper}>
-                    <Text style={detailStyles.content}>
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                        오늘은 친구와 함께 경기도 가평에 가는 날이다.
-                    </Text>
+                    <Text style={detailStyles.content}>{controller.foorintDetail.description}</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>

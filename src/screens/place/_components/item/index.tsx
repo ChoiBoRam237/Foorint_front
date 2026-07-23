@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { colors } from "@/styles/colors";
-import { ITripPlace } from "@/types/trip";
+import { ITripPlaceResponse } from "@/types/response/trip";
 import { PlaceModal } from "../modal";
 import { placeItemStyles } from "./indexStyles"
 import { useControlPlaceItem } from "./index.control";
@@ -11,7 +11,7 @@ import { useControlPlaceItem } from "./index.control";
  */
 
 interface Props {
-    data: ITripPlace;
+    data: ITripPlaceResponse;
 }
 
 const data = {

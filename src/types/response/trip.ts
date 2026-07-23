@@ -1,10 +1,11 @@
-import { ISelection } from "./selection";
+import { ISelection } from "../selection";
+import { CommonImgResponse } from "./common";
 
 /**
- * @brief 여행 정보 타입
+ * @brief trip response 타입
  */
 
-export interface ITrip {
+export interface ITripResponse {
     code: number;
     title: string;
     category: ISelection;
@@ -12,13 +13,13 @@ export interface ITrip {
     imgUrl: string;
 }
 
-export interface ITripPlace {
+export interface ITripPlaceResponse {
     code: number;
     placeName: string;
     visitCount: number;
 }
 
-export interface ITripDetail {
+export interface ITripDetailResponse {
     code: number;
     title: string;
     category: ISelection;
@@ -26,5 +27,5 @@ export interface ITripDetail {
     startDate: Date;
     endDate: Date;
     description: string;
-    imgUrl: string;
+    imgList: CommonImgResponse[];
 }

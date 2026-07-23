@@ -4,7 +4,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { format } from "date-fns";
 import { IModal } from "@/types/modal";
 import { colors } from "@/styles/colors";
-import { ITripDetail } from "@/types/trip";
+import { ITripDetailResponse } from "@/types/response/trip";
 import { placeModalStyles } from "./indexStyles";
 
 /**
@@ -12,7 +12,7 @@ import { placeModalStyles } from "./indexStyles";
  */
 
 interface Props extends IModal {
-    data: ITripDetail;
+    data: ITripDetailResponse;
 }
 
 export const PlaceModal = (props: Props) => {

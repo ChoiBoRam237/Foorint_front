@@ -18,25 +18,24 @@ export default function GenerateScreen() {
             <FormComponent
                 screenTitle="발자국 등록"
                 btnTitle="발자국 등록하기"
+                isLoading={controller.isLoading}
 
                 imgList={controller.imgList}
                 setImgList={controller.setImgList}
                 title={controller.title}
                 setTitle={controller.setTitle}
-                place={controller.place}
-                setPlace={controller.setPlace}
+                location={controller.location}
+                setLocation={controller.setLocation}
                 startDate={controller.startDate}
                 setStartDate={controller.setStartDate}
                 endDate={controller.endDate}
                 setEndDate={controller.setEndDate}
                 category={controller.category}
                 setCategory={controller.setCategory}
-                addCategory={controller.addCategory}
-                setAddCategory={controller.setAddCategory}
-                content={controller.content}
-                setContent={controller.setContent}
+                description={controller.description}
+                setDescription={controller.setDescription}
 
-                onClick={controller.onGenerate}
+                onClick={controller.onGenerateFoorint}
             />
         </SafeAreaView>
     )

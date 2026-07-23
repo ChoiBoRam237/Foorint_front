@@ -124,6 +124,7 @@ export default function MypageScreen() {
                                     mypageStyles.boxItem,
                                     pressed && { backgroundColor: "#8BDFFF" }
                                 ]}
+                                onPress={controller.onLogout}
                             >
                                 <View style={mypageStyles.boxTextWrapper}>
                                     <Ionicons name="exit-outline" color={colors.textPrimary} size={24} />

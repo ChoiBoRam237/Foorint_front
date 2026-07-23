@@ -16,11 +16,12 @@ export const AxiosComponent = () => {
     const queryClient = useQueryClient();
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const tokenInfoRef = useRef<any>(null);
+    const userInfoRef = useRef<any>(null);
 
     const tokenMutation = useMutation({
         mutationFn: async () => {
-            const token = await keychain.getKeychain("token");
-            const tokenInfo = JSON.parse(token ?? "{}");
+            const token = await keychain.getKeychain();
+            const tokenInfo = token && JSON.parse(token.password);
 
             return await commonApi.getRefreshToken({
                 headers: {
@@ -32,7 +33,7 @@ export const AxiosComponent = () => {
         retryDelay: 1000,
         onError: (error: AxiosError) => {
             if (error.response) {
-                if (error.response.status === 401 || error.response.status === 400) {
+                if (error.response.status === 401) {
                     keychain.clearKeychain();
                     queryClient.clear();
                     navigation.replace("Login");
@@ -45,13 +46,16 @@ export const AxiosComponent = () => {
 
     useEffect(() => {
         const setupInterceptor = async () => {
-            const token = await keychain.getKeychain("token");
-            tokenInfoRef.current = JSON.parse(token ?? "{}");
+            const token = await keychain.getKeychain();
+            if (token) {
+                tokenInfoRef.current = JSON.parse(token.password);
+                userInfoRef.current = JSON.parse(token.username);
+            }
             
             const requestIntercept = privateBase.interceptors.request.use(
                 async (config) => {
-                    const token = await keychain.getKeychain("token");
-                    const tokenInfo = JSON.parse(token ?? "");
+                    const token = await keychain.getKeychain();
+                    const tokenInfo = token && JSON.parse(token.password);
 
                     if (tokenInfo?.accessToken) {
                         config.headers.Authorization = `Bearer ${tokenInfo.accessToken}`;
@@ -77,10 +81,15 @@ export const AxiosComponent = () => {
                                     const result = await tokenMutation.mutateAsync();
                                     prevRequest.headers["Authorization"] = `Bearer ${result}`;
 
-                                    keychain.setKeychain("token", JSON.stringify({
-                                        ...tokenInfoRef.current,
-                                        accessToken: result,
-                                    }));
+                                    keychain.setKeychain(
+                                        JSON.stringify({
+                                            ...userInfoRef.current,
+                                        }),
+                                        JSON.stringify({
+                                            ...tokenInfoRef.current,
+                                            accessToken: result,
+                                        })
+                                    );
 
                                     return privateBase(prevRequest);
 

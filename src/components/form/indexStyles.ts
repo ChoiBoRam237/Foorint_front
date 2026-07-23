@@ -95,25 +95,24 @@ export const formStyles = StyleSheet.create({
         color: colors.textPrimary,
     },
 
-    imageItemWrapper: {
-        width: "100%",
-        position: "relative",
-    },
-
     imageItem: {
         width: "100%",
         height: 241,
     },
 
     imagePagination: {
-        position: "absolute",
-        left: 0,
-        bottom: 8,
         display: "flex",
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
         gap: 6,
+    },
+
+    imagePaginationDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 50,
+        backgroundColor: colors.thirdLight,
     },
 
     input: {
