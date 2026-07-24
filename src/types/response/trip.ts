@@ -10,7 +10,7 @@ export interface ITripResponse {
     title: string;
     category: ISelection;
     description: string;
-    imgUrl: string;
+    imgUrl: CommonImgResponse;
 }
 
 export interface ITripPlaceResponse {

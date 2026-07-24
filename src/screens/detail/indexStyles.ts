@@ -68,12 +68,6 @@ export const detailStyles = StyleSheet.create({
         rowGap: 8,
     },
 
-    image: {
-        width: "100%",
-        height: 412,
-        backgroundColor: "white",
-    },
-
     imagePagination: {
         display: "flex",
         flexDirection: "row",

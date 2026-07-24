@@ -6159,6 +6159,11 @@ readable-stream@^3.4.0:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
+reanimated-color-picker@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/reanimated-color-picker/-/reanimated-color-picker-5.1.2.tgz#536bd6aabd6e7c4a1c2d7d015db73ec8ee1866e2"
+  integrity sha512-AfGh9OIU0Y7/Yf5xoH7YwrXbyEyXjXOTP79OilSiw0OGvP0xM/h/Ij6lmyygzr/HQl2WHlhdhSAExk1hThIUeA==
+
 reflect.getprototypeof@^1.0.10, reflect.getprototypeof@^1.0.9:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/reflect.getprototypeof/-/reflect.getprototypeof-1.0.10.tgz#c629219e78a3316d8b604c765ef68996964e7bf9"

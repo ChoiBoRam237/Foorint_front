@@ -8,8 +8,7 @@ import { fonts } from "@/styles/fonts";
 
 export const filterStyles = StyleSheet.create({
     container: {
-        minWidth: 60,
-        maxWidth: 120,
+        width: "100%",
         alignSelf: "flex-start",
     },
 
@@ -20,7 +19,6 @@ export const filterStyles = StyleSheet.create({
         borderRadius: 6,
         padding: 4,
         marginTop: 4,
-        marginLeft: -16,
         backgroundColor: colors.primary,
         shadowOffset: {
             width: 0,

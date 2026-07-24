@@ -234,10 +234,30 @@ export const formStyles = StyleSheet.create({
     },
 
     categoryAddWrapper: {
+        position: "relative",
+        flex: 1,
         width: "100%",
         display: "flex",
         flexDirection: "row",
         columnGap: 4,
+    },
+
+    categoryColorPicker: {
+        width: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: colors.border,
+        borderRadius: 8,
+        padding: 4,
+    },
+
+    categoryColor: {
+        flex: 1,
+        width: "100%",
+        borderRadius: 8,
     },
 
     categoryAddButton: {
@@ -282,4 +302,91 @@ export const formStyles = StyleSheet.create({
         fontSize: 14,
         color: colors.textPrimary
     }
+});
+
+export const colorPickerStyles = StyleSheet.create({
+    colorPickerWrapper: {
+        position: "absolute",
+        top: "100%",
+        left: 0,
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        rowGap: 16,
+        borderRadius: 8,
+        padding: 16,
+        marginTop: 8,
+        backgroundColor: "white",
+        zIndex: 1,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    colorPicker: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        rowGap: 16,
+    },
+
+    panel: {
+        borderRadius: 8,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    slider: {
+        borderRadius: 50,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    previewTxt: {
+        fontFamily: fonts.PretendardSemiBold,
+        fontSize: 16,
+        color: "#7A7A7A",
+    },
+
+    hr: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#CECECE"
+    },
+
+    okWrapper: {
+        width: "100%",
+        display: "flex",
+        alignItems: "flex-end",
+    },
+
+    okButton: {
+        borderRadius: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        backgroundColor: colors.border,
+    },
+
+    okText: {
+        fontFamily: fonts.PretendardBold,
+        fontSize: 14,
+        color: colors.textPrimary,
+    },
 });

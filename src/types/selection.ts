@@ -3,7 +3,7 @@
  */
 
 export interface ISelection {
-    code: number;
+    code: number | null;
     name: string;
-    color?: string;
+    color?: string | null;
 }

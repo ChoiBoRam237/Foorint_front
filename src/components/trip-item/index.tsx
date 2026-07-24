@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/types";
 import { ITripResponse } from "@/types/response/trip";
 import { tripItemStyles } from "./indexStyles";
+import { BASE_URL } from "@env";
 
 /**
  * @brief 여행 아이템 컴포넌트
@@ -23,6 +24,7 @@ export const TripItemComponent = (props: Props) => {
         >
             <Image
                 style={tripItemStyles.image}
+                src={`${BASE_URL}${props.data.imgUrl.folderName}${props.data.imgUrl.imgUrl}`}
             />
 
             <View style={tripItemStyles.content}>
@@ -33,7 +35,7 @@ export const TripItemComponent = (props: Props) => {
                         <View
                             style={[
                                 tripItemStyles.categoryCircle,
-                                { backgroundColor: props.data.category.color }
+                                { backgroundColor: props.data.category?.color ?? "black" }
                             ]}
                         />
 

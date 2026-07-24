@@ -5,30 +5,34 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ISelection } from "@/types/selection";
 import { colors } from "@/styles/colors";
 import { filterStyles } from "./indexStyles";
+import { useControlFilter } from "./index.control";
 
 /**
  * @brief 필터 컴포넌트
  */
 
-interface Props {
-    filterList: ISelection[];
-    value: ISelection;
-    setValue: React.Dispatch<React.SetStateAction<ISelection>>;
+export interface FilterProps {
+    value: ISelection | undefined;
+    setValue: React.Dispatch<React.SetStateAction<ISelection | undefined>>;
 }
 
 const ITEM_HEIGHT = 38;
 
-export const FilterComponent = (props: Props) => {
+export const FilterComponent = (props: FilterProps) => {
+    const controller = useControlFilter(props);
+
+    if (controller.filterList.length === 0) return null;
+
     return (
         <Dropdown
             style={filterStyles.container}
-            containerStyle={filterStyles.itemList}
+            containerStyle={[ filterStyles.itemList ]}
             itemContainerStyle={filterStyles.item}
             selectedTextStyle={[ filterStyles.activeText, { marginLeft: 4 } ]}
             activeColor={colors.thirdLight}
-            data={props.filterList}
+            data={controller.filterList}
             search={false}
-            maxHeight={Math.min((props.filterList.length * ITEM_HEIGHT), 120)}
+            maxHeight={Math.min((controller.filterList.length * ITEM_HEIGHT), 120)}
             valueField="code"
             labelField="name"
             value={props.value}

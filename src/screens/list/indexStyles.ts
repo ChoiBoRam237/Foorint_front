@@ -9,6 +9,7 @@ import { fonts } from "@/styles/fonts";
 export const listStyles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         rowGap: 16,
@@ -30,13 +31,6 @@ export const listStyles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        rowGap: 12,
-    },
-
-    filter: {
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
+        rowGap: 16,
     },
 });

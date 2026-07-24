@@ -1,4 +1,4 @@
-import { FlatList, Text, TextInput, View } from "react-native";
+import { Dimensions, FlatList, Text, TextInput, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { commonStyles } from "@/styles/common";
@@ -8,35 +8,14 @@ import { CloudComponent } from "@/components/cloud";
 import { FilterComponent } from "@/components/filter";
 import { TripItemComponent } from "@/components/trip-item";
 import { FooterComponent } from "@/components/footer";
+import { LoadingComponent } from "@/components/loading";
 import { searchStyles } from "./indexStyles";
 import { useControlSearch } from "./index.control";
+import { NoDataComponent } from "@/components/no-data";
 
 /**
  * @brief 검색 리스트
  */
-
-const data = [
-    {
-        code: 1,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 2,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다."
-    },
-];
 
 export default function SearchScreen() {
     const insets = useSafeAreaInsets();
@@ -49,10 +28,7 @@ export default function SearchScreen() {
             <View
                 style={[
                     searchStyles.wrapper,
-                    {
-                        paddingTop: insets.top + 76,
-                        paddingBottom: insets.bottom + 62 + 16,
-                    }
+                    { paddingTop: insets.top + 60 + 16 }
                 ]}
             >
                 <View style={searchStyles.titleWrapper}>
@@ -83,26 +59,45 @@ export default function SearchScreen() {
                     </View>
                 </View>
 
-                <View style={searchStyles.filter}>
-                    <FilterComponent
-                        filterList={controller.filterList}
-                        value={controller.selectedFilter}
-                        setValue={controller.setSelectedFilter}
-                    />
-                </View>
-
-                <FlatList
-                    key={"2"}
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ gap: 12 }}
-                    columnWrapperStyle={{ gap: 12 }}
-                    keyExtractor={item => item.code.toString()}
-                    data={data}
-                    numColumns={2}
-                    renderItem={({ item }) => (
-                        <TripItemComponent data={item} />
-                    )}
+                <FilterComponent
+                    value={controller.selectedFilter}
+                    setValue={controller.setSelectedFilter}
                 />
+
+                {!controller.listLoading ? (
+                    <>
+                        {controller.foorintList.length > 0 ? (
+                            <FlatList
+                                key={"2"}
+                                style={{ flex: 1 }}
+                                contentContainerStyle={{ gap: 12 }}
+                                columnWrapperStyle={{ gap: 12 }}
+                                keyExtractor={item => item.code.toString()}
+                                data={controller.foorintList}
+                                numColumns={2}
+                                renderItem={({ item }) => {
+                                    const GAP = 12;
+                                    const PADDING = 16;
+                                    const ITEM_WIDTH = (Dimensions.get("window").width - PADDING * 2 - GAP) / 2;
+        
+                                    return (
+                                        <View style={{ width: ITEM_WIDTH }}>
+                                            <TripItemComponent data={item} />
+                                        </View>
+                                    )
+                                }}
+                            />
+                        ) : (
+                            <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 30 }}>
+                                <NoDataComponent text={"검색한 키워드와 일치하는\n발자국이 존재하지 않습니다."} />
+                            </View>
+                        )}
+                    </>
+                ) : (
+                    <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 30 }}>
+                        <LoadingComponent />
+                    </View>
+                )}
             </View>
 
             <FooterComponent target="Search" />

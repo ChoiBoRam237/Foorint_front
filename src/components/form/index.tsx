@@ -5,6 +5,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-date-picker';
+import ColorPicker, { HueSlider, OpacitySlider, Panel1, PreviewText } from 'reanimated-color-picker';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -14,7 +15,7 @@ import { format } from 'date-fns';
 import { colors } from '@/styles/colors';
 import { ISelection } from '@/types/selection';
 import { CloudComponent } from '../cloud';
-import { formStyles } from './indexStyles';
+import { colorPickerStyles, formStyles } from './indexStyles';
 import { useControlForm } from './index.control';
 
 /**
@@ -373,6 +374,18 @@ export const FormComponent = (props: Props) => {
 
                             {controller.addCategory && (
                                 <View style={formStyles.categoryAddWrapper}>
+                                    <Pressable
+                                        style={formStyles.categoryColorPicker}
+                                        onPress={() => controller.setColorPickerOpen(prev => !prev)}
+                                    >
+                                        <View
+                                            style={[
+                                                formStyles.categoryColor,
+                                                { backgroundColor: controller.categoryColor }
+                                            ]}
+                                        />
+                                    </Pressable>
+
                                     <TextInput
                                         style={[
                                             formStyles.input,
@@ -393,11 +406,46 @@ export const FormComponent = (props: Props) => {
                                             pressed && { backgroundColor: "#88CEFA" }
                                         ]}
                                         onPress={() => {
-                                            controller.setAddCategory(false);
+                                            if (controller.categoryName !== "" && controller.categoryColor !== "") {
+                                                controller.onGenerateCategory();
+                                            } else {
+                                                controller.setCategoryColor("#000000");
+                                                controller.setAddCategory(false);
+                                            }
                                         }}
                                     >
                                         <Octicons name="check" color={colors.textPrimary} size={24} />
                                     </Pressable>
+
+                                    {controller.colorPickerOpen && (
+                                        <View style={colorPickerStyles.colorPickerWrapper}>
+                                            <ColorPicker
+                                                value={controller.categoryColor}
+                                                style={colorPickerStyles.colorPicker}
+                                                sliderThickness={25}
+                                                thumbSize={24}
+                                                thumbShape='circle'
+                                                boundedThumb={true}
+                                                onChangeJS={(color) => controller.setCategoryColor(color.hex)}
+                                            >
+                                                <Panel1 style={colorPickerStyles.panel} />
+                                                <HueSlider style={colorPickerStyles.slider} />
+
+                                                <View style={colorPickerStyles.hr} />
+
+                                                <PreviewText style={colorPickerStyles.previewTxt} colorFormat='hex' />
+                                            </ColorPicker>
+
+                                            <View style={colorPickerStyles.okWrapper}>
+                                                <Pressable
+                                                    style={colorPickerStyles.okButton}
+                                                    onPress={() => controller.setColorPickerOpen(false)}
+                                                >
+                                                    <Text style={colorPickerStyles.okText}>OK</Text>
+                                                </Pressable>
+                                            </View>
+                                        </View>
+                                    )}
                                 </View>
                             )}
                         </View>

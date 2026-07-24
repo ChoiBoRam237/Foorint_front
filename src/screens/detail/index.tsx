@@ -10,6 +10,7 @@ import { colors } from "@/styles/colors";
 import { commonStyles } from "@/styles/common";
 import { detailStyles } from "./indexStyles";
 import { useControlDetail } from "./index.control";
+import { useEffect, useState } from "react";
 
 /**
  * @brief 여행 상세 화면
@@ -18,10 +19,42 @@ import { useControlDetail } from "./index.control";
 export default function DetailScreen() {
     const insets = useSafeAreaInsets();
     const controller = useControlDetail();
+    const screenWidth = Dimensions.get("window").width;
+    const [imageHeights, setImageHeights] = useState<Record<number, number>>({});
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const imgList = controller.foorintDetail?.imgList;
+    
+        if (!imgList?.length) return;
+    
+        imgList.forEach((item) => {
+            const imageUrl = `${BASE_URL}${item.folderName}${item.imgUrl}`;
+    
+            Image.getSize(
+                imageUrl,
+                (width, height) => {
+                    setImageHeights(prev => ({
+                        ...prev,
+                        [item.code]: (screenWidth * height) / width,
+                    }));
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        });
+    }, [controller.foorintDetail?.imgList]);
 
     if (controller.isLoading || !controller.foorintDetail) {
         return <LoadingComponent />;
     }
+
+    const currentImage =
+        controller.foorintDetail?.imgList[currentIndex];
+
+    const carouselHeight =
+        currentImage ? imageHeights[currentImage.code] ?? 300 : 300;
 
     return (
         <SafeAreaView style={commonStyles.container}>
@@ -51,7 +84,7 @@ export default function DetailScreen() {
                                 <View
                                     style={[
                                         detailStyles.categoryCircle,
-                                        { backgroundColor: controller.foorintDetail.category.color }
+                                        { backgroundColor: controller.foorintDetail.category.color ?? "black" }
                                     ]}
                                 />
 
@@ -77,15 +110,20 @@ export default function DetailScreen() {
                     <View style={{ flex: 1 }}>
                         <Carousel
                             ref={controller.imgRef}
-                            width={Dimensions.get('window').width}
-                            height={412}
+                            width={screenWidth}
+                            height={carouselHeight}
                             loop={false}
                             data={controller.foorintDetail?.imgList ?? []}
+                            onSnapToItem={setCurrentIndex}
                             onProgressChange={controller.imgProgress}
-                            renderItem={(item) => (
+                            renderItem={({ item }) => (
                                 <Image
-                                    style={detailStyles.image}
-                                    src={`${BASE_URL}${item.item.folderName}${item.item.imgUrl}`}
+                                    style={{
+                                        width: "100%",
+                                        height: imageHeights[item.code] ?? carouselHeight
+                                    }}
+                                    src={`${BASE_URL}${item.folderName}${item.imgUrl}`}
+                                    resizeMode="contain"
                                 /> 
                             )}
                         />

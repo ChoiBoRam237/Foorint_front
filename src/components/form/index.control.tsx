@@ -4,8 +4,8 @@ import { useSharedValue } from "react-native-reanimated";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
 import { AxiosError } from "axios";
 import { ISelection } from "@/types/selection";
+import { commonApi } from "@/util/_api";
 import { postFormApi } from "./_api/POST";
-import { getFormApi } from "./_api/GET";
 import { queryClient } from "../../../queryClient";
 
 /**
@@ -24,7 +24,8 @@ export const useControlForm = () => {
     const [categoryList, setCategoryList] = useState<ISelection[]>([]); // 카테고리 목록
     const [addCategory, setAddCategory] = useState<boolean>(false); // 카테고리 추가 여부
     const [categoryName, setCategoryName] = useState<string>(""); // 추가할 카테고리 이름
-    const [categoryColor, setCategoryColor] = useState<string>(""); // 추가할 카테고리 색상
+    const [categoryColor, setCategoryColor] = useState<string>("#000000"); // 추가할 카테고리 색상
+    const [colorPickerOpen, setColorPickerOpen] = useState<boolean>(false); // 색상 선택 오픈 여부
     const imgRef = useRef<ICarouselInstance>(null);
     const imgProgress = useSharedValue<number>(0);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -39,6 +40,10 @@ export const useControlForm = () => {
             return await postFormApi.postGenerateCategory(data);
         },
         onSuccess: () => {
+            setCategoryName("");
+            setCategoryColor("#000000");
+            setAddCategory(false);
+            setColorPickerOpen(false);
             queryClient.invalidateQueries({
                 queryKey: ["category"]
             });
@@ -51,7 +56,7 @@ export const useControlForm = () => {
     // 내가 만든 카테고리 조회 api
     const { data } = useQuery({
         queryKey: ["category"],
-        queryFn: () => getFormApi.getCategory(),
+        queryFn: () => commonApi.getCategory(),
     });
 
     const onGenerateCategory = () => {
@@ -74,6 +79,7 @@ export const useControlForm = () => {
         addCategory, setAddCategory,
         categoryName, setCategoryName,
         categoryColor, setCategoryColor,
+        colorPickerOpen, setColorPickerOpen,
 
         onGenerateCategory,
     }

@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native";
+import { Dimensions, FlatList, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { MainHeaderComponent } from "@/components/main-header";
 import { commonStyles } from "@/styles/common";
@@ -7,75 +7,14 @@ import { YearSelectionComponent } from "@/components/year-selection";
 import { FilterComponent } from "@/components/filter";
 import { TripItemComponent } from "@/components/trip-item";
 import { FooterComponent } from "@/components/footer";
+import { LoadingComponent } from "@/components/loading";
 import { useControlList } from "./index.control";
 import { listStyles } from "./indexStyles";
+import { NoDataComponent } from "@/components/no-data";
 
 /**
  * @brief 리스트
  */
-
-const data = [
-    {
-        code: 1,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 2,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다.오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 3,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 4,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 5,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    },
-    {
-        code: 6,
-        title: "빠지 야호~",
-        category: {
-            code: 1,
-            name: "국내 여행",
-            color: "red"
-        },
-        description: "오늘 빠지로 놀러갔다."
-    }
-]
 
 export default function ListScreen() {
     const insets = useSafeAreaInsets();
@@ -107,35 +46,53 @@ export default function ListScreen() {
 
                 <View style={listStyles.optionWrapper}>
                     <YearSelectionComponent
-                        yearList={controller.yearList}
                         value={controller.selectedYear}
                         setValue={controller.setSelectedYear}
                     />
 
-                    <View style={listStyles.filter}>
-                        <FilterComponent
-                            filterList={controller.filterList}
-                            value={controller.selectedFilter}
-                            setValue={controller.setSelectedFilter}
-                        />
-                    </View>
+                    <FilterComponent
+                        value={controller.selectedFilter}
+                        setValue={controller.setSelectedFilter}
+                    />
                 </View>
 
-                <FlatList
-                    key={"2"}
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ 
-                        gap: 12,
-                        paddingBottom: insets.bottom + 62 + 16,
-                    }}
-                    columnWrapperStyle={{ gap: 12 }}
-                    keyExtractor={item => item.code.toString()}
-                    data={data}
-                    numColumns={2}
-                    renderItem={({ item }) => (
-                        <TripItemComponent data={item} />
-                    )}
-                />
+                {!controller.listLoading ? (
+                    <>
+                        {controller.foorintList.length > 0 ? (
+                            <FlatList
+                                key={"2"}
+                                style={{ flex: 1 }}
+                                contentContainerStyle={{ 
+                                    gap: 12,
+                                    paddingBottom: insets.bottom + 62 + 16,
+                                }}
+                                columnWrapperStyle={{ gap: 12 }}
+                                keyExtractor={item => item.code.toString()}
+                                data={controller.foorintList}
+                                numColumns={2}
+                                renderItem={({ item }) => {
+                                    const GAP = 12;
+                                    const PADDING = 16;
+                                    const ITEM_WIDTH = (Dimensions.get("window").width - PADDING * 2 - GAP) / 2;
+        
+                                    return (
+                                        <View style={{ width: ITEM_WIDTH }}>
+                                            <TripItemComponent data={item} />
+                                        </View>
+                                    )
+                                }}
+                            />
+                        ) : (
+                            <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 30 }}>
+                                <NoDataComponent text={"선택한 조건에 맞는\n발자국이 존재하지 않습니다."} />
+                            </View>
+                        )}
+                    </>
+                ) : (
+                    <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 30 }}>
+                        <LoadingComponent />
+                    </View>
+                )}
             </View>
 
             <FooterComponent target="List" />

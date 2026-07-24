@@ -52,11 +52,4 @@ export const searchStyles = StyleSheet.create({
         fontSize: 14,
         color: "black",
     },
-
-    filter: {
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-    }
 });
