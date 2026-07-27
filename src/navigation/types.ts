@@ -2,7 +2,7 @@ export type RootStackParamList = {
     Splash: undefined;
     Login: undefined;
     Home: undefined;
-    Generate: undefined;
+    Generate: { date?: Date };
     Detail: { code: number };
     List: undefined;
     Search: undefined;

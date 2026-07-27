@@ -23,10 +23,9 @@
 - @react-native-google-signin/google-signin
 
 #### UI Library
-- react-native-svg
-- react-native-vector-icons
 - react-native-reanimated-carousel
 - react-native-date-picker
+- react-native-calendars
 - react-native-element-dropdown
 
 #### Util Library

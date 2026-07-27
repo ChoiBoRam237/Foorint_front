@@ -24,7 +24,7 @@ export default function SplashScreen() {
     
                 setTimeout(() => {
                     if (tokenInfo) {
-                        navigation.replace("List");
+                        navigation.replace("Home");
                     } else {
                         navigation.replace("Login");
                     }

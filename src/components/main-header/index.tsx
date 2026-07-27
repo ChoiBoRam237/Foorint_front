@@ -26,7 +26,7 @@ export const MainHeaderComponent = () => {
             {/* 홈으로 이동 */}
             <Pressable 
                 style={mainHeaderStyles.logoWrapper}
-                onPress={() => navigation.navigate("List")}
+                onPress={() => navigation.navigate("Home")}
             >
                 <Airplane
                     width={65}

@@ -6,7 +6,7 @@ import { login } from "@react-native-seoul/kakao-login";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query"
 import { RootStackParamList } from "@/navigation/types";
-import { BASE_URL, GOOGLE_WEB_CLIENT_ID } from "@env";
+import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import { keychain } from "@/util/keychain";
 import { postLoginApi } from "./_api/POST"
 
@@ -43,7 +43,7 @@ export const useControlLogin = () => {
 
             setLoginLoading(false);
 
-            navigation.replace("List");
+            navigation.replace("Home");
         },
         onError: (error: AxiosError) => {
             console.error("카카오 로그인 에러 : ", error);
@@ -70,7 +70,7 @@ export const useControlLogin = () => {
 
             setLoginLoading(false);
 
-            navigation.replace("List");
+            navigation.replace("Home");
         },
         onError: (error: AxiosError) => {
             console.error("구글 로그인 에러 : ", error);

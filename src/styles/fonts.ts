@@ -5,6 +5,6 @@ export const fonts = {
     PretendardBold: "Pretendard-Bold",
 
     Cloudsofa: "Cloudsofa_namgim-Regular",
-
     Griun: "Griun_Cocochoitoon-Rg",
+    MontserratBold: "Montserrat-Bold",
 }

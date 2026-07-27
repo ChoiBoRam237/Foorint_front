@@ -5,7 +5,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-date-picker';
-import ColorPicker, { HueSlider, OpacitySlider, Panel1, PreviewText } from 'reanimated-color-picker';
+import ColorPicker, { HueSlider, Panel1, PreviewText } from 'reanimated-color-picker';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -344,7 +344,7 @@ export const FormComponent = (props: Props) => {
                                             width: 8,
                                             height: 8,
                                             borderRadius: 50,
-                                            backgroundColor: props.category?.color,
+                                            backgroundColor: props.category?.color ?? "black",
                                             marginRight: 8,
                                         }}
                                     />

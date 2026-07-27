@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -13,13 +13,16 @@ import { formatDateTime } from "@/components/form/index.control";
  * @brief 발자국 등록 컨트롤
  */
 
+type GenerateRouteProp = RouteProp<RootStackParamList, "Generate">;
+
 export const useControlGenerate = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const route = useRoute<GenerateRouteProp>();
     const [imgList, setImgList] = useState<IFile[]>([]); // 이미지 리스트
     const [title, setTitle] = useState<string>(""); // 제목
     const [location, setLocation] = useState<string>(""); // 여행 장소
-    const [startDate, setStartDate] = useState<Date | null>(null); // 시작 날짜
-    const [endDate, setEndDate] = useState<Date | null>(null); // 종료 날짜
+    const [startDate, setStartDate] = useState<Date | null>(route.params.date ?? null); // 시작 날짜
+    const [endDate, setEndDate] = useState<Date | null>(route.params.date ?? null); // 종료 날짜
     const [category, setCategory] = useState<ISelection | null>(null); // 카테고리
     const [description, setDescription] = useState<string>(""); // 내용
 
@@ -31,7 +34,7 @@ export const useControlGenerate = () => {
             formData.append("location", location);
             formData.append("startDate", formatDateTime(startDate));
             formData.append("endDate", formatDateTime(endDate));
-            category && formData.append("categoryCode", category?.code.toString());
+            category && formData.append("categoryCode", (category?.code ?? 0).toString());
             description !== "" && formData.append("description", description);
             imgList.length > 0 && (
                 imgList.forEach(img => formData.append("imgList", {
