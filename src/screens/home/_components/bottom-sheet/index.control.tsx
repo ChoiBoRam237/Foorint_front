@@ -23,7 +23,7 @@ export const useControlHomeBottomSheet = (props: BottomSheetProps) => {
     });
 
     useEffect(() => {
-        if (data) setDayList(data);
+        if (data && data.length > 0) setDayList(data);
     }, [data]);
 
     return {

@@ -18,8 +18,11 @@ export const useControlYearSelection = (props: YearSelectionProps) => {
     });
 
     useEffect(() => {
-        if (data) setYearList(data);
-        if (!props.value) props.setValue(data[0]);
+        if (data && data.length > 0) {
+            setYearList(data);
+            
+            if (!props.value) props.setValue(data[0]);
+        }
     }, [data]);
 
     return {

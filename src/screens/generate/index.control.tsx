@@ -21,8 +21,8 @@ export const useControlGenerate = () => {
     const [imgList, setImgList] = useState<IFile[]>([]); // 이미지 리스트
     const [title, setTitle] = useState<string>(""); // 제목
     const [location, setLocation] = useState<string>(""); // 여행 장소
-    const [startDate, setStartDate] = useState<Date | null>(route.params.date ?? null); // 시작 날짜
-    const [endDate, setEndDate] = useState<Date | null>(route.params.date ?? null); // 종료 날짜
+    const [startDate, setStartDate] = useState<Date | null>(route.params?.date ?? null); // 시작 날짜
+    const [endDate, setEndDate] = useState<Date | null>(route.params?.date ?? null); // 종료 날짜
     const [category, setCategory] = useState<ISelection | null>(null); // 카테고리
     const [description, setDescription] = useState<string>(""); // 내용
 

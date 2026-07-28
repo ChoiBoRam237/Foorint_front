@@ -21,6 +21,8 @@ export interface ITripPlaceResponse {
 
 export interface ITripDetailResponse {
     code: number;
+    prevCode: number;
+    nextCode: number;
     title: string;
     category: ISelection;
     location: string;

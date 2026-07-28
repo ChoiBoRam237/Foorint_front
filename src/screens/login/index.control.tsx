@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query"
 import { RootStackParamList } from "@/navigation/types";
 import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import { keychain } from "@/util/keychain";
+import { asyncStorage } from "@/util/asyncStorage";
 import { postLoginApi } from "./_api/POST"
 
 /**
@@ -29,15 +30,18 @@ export const useControlLogin = () => {
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                })
+            );
+            await asyncStorage.setAsyncStorage(
+                "userInfo",
+                JSON.stringify({
                     userCode: data.userCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
-                }),
-                JSON.stringify({
-                    accessToken: data.accessToken,
-                    refreshToken: data.refreshToken,
                 })
             );
 
@@ -56,15 +60,18 @@ export const useControlLogin = () => {
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                })
+            );
+            await asyncStorage.setAsyncStorage(
+                "userInfo",
+                JSON.stringify({
                     userCode: data.userCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
-                }),
-                JSON.stringify({
-                    accessToken: data.accessToken,
-                    refreshToken: data.refreshToken,
                 })
             );
 

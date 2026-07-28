@@ -1,9 +1,12 @@
 import * as Keychain from 'react-native-keychain';
 
-// 저장
+/**
+ * @brief keychain 관련 util
+ */
+
 export const keychain = {
-    setKeychain: async (userInfo: any, tokenInfo: any) => {
-        await Keychain.setGenericPassword(userInfo, tokenInfo);
+    setKeychain: async (tokenInfo: any) => {
+        await Keychain.setGenericPassword("user", tokenInfo);
     },
 
     getKeychain: async () => {

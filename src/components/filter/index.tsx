@@ -4,8 +4,8 @@ import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ISelection } from "@/types/selection";
 import { colors } from "@/styles/colors";
-import { filterStyles } from "./indexStyles";
 import { useControlFilter } from "./index.control";
+import { filterStyles } from "./indexStyles";
 
 /**
  * @brief 필터 컴포넌트
@@ -21,7 +21,7 @@ const ITEM_HEIGHT = 38;
 export const FilterComponent = (props: FilterProps) => {
     const controller = useControlFilter(props);
 
-    if (controller.filterList.length === 0) return null;
+    if (controller.categoryList.length === 0) return null;
 
     return (
         <Dropdown
@@ -30,9 +30,9 @@ export const FilterComponent = (props: FilterProps) => {
             itemContainerStyle={filterStyles.item}
             selectedTextStyle={[ filterStyles.activeText, { marginLeft: 4 } ]}
             activeColor={colors.thirdLight}
-            data={controller.filterList}
+            data={controller.categoryList}
             search={false}
-            maxHeight={Math.min((controller.filterList.length * ITEM_HEIGHT), 120)}
+            maxHeight={Math.min((controller.categoryList.length * ITEM_HEIGHT), 120)}
             valueField="code"
             labelField="name"
             value={props.value}

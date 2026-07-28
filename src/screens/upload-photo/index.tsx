@@ -1,36 +1,17 @@
-import { FlatList, Image, Pressable, View } from "react-native";
+import { Dimensions, FlatList, Image, Pressable, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { BASE_URL } from "@env";
 import { commonStyles } from "@/styles/common";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { YearSelectionComponent } from "@/components/year-selection";
+import { LoadingComponent } from "@/components/loading";
+import { UploadPhotoModal } from "./_components/modal";
 import { useControlUploadPhoto } from "./index.control";
 import { uploadPhotoStyles } from "./indexStyles";
-import { UploadPhotoModal } from "./_components/modal";
 
 /**
  * @brief 업로드한 사진
  */
-
-const data = [
-    { code: 1, imgUrl: "" },
-    { code: 2, imgUrl: "" },
-    { code: 3, imgUrl: "" },
-];
-
-const content = {
-    code: 1,
-    title: "처음으로 빠지에 가다.",
-    category: {
-        code: 1,
-        color: "#FF0000",
-        name: "국내 여행"
-    },
-    location: "경기도 가평시",
-    startDate: new Date(2026, 7, 17),
-    endDate: new Date(2026, 7, 19),
-    description: "친구들과 가평 빠지에 놀러갔다.",
-    imgUrl: "",
-}
 
 export default function UploadPhotoScreen() {
     const insets = useSafeAreaInsets();
@@ -51,35 +32,60 @@ export default function UploadPhotoScreen() {
             >
                 <View style={{ width: "100%" }}>
                     <YearSelectionComponent
-                        yearList={controller.yearList}
                         value={controller.selectedYear}
                         setValue={controller.setSelectedYear}
                     />
                 </View>
 
-                <FlatList
-                    key={"3"}
-                    style={{ flex: 1 }}
-                    keyExtractor={item => item.code.toString()}
-                    data={data}
-                    numColumns={3}
-                    renderItem={({ item }) => (
-                        <Pressable
-                            style={{ flex: 3 }}
-                            onPress={() => controller.setModalOpen(true)}
-                        >
-                            <Image
-                                style={uploadPhotoStyles.image}
-                            />
-                        </Pressable>
-                    )}
-                />
+                {!controller.isLoading ? (
+                    <FlatList
+                        key={"3"}
+                        style={{ flex: 1 }}
+                        keyExtractor={item => item.code.toString()}
+                        data={controller.imageList}
+                        numColumns={3}
+                        renderItem={({ item, index }) => {
+                            const PADDING = 16;
+                            const ITEM_WIDTH = (Dimensions.get("window").width - PADDING * 2) / 3;
+
+                            return (
+                                <View style={{ width: ITEM_WIDTH }}>
+                                    <Pressable
+                                        style={{ flex: 1 }}
+                                        onPress={() => {
+                                            controller.setCode({
+                                                code: item.code,
+                                                prevCode: item.prevCode,
+                                                nextCode: item.nextCode
+                                            });
+                                            controller.setSelectedImgIndex(index);
+                                            controller.setModalOpen(true);
+                                        }}
+                                    >
+                                        <Image
+                                            style={uploadPhotoStyles.image}
+                                            src={`${BASE_URL}${item.imgUrl.folderName}${item.imgUrl.imgUrl}`}
+                                        />
+                                    </Pressable>
+                                </View>
+                            )
+                        }}
+                    />
+                ) : (
+                    <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 16 }}>
+                        <LoadingComponent />
+                    </View>
+                )}
             </View>
 
             <UploadPhotoModal
                 open={controller.modalOpen}
                 setOpen={controller.setModalOpen}
-                data={content}
+                isLoading={controller.detailLoading}
+                dataList={controller.imageList}
+                data={controller.foorintDetail}
+                index={controller.selectedImgIndex}
+                setIndex={controller.setSelectedImgIndex}
             />
         </SafeAreaView>
     )

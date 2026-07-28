@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Dimensions, Image, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
-import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-date-picker';
 import ColorPicker, { HueSlider, Panel1, PreviewText } from 'reanimated-color-picker';
@@ -56,6 +55,7 @@ interface Props {
 export const FormComponent = (props: Props) => {
     const insets = useSafeAreaInsets();
     const controller = useControlForm();
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
     
     const onChoosePhoto = async () => {
         if (controller.isProcessing) return;
@@ -144,33 +144,41 @@ export const FormComponent = (props: Props) => {
 
                         <View style={{ flex: 1 }}>
                             {props.imgList.length > 0 ? (
-                                <Carousel
-                                    ref={controller.imgRef}
-                                    width={Dimensions.get('window').width - 32}
-                                    height={241}
-                                    loop={false}
-                                    data={carouselData}
-                                    onProgressChange={controller.imgProgress}
-                                    renderItem={(item) => {
-                                        if (item.item.isUploadButton) {
-                                            return (
+                                <ScrollView
+                                    horizontal
+                                    pagingEnabled
+                                    showsHorizontalScrollIndicator={false}
+                                    onMomentumScrollEnd={(e) => {
+                                        const index = Math.round(
+                                            e.nativeEvent.contentOffset.x / (Dimensions.get("window").width - 32)
+                                        );
+                                        setCurrentIndex(index);
+                                    }}
+                                >
+                                    {carouselData.map((item, index) => (
+                                        <View
+                                            key={index}
+                                            style={{
+                                                width: Dimensions.get("window").width - 32,
+                                                height: 241,
+                                            }}
+                                        >
+                                            {item.isUploadButton ? (
                                                 <Pressable onPress={onChoosePhoto}>
                                                     <View style={formStyles.imageUpload}>
                                                         <Ionicons name="images-outline" color={colors.textPrimary} size={28} />
                                                         <Text style={formStyles.imageUploadTitle}>이미지 업로드</Text>
                                                     </View>
                                                 </Pressable>
-                                            )
-                                        } else {
-                                            return(
+                                            ) : (
                                                 <Image
                                                     style={formStyles.imageItem}
-                                                    source={{ uri: item.item.uri }}
+                                                    source={{ uri: item.uri }}
                                                 />
-                                            )
-                                        }
-                                    }}
-                                />
+                                            )}
+                                        </View>
+                                    ))}
+                                </ScrollView>
                             ) : (
                                 <Pressable onPress={onChoosePhoto}>
                                     <View style={formStyles.imageUpload}>
@@ -182,13 +190,17 @@ export const FormComponent = (props: Props) => {
                         </View>
 
                         {props.imgList.length > 0 && (
-                            <Pagination.Basic
-                                dotStyle={formStyles.imagePaginationDot}
-                                activeDotStyle={{ backgroundColor: colors.thirdDark }}
-                                containerStyle={formStyles.imagePagination}
-                                progress={controller.imgProgress}
-                                data={carouselData}
-                            />
+                            <View style={formStyles.imagePagination}>
+                                {carouselData.map((_, index) => (
+                                    <View
+                                        key={index}
+                                        style={[
+                                            formStyles.imagePaginationDot,
+                                            index === currentIndex && { backgroundColor: colors.thirdDark },
+                                        ]}
+                                    />
+                                ))}
+                            </View>
                         )}
                     </View>
 

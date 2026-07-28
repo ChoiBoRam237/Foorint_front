@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { ITripResponse } from "@/types/response/trip"
 import { useQuery } from "@tanstack/react-query";
+import { ITripResponse } from "@/types/response/trip"
 import { commonApi } from "@/util/_api";
 
 /**
@@ -22,7 +22,7 @@ export const useFoorintList = (props: Props) => {
     });
 
     useEffect(() => {
-        if (data) setFoorintList(data);
+        if (data && data.length > 0) setFoorintList(data);
     }, [data]);
 
     return {

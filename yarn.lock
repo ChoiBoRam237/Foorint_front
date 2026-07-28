@@ -1387,6 +1387,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@react-native-async-storage/async-storage@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-3.1.1.tgz#051caeb93919260041e53165f1b6c8a975b15105"
+  integrity sha512-z+PnLz1n6ECKhgoHZHkfc+dijXZEyZnNFSajbtE0NEbsJhmX8x9GlOeiMQIKX2E4DUqPSgfIh4FYBv1M49KgPQ==
+  dependencies:
+    idb "8.0.3"
+
 "@react-native-community/cli-clean@20.1.0":
   version "20.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-clean/-/cli-clean-20.1.0.tgz#c60a8f909c4269cabb785b47e43af4f8cd3fef3b"
@@ -4154,6 +4161,11 @@ iconv-lite@~0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+idb@8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/idb/-/idb-8.0.3.tgz#c91e558f15a8d53f1d7f53a094d226fc3ad71fd9"
+  integrity sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==
+
 ieee754@^1.1.13:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
@@ -6013,6 +6025,11 @@ react-native-date-picker@^5.0.13:
   resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-5.0.13.tgz#fe05f58652aaeee9e67f73cf7436c32a623ff3a4"
   integrity sha512-qCLUODZVsJetO5zuoXjw1D39K527XWqBG8sOfhWdHyPzf13h8RXR1/RSKd1N0fdRDi5GdyizYmB0lPAK12/hbw==
 
+react-native-device-info@^15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-15.0.2.tgz#c7de1bb6baeb07e1bab70159ad540c5705cb8dc0"
+  integrity sha512-dd71eXG2l3Cwp66IvKNadMTB8fhU3PEjyVddI97sYan+D4bgIAUmgGDhbSOFvHcGavksb2U17kiQYaDiK2WK2g==
+
 react-native-dotenv@^3.4.11:
   version "3.4.11"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-3.4.11.tgz#2e6c4eabd55d5f1bf109b3dd9141dadf9c55cdd4"
@@ -6049,11 +6066,6 @@ react-native-keychain@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-10.0.0.tgz#1de6f54d27b2376deaac4d51883c066f53b7be7b"
   integrity sha512-YzPKSAnSzGEJ12IK6CctNLU79T1W15WDrElRQ+1/FsOazGX9ucFPTQwgYe8Dy8jiSEDJKM4wkVa3g4lD2Z+Pnw==
-
-react-native-reanimated-carousel@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated-carousel/-/react-native-reanimated-carousel-4.0.3.tgz#975f4ff3f5da5bb3790fe60850a46ad8119612bc"
-  integrity sha512-YZXlvZNghR5shFcI9hTA7h7bEhh97pfUSLZvLBAshpbkuYwJDKmQXejO/199T6hqGq0wCRwR0CWf2P4Vs6A4Fw==
 
 react-native-reanimated@^4.5.1:
   version "4.5.1"
@@ -7333,3 +7345,8 @@ yocto-queue@^0.1.0:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.4.3.tgz#b680f172885d18bbebf21a834ea25e55a1bbf356"
   integrity sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==
+
+zustand@^5.0.14:
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.14.tgz#18216c24fcb980cf36898f9c57520e67b1f77855"
+  integrity sha512-/8tAspM5LMPr28b3fwLYrtdj77ECpfZviaP75CMTnwO8ISyaE4GDIG/9rDDYq/cH9D2Xw2A2RXglLInmVBQB/g==

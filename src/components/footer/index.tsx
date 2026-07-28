@@ -65,7 +65,7 @@ export const FooterComponent = (props: Props) => {
 
                 <Pressable
                     style={footerStyles.plusButton}
-                    onPress={() => navigation.navigate("Generate")}
+                    onPress={() => navigation.navigate("Generate", {})}
                 >
                     <Feather name="plus" color="white" size={30} />
                 </Pressable>

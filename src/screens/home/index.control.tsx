@@ -28,7 +28,7 @@ export const useControlHome = () => {
     };
 
     useEffect(() => {
-        if (data) setMonthList(data);
+        if (data && data.length > 0) setMonthList(data);
     }, [data]);
 
     return {

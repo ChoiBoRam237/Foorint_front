@@ -31,4 +31,10 @@ export const commonApi = {
                 },
             })
         ).data.data,
+
+    // 특정 발자국 상세 조회
+    getFoorintDetail: async (footPrintCode: number) =>
+        await (
+            await privateBase.get(`/v3/api/foorint/${footPrintCode}`)
+        ).data.data,
 }

@@ -7,6 +7,7 @@ import { RootStackParamList } from "@/navigation/types";
 import { keychain } from "@/util/keychain";
 import { commonApi } from "@/util/_api";
 import { privateBase } from "@/util/api";
+import { asyncStorage } from "@/util/asyncStorage";
 
 /**
  * @brief 토큰 처리 hook
@@ -16,7 +17,6 @@ export const AxiosComponent = () => {
     const queryClient = useQueryClient();
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const tokenInfoRef = useRef<any>(null);
-    const userInfoRef = useRef<any>(null);
 
     const tokenMutation = useMutation({
         mutationFn: async () => {
@@ -35,6 +35,7 @@ export const AxiosComponent = () => {
             if (error.response) {
                 if (error.response.status === 401) {
                     keychain.clearKeychain();
+                    asyncStorage.removeAsyncStorage("userInfo");
                     queryClient.clear();
                     navigation.replace("Login");
                 }
@@ -47,10 +48,7 @@ export const AxiosComponent = () => {
     useEffect(() => {
         const setupInterceptor = async () => {
             const token = await keychain.getKeychain();
-            if (token) {
-                tokenInfoRef.current = JSON.parse(token.password);
-                userInfoRef.current = JSON.parse(token.username);
-            }
+            if (token) tokenInfoRef.current = JSON.parse(token.password);
             
             const requestIntercept = privateBase.interceptors.request.use(
                 async (config) => {
@@ -83,9 +81,6 @@ export const AxiosComponent = () => {
 
                                     keychain.setKeychain(
                                         JSON.stringify({
-                                            ...userInfoRef.current,
-                                        }),
-                                        JSON.stringify({
                                             ...tokenInfoRef.current,
                                             accessToken: result,
                                         })
@@ -96,6 +91,7 @@ export const AxiosComponent = () => {
                                 } catch (tokenError) {
                                     console.error("Token refresh error:", tokenError);
                                     keychain.clearKeychain();
+                                    asyncStorage.removeAsyncStorage("userInfo");
                                     queryClient.clear();
                                     navigation.replace("Login");
                                 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
+import { Dimensions, Image, Text, View, ScrollView } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import Carousel, { Pagination } from "react-native-reanimated-carousel";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { format } from "date-fns";
 import { BASE_URL } from "@env";
@@ -21,7 +20,7 @@ export default function DetailScreen() {
     const controller = useControlDetail();
     const screenWidth = Dimensions.get("window").width;
     const [imageHeights, setImageHeights] = useState<Record<number, number>>({});
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
     useEffect(() => {
         const imgList = controller.foorintDetail?.imgList;
@@ -40,13 +39,13 @@ export default function DetailScreen() {
                     }));
                 },
                 (error) => {
-                    console.log(error);
+                    console.error(error);
                 }
             );
         });
     }, [controller.foorintDetail?.imgList]);
 
-    if (controller.isLoading || !controller.foorintDetail) {
+    if (controller.detailLoading || !controller.foorintDetail) {
         return <LoadingComponent />;
     }
 
@@ -74,6 +73,7 @@ export default function DetailScreen() {
                         paddingBottom: insets.bottom + 10
                     }
                 ]}
+                nestedScrollEnabled={true}
             >
                 <View style={detailStyles.infoContainer}>
                     <View style={detailStyles.infoWrapper}>
@@ -107,35 +107,40 @@ export default function DetailScreen() {
                 </View>
 
                 <View style={detailStyles.imageWrapper}>
-                    <View style={{ flex: 1 }}>
-                        <Carousel
-                            ref={controller.imgRef}
-                            width={screenWidth}
-                            height={carouselHeight}
-                            loop={false}
-                            data={controller.foorintDetail?.imgList ?? []}
-                            onSnapToItem={setCurrentIndex}
-                            onProgressChange={controller.imgProgress}
-                            renderItem={({ item }) => (
-                                <Image
-                                    style={{
-                                        width: "100%",
-                                        height: imageHeights[item.code] ?? carouselHeight
-                                    }}
-                                    src={`${BASE_URL}${item.folderName}${item.imgUrl}`}
-                                    resizeMode="contain"
-                                /> 
-                            )}
-                        />
-                    </View>
+                    <ScrollView
+                        horizontal
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        style={{ width: screenWidth, height: carouselHeight }}
+                        onMomentumScrollEnd={(e) => {
+                            const index = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
+                            setCurrentIndex(index);
+                        }}
+                    >
+                        {controller.foorintDetail?.imgList.map((item, index) => (
+                            <Image
+                                key={index}
+                                style={{
+                                    width: screenWidth,
+                                    height: imageHeights[item.code] ?? carouselHeight
+                                }}
+                                src={`${BASE_URL}${item.folderName}${item.imgUrl}`}
+                                resizeMode="contain"
+                            />
+                        ))}
+                    </ScrollView>
 
-                    <Pagination.Basic
-                        dotStyle={detailStyles.imagePaginationDot}
-                        containerStyle={detailStyles.imagePagination}
-                        activeDotStyle={{ backgroundColor: colors.thirdDark }}
-                        progress={controller.imgProgress}
-                        data={controller.foorintDetail?.imgList ?? []}
-                    />
+                    <View style={detailStyles.imagePagination}>
+                        {controller.foorintDetail.imgList.map((_, index) => (
+                            <View
+                                key={index}
+                                style={[
+                                    detailStyles.imagePaginationDot,
+                                    index === currentIndex && { backgroundColor: colors.thirdDark },
+                                ]}
+                            />
+                        ))}
+                    </View>
                 </View>
 
                 <View style={detailStyles.contentWrapper}>

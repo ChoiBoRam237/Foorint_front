@@ -6,13 +6,13 @@ import { fonts } from "@/styles/fonts";
  * @brief 여행 장소 모달 컴포넌트
  */
 
-export const placeModalStyles = StyleSheet.create({
+export const uploadPhotoModalStyles = StyleSheet.create({
     container: {
         flex: 1,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        columnGap: 16,
+        columnGap: 8,
         paddingHorizontal: 16,
         backgroundColor: colors.black30,
     },
@@ -134,5 +134,14 @@ export const placeModalStyles = StyleSheet.create({
         fontFamily: fonts.PretendardBold,
         fontSize: 12,
         color: "white",
+    },
+
+    noData: {
+        flex: 1,
+        height: 374,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
     },
 });

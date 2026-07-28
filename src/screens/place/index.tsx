@@ -1,21 +1,18 @@
-import { FlatList, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { commonStyles } from "@/styles/common";
+import { colors } from "@/styles/colors";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { YearSelectionComponent } from "@/components/year-selection";
-import { PlaceItem } from "./_components/item";
+import { LoadingComponent } from "@/components/loading";
+import { PlaceModal } from "./_components/modal";
 import { useControlPlace } from "./index.control";
 import { placeStyles } from "./indexStyles";
 
 /**
  * @brief 여행 장소
  */
-
-const data = [
-    { code: 1, placeName: "경기도 가평시", visitCount: 3 },
-    { code: 2, placeName: "부산광역시", visitCount: 1 },
-    { code: 3, placeName: "인천광역시", visitCount: 2 },
-];
 
 export default function PlaceScreen() {
     const insets = useSafeAreaInsets();
@@ -36,24 +33,53 @@ export default function PlaceScreen() {
             >
                 <View style={{ width: "100%" }}>
                     <YearSelectionComponent
-                        yearList={controller.yearList}
                         value={controller.selectedYear}
                         setValue={controller.setSelectedYear}
                     />
                 </View>
 
-                <FlatList
-                    key={"1"}
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ gap: 12 }}
-                    keyExtractor={item => item.code.toString()}
-                    data={data}
-                    numColumns={1}
-                    renderItem={({ item }) => (
-                        <PlaceItem data={item} />
-                    )}
-                />
+                {!controller.isLoading ? (
+                    <FlatList
+                        key={"1"}
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ gap: 12 }}
+                        keyExtractor={item => item.code.toString()}
+                        data={controller.locationList}
+                        numColumns={1}
+                        renderItem={({ item }) => (
+                            <Pressable
+                                style={({ pressed }) => [
+                                    placeStyles.placeItemContainer,
+                                    pressed && { backgroundColor: colors.thirdLight }
+                                ]}
+                                onPress={() => {
+                                    controller.setSelectedCode(item.code);
+                                    controller.setModalOpen(true);
+                                }}
+                            >
+                                <View style={placeStyles.placeItemWrapper}>
+                                    <Ionicons name="location-outline" color={colors.textPrimary} size={20} />
+                                    <Text style={placeStyles.placeItemName}>{item.location}</Text>
+                                </View>
+
+                                <Text style={placeStyles.placeItemNumber}>{item.visitCount}번 방문</Text>
+                            </Pressable>
+                        )}
+                    />
+                ) : (
+                    <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 16 }}>
+                        <LoadingComponent />
+                    </View>
+                )}
             </View>
+
+            <PlaceModal
+                open={controller.modalOpen}
+                setOpen={controller.setModalOpen}
+                isLoading={controller.detailLoading}
+                data={controller.foorintDetail}
+                setSelectedCode={controller.setSelectedCode}
+            />
         </SafeAreaView>
     )
 }

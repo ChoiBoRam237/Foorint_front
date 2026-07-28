@@ -14,10 +14,7 @@ export const uploadPhotoStyles = StyleSheet.create({
     },
 
     image: {
+        width: "100%",
         height: 130,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "black",
-        backgroundColor: "white",
     }
 });

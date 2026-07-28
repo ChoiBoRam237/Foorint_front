@@ -1,21 +1,47 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ISelection } from "@/types/selection"
+import { IUserLocation } from "@/types/response/user";
+import { useQuery } from "@tanstack/react-query";
+import { getPlaceApi } from "./_api/GET";
+import { useFoorintDetail } from "@/hooks/_api/useFoorintDetail";
 
 /**
  * @brief 여행 장소 컨트롤
  */
 
-const yearList = [
-    { code: 1, name: "전체" },
-    { code: 2, name: "2026" },
-    { code: 3, name: "2025" },
-]
-
 export const useControlPlace = () => {
-    const [selectedYear, setSelectedYear] = useState<ISelection>(yearList[0]);
+    const [locationList, setLocationList] = useState<IUserLocation[]>([]);
+    const [selectedYear, setSelectedYear] = useState<ISelection>();
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [selectedCode, setSelectedCode] = useState<number>();
+
+    // 업로드한 이미지 목록 조회 api
+    const {
+        data,
+        isLoading,
+        isFetching
+    } = useQuery({
+        queryKey: ["images", selectedYear],
+        queryFn: () => getPlaceApi.getUserLocation(selectedYear?.code ?? -1),
+    });
+
+    // 특정 발자국 상세 조회 api
+    const { 
+        detailLoading, 
+        foorintDetail 
+    } = useFoorintDetail({ footPrintCode: selectedCode! });
+
+    useEffect(() => {
+        if (data && data.length > 0) setLocationList(data);
+    }, [data]);
 
     return {
-        yearList,
+        isLoading: isLoading || isFetching,
+        detailLoading,
+        locationList,
+        foorintDetail,
         selectedYear, setSelectedYear,
+        modalOpen, setModalOpen,
+        selectedCode, setSelectedCode,
     }
 }
