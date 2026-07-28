@@ -4,8 +4,8 @@ import { ICarouselInstance } from "react-native-reanimated-carousel";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { ITripDetailResponse } from "@/types/response/trip";
-import { getDetailApi } from "./_api/GET";
 import { RootStackParamList } from "@/navigation/types";
+import { getDetailApi } from "./_api/GET";
 
 /**
  * @brief 여행 상세 화면

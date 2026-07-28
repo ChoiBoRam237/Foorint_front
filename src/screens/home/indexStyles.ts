@@ -62,7 +62,7 @@ export const calendarStyles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        rowGap: 10,
+        rowGap: 4,
     },
 
     dayText: {

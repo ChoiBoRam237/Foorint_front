@@ -1,13 +1,10 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Calendar } from "react-native-calendars";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, isToday } from "date-fns";
-import { RootStackParamList } from "@/navigation/types";
 import { commonStyles } from "@/styles/common";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -22,13 +19,7 @@ import { calendarStyles, homeStyles } from "./indexStyles";
  * @brief 홈화면
  */
 
-const data = [
-    { date: "2026-07-01", status: true, color: "#FF0000", count: 1 },
-    { date: "2026-07-20", status: true, color: "#FF0000", count: 2 },
-];
-
 export default function HomeScreen() {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
     const controller = useControlHome();
 
@@ -83,18 +74,14 @@ export default function HomeScreen() {
                         )}
                         dayComponent={({ date }) => {
                             const today = isToday(new Date(date?.timestamp!));
-                            const travel = data.find(item => item.date === date?.dateString);
+                            const travel = controller.monthList.find(item => format(item.startDate, "yyyy-MM-dd") === date?.dateString);
 
                             return (
                                 <Pressable
                                     style={calendarStyles.dayWrapper}
                                     onPress={() => {
-                                        if (travel?.status) {
-                                            controller.setSelectedDate(new Date(date?.timestamp!));
-                                            controller.handlePresentModalPress();
-                                        } else {
-                                            navigation.navigate("Generate", { date: new Date(date?.timestamp!) })
-                                        }
+                                        controller.setSelectedDay(new Date(date?.timestamp!));
+                                        controller.handlePresentModalPress();
                                     }}
                                 >
                                     <Text
@@ -109,7 +96,7 @@ export default function HomeScreen() {
                                         {String(date?.day)}
                                     </Text>
 
-                                    {travel?.status && (
+                                    {travel && (
                                         <View style={calendarStyles.foorintWrapper}>
                                             <View style={calendarStyles.foorintIcon}>
                                                 <MaterialCommunityIcons name="foot-print" color={travel.color} size={24} />
@@ -119,7 +106,7 @@ export default function HomeScreen() {
                                                 <Text
                                                     style={[
                                                         calendarStyles.foorintText,
-                                                        { color: travel.color }
+                                                        { color: colors.textSecond }
                                                     ]}
                                                 >
                                                     +{travel.count}
@@ -130,6 +117,9 @@ export default function HomeScreen() {
                                 </Pressable>
                             )
                         }}
+                        onMonthChange={(month) => {
+                            controller.setSelectedMonth(new Date(month.timestamp));
+                        }}
                     />
                 </ScrollView>
 
@@ -138,7 +128,7 @@ export default function HomeScreen() {
                 {/* 홈 바텀 시트 */}
                 <HomeBottomSheet
                     bottomSheetModalRef={controller.bottomSheetModalRef}
-                    value={controller.selectedDate ?? new Date()}
+                    value={controller.selectedDay}
                 />
             </SafeAreaView>
         </BottomSheetModalProvider>

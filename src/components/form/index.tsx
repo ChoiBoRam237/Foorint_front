@@ -188,12 +188,6 @@ export const FormComponent = (props: Props) => {
                                 containerStyle={formStyles.imagePagination}
                                 progress={controller.imgProgress}
                                 data={carouselData}
-                                onPress={(index) => (
-                                    controller.imgRef.current?.scrollTo({
-                                        count: index - controller.imgProgress.value,
-                                        animated: true,
-                                    })
-                                )}
                             />
                         )}
                     </View>

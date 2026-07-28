@@ -29,3 +29,17 @@ export interface ITripDetailResponse {
     description: string;
     imgList: CommonImgResponse[];
 }
+
+export interface ITripMonthResponse {
+    startDate: Date;
+    color: string;
+    count: number;
+}
+
+export interface ITripDayResponse {
+    code: number;
+    title: string;
+    startDate: Date;
+    endDate: Date;
+    category: ISelection;
+}

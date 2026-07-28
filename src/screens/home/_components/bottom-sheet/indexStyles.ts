@@ -8,9 +8,10 @@ import { fonts } from "@/styles/fonts";
 
 export const bottomSheetStyles = StyleSheet.create({
     modalContainer: {
+        position: "relative",
+        flex: 1,
         display: "flex",
         flexDirection: "column",
-        rowGap: 12,
         paddingHorizontal: 16,
     },
 
@@ -19,6 +20,7 @@ export const bottomSheetStyles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         columnGap: 4,
+        marginBottom: 12,
     },
 
     text: {
@@ -95,5 +97,18 @@ export const bottomSheetStyles = StyleSheet.create({
         shadowColor: "black",
         shadowOpacity: 0.3,
         elevation: 8,
-    }
+    },
+
+    noData: {
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    noDataText: {
+        fontFamily: fonts.PretendardMedium,
+        fontSize: 16,
+        color: colors.textPrimary,
+    },
 });

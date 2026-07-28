@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel, { Pagination } from "react-native-reanimated-carousel";
@@ -10,7 +11,6 @@ import { colors } from "@/styles/colors";
 import { commonStyles } from "@/styles/common";
 import { detailStyles } from "./indexStyles";
 import { useControlDetail } from "./index.control";
-import { useEffect, useState } from "react";
 
 /**
  * @brief 여행 상세 화면
@@ -135,12 +135,6 @@ export default function DetailScreen() {
                         activeDotStyle={{ backgroundColor: colors.thirdDark }}
                         progress={controller.imgProgress}
                         data={controller.foorintDetail?.imgList ?? []}
-                        onPress={(index) => (
-                            controller.imgRef.current?.scrollTo({
-                                count: index - controller.imgProgress.value,
-                                animated: true,
-                            })
-                        )}
                     />
                 </View>
 
