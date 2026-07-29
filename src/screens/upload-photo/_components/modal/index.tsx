@@ -82,14 +82,14 @@ export const UploadPhotoModal = (props: Props) => {
                                 </View>
 
                                 <View style={uploadPhotoModalStyles.infoInnerWrapper}>
-                                    <View style={uploadPhotoModalStyles.placeInfo}>
+                                    <View style={uploadPhotoModalStyles.locationInfo}>
                                         <Ionicons name="location-outline" color={colors.textPrimary} size={14} />
-                                        <Text style={uploadPhotoModalStyles.placeInfoText}>{props.data.location}</Text>
+                                        <Text style={uploadPhotoModalStyles.locationInfoText}>{props.data.location}</Text>
                                     </View>
 
-                                    <View style={uploadPhotoModalStyles.placeInfo}>
+                                    <View style={uploadPhotoModalStyles.locationInfo}>
                                         <Ionicons name="calendar-outline" color={colors.textPrimary} size={14} />
-                                        <Text style={uploadPhotoModalStyles.placeInfoText}>{format(props.data.startDate, "yyyy.MM.dd")} ~ {format(props.data.endDate, "yyyy.MM.dd")}</Text>
+                                        <Text style={uploadPhotoModalStyles.locationInfoText}>{format(props.data.startDate, "yyyy.MM.dd")} ~ {format(props.data.endDate, "yyyy.MM.dd")}</Text>
                                     </View>
                                 </View>
                             </View>

@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, Pressable, View } from "react-native";
+import { Dimensions, FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { BASE_URL } from "@env";
 import { commonStyles } from "@/styles/common";
@@ -38,41 +38,49 @@ export default function UploadPhotoScreen() {
                 </View>
 
                 {!controller.isLoading ? (
-                    <FlatList
-                        key={"3"}
-                        style={{ flex: 1 }}
-                        keyExtractor={item => item.code.toString()}
-                        data={controller.imageList}
-                        numColumns={3}
-                        renderItem={({ item, index }) => {
-                            const PADDING = 16;
-                            const ITEM_WIDTH = (Dimensions.get("window").width - PADDING * 2) / 3;
-
-                            return (
-                                <View style={{ width: ITEM_WIDTH }}>
-                                    <Pressable
-                                        style={{ flex: 1 }}
-                                        onPress={() => {
-                                            controller.setCode({
-                                                code: item.code,
-                                                prevCode: item.prevCode,
-                                                nextCode: item.nextCode
-                                            });
-                                            controller.setSelectedImgIndex(index);
-                                            controller.setModalOpen(true);
-                                        }}
-                                    >
-                                        <Image
-                                            style={uploadPhotoStyles.image}
-                                            src={`${BASE_URL}${item.imgUrl.folderName}${item.imgUrl.imgUrl}`}
-                                        />
-                                    </Pressable>
-                                </View>
-                            )
-                        }}
-                    />
+                    <>
+                        {controller.imageList.length > 0 ? (
+                            <FlatList
+                                key={"3"}
+                                style={{ flex: 1 }}
+                                keyExtractor={item => item.code.toString()}
+                                data={controller.imageList}
+                                numColumns={3}
+                                renderItem={({ item, index }) => {
+                                    const PADDING = 16;
+                                    const ITEM_WIDTH = (Dimensions.get("window").width - PADDING * 2) / 3;
+        
+                                    return (
+                                        <View style={{ width: ITEM_WIDTH }}>
+                                            <Pressable
+                                                style={{ flex: 1 }}
+                                                onPress={() => {
+                                                    controller.setCode({
+                                                        code: item.code,
+                                                        prevCode: item.prevCode,
+                                                        nextCode: item.nextCode
+                                                    });
+                                                    controller.setSelectedImgIndex(index);
+                                                    controller.setModalOpen(true);
+                                                }}
+                                            >
+                                                <Image
+                                                    style={uploadPhotoStyles.image}
+                                                    src={`${BASE_URL}${item.imgUrl.folderName}${item.imgUrl.imgUrl}`}
+                                                />
+                                            </Pressable>
+                                        </View>
+                                    )
+                                }}
+                            />
+                        ) : (
+                            <View style={uploadPhotoStyles.noData}>
+                                <Text style={uploadPhotoStyles.noDataText}>업로드된 이미지가 없습니다.</Text>
+                            </View>
+                        )}
+                    </>
                 ) : (
-                    <View style={{ flex: 1, paddingBottom: insets.bottom + 62 + 16 }}>
+                    <View style={{ flex: 1 }}>
                         <LoadingComponent />
                     </View>
                 )}

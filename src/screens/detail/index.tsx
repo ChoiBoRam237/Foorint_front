@@ -59,8 +59,8 @@ export default function DetailScreen() {
         <SafeAreaView style={commonStyles.container}>
             <ArrowHeaderComponent
                 options={[
-                    { text: "수정하기", textColor: "black", onClick: () => {} },
-                    { text: "삭제하기", textColor: colors.red, onClick: () => {} },
+                    { text: "수정하기", textColor: "black", onClick: controller.onUpdateFoorint },
+                    { text: "삭제하기", textColor: colors.red, onClick: controller.onDeleteFoorint },
                 ]}
             />
 

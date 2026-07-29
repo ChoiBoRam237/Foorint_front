@@ -9,7 +9,9 @@ import { useCategory } from "@/hooks/_api/useCategory";
 export const useControlFilter = (props: FilterProps) => {
     
     // 내가 만든 카테고리 조회 hook
-    const { categoryList } = useCategory();
+    const { categoryList } = useCategory({
+        includeAllOption: true
+    });
 
     useEffect(() => {
         if (!props.value) props.setValue(categoryList[0]);

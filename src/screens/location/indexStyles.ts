@@ -6,7 +6,7 @@ import { fonts } from "@/styles/fonts";
  * @brief 여행 장소 스타일
  */
 
-export const placeStyles = StyleSheet.create({
+export const locationStyles = StyleSheet.create({
     container: {
         flex: 1,
         display: "flex",
@@ -15,7 +15,7 @@ export const placeStyles = StyleSheet.create({
         paddingHorizontal: 16,
     },
 
-    placeItemContainer: {
+    locationItemContainer: {
         width: "100%",
         height: "auto",
         display: "flex",
@@ -29,22 +29,35 @@ export const placeStyles = StyleSheet.create({
         borderRadius: 8,
     },
 
-    placeItemWrapper: {
+    locationItemWrapper: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         columnGap: 6
     },
 
-    placeItemName: {
+    locationItemName: {
         fontFamily: fonts.PretendardMedium,
         fontSize: 16,
         color: "black",
     },
 
-    placeItemNumber: {
+    locationItemNumber: {
         fontFamily: fonts.PretendardRegular,
         fontSize: 12,
         color: colors.textPrimary,
-    }
+    },
+
+    noData: {
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    noDataText: {
+        fontFamily: fonts.PretendardMedium,
+        fontSize: 16,
+        color: colors.textPrimary,
+    },
 });

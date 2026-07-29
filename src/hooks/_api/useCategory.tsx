@@ -8,13 +8,17 @@ import { queryClient } from "../../../queryClient";
  * @brief 카테고리 목록 조회 API Hook
  */
 
-export const useCategory = () => {
+interface Props {
+    includeAllOption: boolean;
+}
+
+export const useCategory = (props: Props) => {
     const [categoryList, setCategoryList] = useState<ISelection[]>([]);
 
     // 내가 만든 카테고리 조회 api
     const { data } = useQuery({
         queryKey: ["category"],
-        queryFn: () => commonApi.getCategory(),
+        queryFn: () => commonApi.getCategory(props.includeAllOption),
     });
 
     const onCategoryFetch = () => {

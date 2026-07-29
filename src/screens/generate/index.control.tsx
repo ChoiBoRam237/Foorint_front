@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { RootStackParamList } from "@/navigation/types";
-import { IFile } from "@/components/form";
+import { IFile, IPreviewFile } from "@/components/form";
 import { ISelection } from "@/types/selection";
 import { postGenerateApi } from "./_api/POST";
 import { formatDateTime } from "@/components/form/index.control";
@@ -19,6 +19,7 @@ export const useControlGenerate = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const route = useRoute<GenerateRouteProp>();
     const [imgList, setImgList] = useState<IFile[]>([]); // 이미지 리스트
+    const [previewImgList, setPreviewImgList] = useState<IPreviewFile[]>([]); // 미리보기 이미지 리스트
     const [title, setTitle] = useState<string>(""); // 제목
     const [location, setLocation] = useState<string>(""); // 여행 장소
     const [startDate, setStartDate] = useState<Date | null>(route.params?.date ?? null); // 시작 날짜
@@ -63,6 +64,7 @@ export const useControlGenerate = () => {
         isLoading: postGenerateFoorint.isPending,
 
         imgList, setImgList,
+        previewImgList, setPreviewImgList,
         title, setTitle,
         location, setLocation,
         startDate, setStartDate,

@@ -27,7 +27,7 @@ export const useControlForm = () => {
     const {
         categoryList,
         onCategoryFetch,
-    } = useCategory();
+    } = useCategory({ includeAllOption: false });
 
     // 카테고리 생성 api
     const postGenerateCategory = useMutation({

@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { colors } from "@/styles/colors";
 import { arrowHeaderStyles } from "./indexStyles";
 import { OverflowMenuComponent } from "../overflow-menu";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
  * @brief 화살표 헤더 컴포넌트
@@ -24,10 +25,16 @@ interface Props {
 
 export const ArrowHeaderComponent = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const insets = useSafeAreaInsets();
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     return (
-        <View style={arrowHeaderStyles.container}>
+        <View
+            style={[
+                arrowHeaderStyles.container,
+                { top: insets.top }
+            ]}
+        >
             <View style={arrowHeaderStyles.wrapper}>
                 <Pressable
                     style={{ position: "absolute", left: 0 }}

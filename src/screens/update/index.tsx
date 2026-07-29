@@ -1,23 +1,26 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MainHeaderComponent } from "@/components/main-header";
 import { FormComponent } from "@/components/form";
+import { LoadingComponent } from "@/components/loading";
 import { commonStyles } from "@/styles/common";
-import { useControlGenerate } from "./index.control";
+import { useControlUpdate } from "./index.control";
 
 /**
- * @brief 발자국 등록
+ * @brief 발자국 수정
  */
 
-export default function GenerateScreen() {
-    const controller = useControlGenerate();
+export default function UpdateScreen() {
+    const controller = useControlUpdate();
+
+    if (controller.detailLoading) return <LoadingComponent />;
 
     return (
         <SafeAreaView style={commonStyles.container}>
             <MainHeaderComponent />
 
             <FormComponent
-                screenTitle="발자국 등록"
-                btnTitle="발자국 등록하기"
+                screenTitle="발자국 수정"
+                btnTitle="발자국 수정하기"
                 isLoading={controller.isLoading}
 
                 imgList={controller.imgList}
@@ -37,7 +40,7 @@ export default function GenerateScreen() {
                 description={controller.description}
                 setDescription={controller.setDescription}
 
-                onClick={controller.onGenerateFoorint}
+                onClick={controller.onUpdateFoorint}
             />
         </SafeAreaView>
     )

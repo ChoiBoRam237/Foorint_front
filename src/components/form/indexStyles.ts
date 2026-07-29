@@ -115,6 +115,12 @@ export const formStyles = StyleSheet.create({
         backgroundColor: colors.thirdLight,
     },
 
+    imageRemove: {
+        position: "absolute",
+        top: 8,
+        right: 8,
+    },
+
     input: {
         width: "100%",
         height: "auto",

@@ -5,9 +5,10 @@ import HomeScreen from "@/screens/home";
 import ListScreen from "@/screens/list";
 import DetailScreen from "@/screens/detail";
 import GenerateScreen from "@/screens/generate";
+import UpdateScreen from "@/screens/update";
 import SearchScreen from "@/screens/search";
 import MypageScreen from "@/screens/mypage";
-import PlaceScreen from "@/screens/place";
+import LocationScreen from "@/screens/location";
 import UploadPhotoScreen from "@/screens/upload-photo";
 
 const Stack = createNativeStackNavigator();
@@ -27,11 +28,12 @@ export default function RootNavigator() {
             <Stack.Screen name="List" component={ListScreen} />
             <Stack.Screen name="Detail" component={DetailScreen} />
             <Stack.Screen name="Generate" component={GenerateScreen} />
+            <Stack.Screen name="Update" component={UpdateScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
 
             {/* 마이페이지 */}
             <Stack.Screen name="Mypage" component={MypageScreen} />
-            <Stack.Screen name="Place" component={PlaceScreen} />
+            <Stack.Screen name="Location" component={LocationScreen} />
             <Stack.Screen name="UploadPhoto" component={UploadPhotoScreen} />
         </Stack.Navigator>
     )

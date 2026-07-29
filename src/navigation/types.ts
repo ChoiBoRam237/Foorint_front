@@ -4,9 +4,10 @@ export type RootStackParamList = {
     Home: undefined;
     Generate: { date?: Date };
     Detail: { code: number };
+    Update: { code: number };
     List: undefined;
     Search: undefined;
     Mypage: undefined;
-    Place: undefined;
+    Location: undefined;
     UploadPhoto: undefined;
 }

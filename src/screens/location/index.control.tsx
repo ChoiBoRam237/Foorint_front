@@ -2,14 +2,14 @@ import { useEffect, useState } from "react"
 import { ISelection } from "@/types/selection"
 import { IUserLocation } from "@/types/response/user";
 import { useQuery } from "@tanstack/react-query";
-import { getPlaceApi } from "./_api/GET";
+import { getLocationApi } from "./_api/GET";
 import { useFoorintDetail } from "@/hooks/_api/useFoorintDetail";
 
 /**
  * @brief 여행 장소 컨트롤
  */
 
-export const useControlPlace = () => {
+export const useControlLocation = () => {
     const [locationList, setLocationList] = useState<IUserLocation[]>([]);
     const [selectedYear, setSelectedYear] = useState<ISelection>();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export const useControlPlace = () => {
         isFetching
     } = useQuery({
         queryKey: ["images", selectedYear],
-        queryFn: () => getPlaceApi.getUserLocation(selectedYear?.code ?? -1),
+        queryFn: () => getLocationApi.getUserLocation(selectedYear?.code ?? -1),
     });
 
     // 특정 발자국 상세 조회 api

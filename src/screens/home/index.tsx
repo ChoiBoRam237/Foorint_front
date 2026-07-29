@@ -45,7 +45,7 @@ export default function HomeScreen() {
                             target="three"
                             width={72}
                             height={48}
-                            position={{ top: -13, left: 35 }}
+                            position={{ bottom: -4, left: 35 }}
                         />
                     </View>
 

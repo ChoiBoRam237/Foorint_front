@@ -4,7 +4,7 @@ import { privateBase } from "@/util/api";
  * @brief 여행 장소 관련 GET API
  */
 
-export const getPlaceApi = {
+export const getLocationApi = {
     // 여행 장소 목록 조회
     getUserLocation: async (year: number) =>
         await (

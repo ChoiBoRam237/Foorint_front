@@ -13,12 +13,6 @@ export interface ITripResponse {
     imgUrl: CommonImgResponse;
 }
 
-export interface ITripPlaceResponse {
-    code: number;
-    placeName: string;
-    visitCount: number;
-}
-
 export interface ITripDetailResponse {
     code: number;
     prevCode: number;

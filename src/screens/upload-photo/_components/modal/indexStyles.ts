@@ -81,14 +81,14 @@ export const uploadPhotoModalStyles = StyleSheet.create({
         rowGap: 2,
     },
 
-    placeInfo: {
+    locationInfo: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         columnGap: 6,
     },
 
-    placeInfoText: {
+    locationInfoText: {
         fontFamily: fonts.PretendardRegular,
         fontSize: 12,
         color: "black",

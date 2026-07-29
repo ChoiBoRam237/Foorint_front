@@ -6,7 +6,7 @@ import { fonts } from "@/styles/fonts";
  * @brief 여행 장소 모달 컴포넌트
  */
 
-export const placeModalStyles = StyleSheet.create({
+export const locationModalStyles = StyleSheet.create({
     container: {
         flex: 1,
         display: "flex",
@@ -87,14 +87,14 @@ export const placeModalStyles = StyleSheet.create({
         rowGap: 2,
     },
 
-    placeInfo: {
+    locationInfo: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         columnGap: 6,
     },
 
-    placeInfoText: {
+    locationInfoText: {
         fontFamily: fonts.PretendardRegular,
         fontSize: 12,
         color: "black",

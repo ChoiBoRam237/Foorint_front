@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Octicons from 'react-native-vector-icons/Octicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { format } from 'date-fns';
 import { colors } from '@/styles/colors';
 import { ISelection } from '@/types/selection';
@@ -26,6 +27,10 @@ export interface IFile {
     name?: string;
     type?: string;
     size?: number;
+}
+
+export interface IPreviewFile {
+    uri?: string;
     isUploadButton?: boolean;
 }
 
@@ -36,6 +41,8 @@ interface Props {
 
     imgList: IFile[];
     setImgList: React.Dispatch<React.SetStateAction<IFile[]>>;
+    previewImgList: IPreviewFile[];
+    setPreviewImgList: React.Dispatch<React.SetStateAction<IPreviewFile[]>>;
     title: string;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
     location: string;
@@ -82,6 +89,7 @@ export const FormComponent = (props: Props) => {
             });
 
             props.setImgList(prev => [...prev, ...newFiles]);
+            newFiles.forEach(prev => props.setPreviewImgList(img => [...img, { uri: prev.uri }]));
         } catch (e) {
             console.error("에러 : ", e);
         } finally {
@@ -97,8 +105,8 @@ export const FormComponent = (props: Props) => {
     }
 
     const carouselData = [
-        ...props.imgList,
-        ...(props.imgList.length < 5
+        ...props.previewImgList,
+        ...(props.previewImgList.length < 5
             ? [{ isUploadButton: true }]
             : []),
     ];
@@ -143,7 +151,7 @@ export const FormComponent = (props: Props) => {
                         </View>
 
                         <View style={{ flex: 1 }}>
-                            {props.imgList.length > 0 ? (
+                            {props.previewImgList.length > 0 ? (
                                 <ScrollView
                                     horizontal
                                     pagingEnabled
@@ -171,10 +179,22 @@ export const FormComponent = (props: Props) => {
                                                     </View>
                                                 </Pressable>
                                             ) : (
-                                                <Image
-                                                    style={formStyles.imageItem}
-                                                    source={{ uri: item.uri }}
-                                                />
+                                                <View style={{ position: "relative" }}>
+                                                    <Image
+                                                        style={formStyles.imageItem}
+                                                        source={{ uri: props.previewImgList.find(img => img.uri === item.uri)?.uri }}
+                                                    />
+
+                                                    <Pressable
+                                                        style={formStyles.imageRemove}
+                                                        onPress={() => {
+                                                            props.setPreviewImgList(prev => prev.filter(img => img.uri !== item.uri));
+                                                            props.setImgList(prev => prev.filter(img => img.uri !== item.uri));
+                                                        }}
+                                                    >
+                                                        <SimpleLineIcons name="close" color="white" size={24} />
+                                                    </Pressable>
+                                                </View>
                                             )}
                                         </View>
                                     ))}
@@ -189,7 +209,7 @@ export const FormComponent = (props: Props) => {
                             )}
                         </View>
 
-                        {props.imgList.length > 0 && (
+                        {props.previewImgList.length > 0 && (
                             <View style={formStyles.imagePagination}>
                                 {carouselData.map((_, index) => (
                                     <View

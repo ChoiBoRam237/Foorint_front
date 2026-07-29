@@ -10,7 +10,7 @@ export const overflowMenuStyles = StyleSheet.create({
     container: {
         position: "absolute",
         top: 0,
-        left: 0,
+        right: -8,
         zIndex: 20,
     },
 

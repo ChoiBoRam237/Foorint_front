@@ -10,7 +10,7 @@ import { colors } from "@/styles/colors";
 import { IModal } from "@/types/modal";
 import { ITripDetailResponse } from "@/types/response/trip";
 import { RootStackParamList } from "@/navigation/types";
-import { placeModalStyles } from "./indexStyles";
+import { locationModalStyles } from "./indexStyles";
 
 /**
  * @brief 여행 장소 모달
@@ -22,7 +22,7 @@ interface Props extends IModal {
     setSelectedCode: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-export const PlaceModal = (props: Props) => {
+export const LocationModal = (props: Props) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     if (!props.data) return;
@@ -34,7 +34,7 @@ export const PlaceModal = (props: Props) => {
             visible={props.open}
             onRequestClose={() => props.setOpen(false)}
         >
-            <View style={placeModalStyles.container}>
+            <View style={locationModalStyles.container}>
                 {props.data.prevCode && (
                     <Pressable
                         onPress={() => props.setSelectedCode(props.data?.prevCode)}
@@ -44,45 +44,45 @@ export const PlaceModal = (props: Props) => {
                 )}
 
                 {!props.isLoading ? (
-                    <View style={placeModalStyles.infoContainer}>
+                    <View style={locationModalStyles.infoContainer}>
                         <Image
-                            style={placeModalStyles.image}
+                            style={locationModalStyles.image}
                             src={`${BASE_URL}${props.data.imgList[0].folderName}${props.data.imgList[0].imgUrl}`}
                         />
 
-                        <View style={placeModalStyles.infoWrapper}>
-                            <View style={placeModalStyles.contentWrapper}>
-                                <View style={placeModalStyles.contentInnerWrapper}>
-                                    <View style={placeModalStyles.titleWrapper}>
-                                        <Text style={placeModalStyles.title}>{props.data.title}</Text>
+                        <View style={locationModalStyles.infoWrapper}>
+                            <View style={locationModalStyles.contentWrapper}>
+                                <View style={locationModalStyles.contentInnerWrapper}>
+                                    <View style={locationModalStyles.titleWrapper}>
+                                        <Text style={locationModalStyles.title}>{props.data.title}</Text>
                                         
-                                        <View style={placeModalStyles.category}>
+                                        <View style={locationModalStyles.category}>
                                             <View
                                                 style={[
-                                                    placeModalStyles.categoryCircle,
+                                                    locationModalStyles.categoryCircle,
                                                     { backgroundColor: props.data.category.color ?? "black" }
                                                 ]}
                                             />
 
-                                            <Text style={placeModalStyles.categoryName}>{props.data.category.name}</Text>
+                                            <Text style={locationModalStyles.categoryName}>{props.data.category.name}</Text>
                                         </View>
                                     </View>
 
-                                    <View style={placeModalStyles.infoInnerWrapper}>
-                                        <View style={placeModalStyles.placeInfo}>
+                                    <View style={locationModalStyles.infoInnerWrapper}>
+                                        <View style={locationModalStyles.locationInfo}>
                                             <Ionicons name="location-outline" color={colors.textPrimary} size={14} />
-                                            <Text style={placeModalStyles.placeInfoText}>{props.data.location}</Text>
+                                            <Text style={locationModalStyles.locationInfoText}>{props.data.location}</Text>
                                         </View>
 
-                                        <View style={placeModalStyles.placeInfo}>
+                                        <View style={locationModalStyles.locationInfo}>
                                             <Ionicons name="calendar-outline" color={colors.textPrimary} size={14} />
-                                            <Text style={placeModalStyles.placeInfoText}>{format(props.data.startDate, "yyyy.MM.dd")} ~ {format(props.data.endDate, "yyyy.MM.dd")}</Text>
+                                            <Text style={locationModalStyles.locationInfoText}>{format(props.data.startDate, "yyyy.MM.dd")} ~ {format(props.data.endDate, "yyyy.MM.dd")}</Text>
                                         </View>
                                     </View>
                                 </View>
                                 
                                 <Text
-                                    style={placeModalStyles.description}
+                                    style={locationModalStyles.description}
                                     numberOfLines={4}
                                     ellipsizeMode="tail"
                                 >
@@ -90,28 +90,28 @@ export const PlaceModal = (props: Props) => {
                                 </Text>
                             </View>
 
-                            <View style={placeModalStyles.buttonWrapper}>
+                            <View style={locationModalStyles.buttonWrapper}>
                                 <Pressable
                                     style={({ pressed }) => [
-                                        placeModalStyles.buttonOutline,
+                                        locationModalStyles.buttonOutline,
                                         pressed && { backgroundColor: colors.thirdLight }
                                     ]}
                                     onPress={() => props.setOpen(false)}
                                 >
-                                    <Text style={placeModalStyles.buttonOutlineText}>닫기</Text>
+                                    <Text style={locationModalStyles.buttonOutlineText}>닫기</Text>
                                 </Pressable>
 
                                 <Pressable
-                                    style={placeModalStyles.buttonFill}
+                                    style={locationModalStyles.buttonFill}
                                     onPress={() => navigation.navigate("Detail", { code: props.data?.code ?? 0 })}
                                 >
-                                    <Text style={placeModalStyles.buttonFillText}>이동</Text>
+                                    <Text style={locationModalStyles.buttonFillText}>이동</Text>
                                 </Pressable>
                             </View>
                         </View>
                     </View>
                 ) : (
-                    <View style={placeModalStyles.noData}>
+                    <View style={locationModalStyles.noData}>
                         <ActivityIndicator size="large" color={colors.textPrimary} />
                     </View>
                 )}
