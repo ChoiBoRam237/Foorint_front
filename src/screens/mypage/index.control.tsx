@@ -6,8 +6,10 @@ import { RootStackParamList } from "@/navigation/types";
 import { keychain } from "@/util/keychain";
 import { IUserDetail } from "@/types/response/user";
 import { useUserInfo } from "@/hooks/useUserInfo";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMypageApi } from "./_api/GET";
+import { deleteMypageApi } from "./_api/DELETE";
+import { AxiosError } from "axios";
 
 /**
  * @brief 마이페이지 컨트롤
@@ -30,15 +32,33 @@ export const useControlMypage = () => {
         enabled: !!userCode,
     });
 
+    // 계정 탈퇴 api
+    const deleteUser = useMutation({
+        mutationFn: () => deleteMypageApi.deleteUser(userCode!),
+        onSuccess: () => {
+            onLogout();
+        },
+        onError: (error: AxiosError) => {
+            console.error("계정 삭제 에러 : ", error);
+        }
+    });
+
+    // bottom sheet 열기
     const handlePresentModalPress = () => {
         requestAnimationFrame(() => {
             bottomSheetModalRef.current?.present();
         });
     };
 
+    // 로그아웃
     const onLogout = async () => {
         await keychain.clearKeychain();
         navigation.replace("Login");
+    }
+
+    // 계정 탈퇴
+    const onExit = () => {
+        deleteUser.mutate();
     }
 
     useEffect(() => {
@@ -60,6 +80,6 @@ export const useControlMypage = () => {
         bottomSheetModalRef,
         handlePresentModalPress,
 
-        onLogout,
+        onLogout, onExit,
     }
 }

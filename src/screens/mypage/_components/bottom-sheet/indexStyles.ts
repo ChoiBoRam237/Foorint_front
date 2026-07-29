@@ -8,12 +8,10 @@ import { fonts } from "@/styles/fonts";
 
 export const bottomSheetStyles = StyleSheet.create({
     container: {
-        flex: 1,
         width: "100%",
         display: "flex",
         flexDirection: "column",
         rowGap: 20,
-        paddingBottom: 30,
         paddingHorizontal: 16,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,

@@ -1,5 +1,5 @@
 import { Text, Pressable, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { CloudComponent } from "@/components/cloud";
 import Google from "@/assets/images/google.svg";
 import Kakao from "@/assets/images/kakao.svg";
@@ -13,6 +13,7 @@ import { useControlLogin } from "./index.control";
 
 export default function LoginScreen() {
     const controller = useControlLogin();
+    const insets = useSafeAreaInsets();
 
     return (
         <View style={loginStyles.container}>
@@ -36,7 +37,12 @@ export default function LoginScreen() {
                     </View>
                 </View>
 
-                <View style={loginStyles.buttonWrapper}>
+                <View
+                    style={[
+                        loginStyles.buttonWrapper,
+                        { bottom: insets.bottom + 20 }
+                    ]}
+                >
                     <Pressable
                         style={({ pressed }) => [
                             loginStyles.googleButton,

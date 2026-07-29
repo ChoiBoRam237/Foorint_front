@@ -61,7 +61,6 @@ export const loginStyles = StyleSheet.create({
 
     buttonWrapper: {
         position: "absolute",
-        bottom: 20,
         width: "100%",
         flexDirection: "column",
         alignItems: "center",

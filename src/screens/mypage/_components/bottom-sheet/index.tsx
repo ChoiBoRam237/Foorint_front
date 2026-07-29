@@ -1,5 +1,6 @@
 import { RefObject, useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export const MypageBottomSheet = (props: Props) => {
+    const insets = useSafeAreaInsets();
+
     const handleCloseModalPress = () => {
         requestAnimationFrame(() => {
             props.bottomSheetModalRef.current?.close();
@@ -31,12 +34,17 @@ export const MypageBottomSheet = (props: Props) => {
     return (
         <BottomSheetModal
             ref={props.bottomSheetModalRef}
-            index={1}
-            snapPoints={['40%', '50%']}
+            enableDynamicSizing={true}
+            index={0}
             onChange={handleSheetPositionChange}
-            backdropComponent={renderBackdrop}
+            backdropComponent={renderBackdrop}    
         >
-            <BottomSheetView style={bottomSheetStyles.container}>
+            <BottomSheetView
+                style={[
+                    bottomSheetStyles.container,
+                    { paddingBottom: insets.bottom + 30 }
+                ]}
+            >
                 <Pressable
                     style={bottomSheetStyles.close}
                     onPress={handleCloseModalPress}

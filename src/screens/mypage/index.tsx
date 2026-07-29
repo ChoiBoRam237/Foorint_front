@@ -73,7 +73,7 @@ export default function MypageScreen() {
 
                                     <Pressable
                                         style={mypageStyles.statisticsItem}
-                                        onPress={() => navigation.navigate("Place")}
+                                        onPress={() => navigation.navigate("Location")}
                                     >
                                         <View style={mypageStyles.statisticsItemArrow}>
                                             <Feather name="chevron-right" color={colors.textPrimary} size={16} />
@@ -142,6 +142,7 @@ export default function MypageScreen() {
                                         mypageStyles.boxItem,
                                         pressed && { backgroundColor: "#8BDFFF" }
                                     ]}
+                                    onPress={controller.onExit}
                                 >
                                     <Text
                                         style={[
