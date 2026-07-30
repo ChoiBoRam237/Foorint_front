@@ -37,11 +37,13 @@ export const useControlLogin = () => {
             await asyncStorage.setAsyncStorage(
                 "userInfo",
                 JSON.stringify({
-                    userCode: data.userCode,
+                    code: data.code,
+                    customerServiceCode: data.customerServiceCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
+                    userType: data.userType,
                 })
             );
 
@@ -67,11 +69,13 @@ export const useControlLogin = () => {
             await asyncStorage.setAsyncStorage(
                 "userInfo",
                 JSON.stringify({
-                    userCode: data.userCode,
+                    code: data.code,
+                    customerServiceCode: data.customerServiceCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
+                    userType: data.userType,
                 })
             );
 

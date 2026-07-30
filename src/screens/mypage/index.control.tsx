@@ -17,7 +17,7 @@ import { AxiosError } from "axios";
 
 export const useControlMypage = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const [userCode, setUserCode] = useState<number>();
+    const { userCode } = useUserInfo();
     const [mypageInfo, setMypageInfo] = useState<IUserDetail>();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -60,15 +60,6 @@ export const useControlMypage = () => {
     const onExit = () => {
         deleteUser.mutate();
     }
-
-    useEffect(() => {
-        const loadUser = async () => {
-            const user = await useUserInfo();
-            setUserCode(user.userCode);
-        };
-    
-        loadUser();
-    }, []);
 
     useEffect(() => {
         if (data) setMypageInfo(data);

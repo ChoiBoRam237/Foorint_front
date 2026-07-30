@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Airplane from "@/assets/images/airplane.svg";
 import { colors } from "@/styles/colors";
 import { mainHeaderStyles } from "./indexStyles"
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 /**
  * @brief 메인 헤더 컴포넌트
@@ -15,6 +16,7 @@ import { mainHeaderStyles } from "./indexStyles"
 export const MainHeaderComponent = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
+    const { userType, customerServiceCode } = useUserInfo();
 
     return (
         <View
@@ -36,7 +38,16 @@ export const MainHeaderComponent = () => {
                 <Text style={mainHeaderStyles.logoTitle}>foorint</Text>
             </Pressable>
 
-            <Pressable>
+            <Pressable
+                onPress={() => {
+                    if (userType === "ADMIN") {
+                        navigation.navigate("ChatList");
+                    } else {
+                        if (customerServiceCode) navigation.navigate("Chat", { code: customerServiceCode });
+                        // TODO: 없을 경우 채팅방 새로 생성 후 채팅방으로 접속
+                    }
+                }}
+            >
                 <AntDesign
                     name="customerservice"
                     color={colors.thirdDark}

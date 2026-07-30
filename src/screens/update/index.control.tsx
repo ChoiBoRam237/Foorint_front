@@ -103,10 +103,6 @@ export const useControlUpdate = () => {
         setRemoveImgCodeList(removeCodeList);
     }, [foorintDetail, previewImgList]);
 
-    console.log("imgList => ", imgList);
-    console.log("previewImgList => ", previewImgList);
-    console.log("removeImgCodeList => ", removeImgCodeList);
-
     return {
         detailLoading,
         isLoading: patchFoorint.isPending,

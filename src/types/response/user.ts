@@ -1,8 +1,18 @@
+import { CommonImgResponse } from "./common";
+
 /**
  * @brief 유저 response 타입
  */
 
-import { CommonImgResponse } from "./common";
+export interface IUser {
+    code: number;
+    customerServiceCode?: number;
+    name: string;
+    email: string;
+    profileImgUrl: string;
+    loginType: string;
+    userType: string;
+}
 
 export interface IUserDetail {
     code: number;

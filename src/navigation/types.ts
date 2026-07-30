@@ -10,4 +10,6 @@ export type RootStackParamList = {
     Mypage: undefined;
     Location: undefined;
     UploadPhoto: undefined;
+    Chat: { code: number };
+    ChatList: undefined;
 }

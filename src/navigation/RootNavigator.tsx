@@ -10,6 +10,8 @@ import SearchScreen from "@/screens/search";
 import MypageScreen from "@/screens/mypage";
 import LocationScreen from "@/screens/location";
 import UploadPhotoScreen from "@/screens/upload-photo";
+import CustomerServiceChatScreen from "@/screens/customer-service-chat";
+import CustomerServiceChatListScreen from "@/screens/customer-service-list";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +37,10 @@ export default function RootNavigator() {
             <Stack.Screen name="Mypage" component={MypageScreen} />
             <Stack.Screen name="Location" component={LocationScreen} />
             <Stack.Screen name="UploadPhoto" component={UploadPhotoScreen} />
+
+            {/* 고객센터 */}
+            <Stack.Screen name="Chat" component={CustomerServiceChatScreen} />
+            <Stack.Screen name="ChatList" component={CustomerServiceChatListScreen} />
         </Stack.Navigator>
     )
 }
