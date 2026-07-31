@@ -16,16 +16,18 @@ export const footerStyles = StyleSheet.create({
         justifyContent: "center",
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
-        paddingHorizontal: 30,
+        paddingHorizontal: 35,
         paddingTop: 8,
         paddingBottom: 12,
         backgroundColor: colors.thirdLight,
     },
 
     wrapper: {
+        width: "100%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
         columnGap: 25,
     },
 

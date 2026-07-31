@@ -4,10 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/navigation/types";
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useUserInfo } from "@/hooks/useUserInfo";
+import { useCustomerRoom } from "@/hooks/_api/useCustomerRoom";
 import Airplane from "@/assets/images/airplane.svg";
 import { colors } from "@/styles/colors";
+import { UserRole } from "@/types/enum";
 import { mainHeaderStyles } from "./indexStyles"
-import { useUserInfo } from "@/hooks/useUserInfo";
 
 /**
  * @brief 메인 헤더 컴포넌트
@@ -16,7 +18,14 @@ import { useUserInfo } from "@/hooks/useUserInfo";
 export const MainHeaderComponent = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
-    const { userType, customerServiceCode } = useUserInfo();
+    const { userRole, customerRoomCode } = useUserInfo();
+    const {
+        onGenerateCustomerRoom
+    } = useCustomerRoom({ 
+        onSuccess: 
+            (customerRoomCode: number) => 
+                navigation.navigate("Chat", { code: customerRoomCode })
+    });
 
     return (
         <View
@@ -40,11 +49,11 @@ export const MainHeaderComponent = () => {
 
             <Pressable
                 onPress={() => {
-                    if (userType === "ADMIN") {
+                    if (userRole === UserRole.ADMIN) {
                         navigation.navigate("ChatList");
                     } else {
-                        if (customerServiceCode) navigation.navigate("Chat", { code: customerServiceCode });
-                        // TODO: 없을 경우 채팅방 새로 생성 후 채팅방으로 접속
+                        if (customerRoomCode) navigation.navigate("Chat", { code: customerRoomCode });
+                        else onGenerateCustomerRoom();
                     }
                 }}
             >

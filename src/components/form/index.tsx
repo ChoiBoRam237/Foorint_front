@@ -117,7 +117,7 @@ export const FormComponent = (props: Props) => {
             contentContainerStyle={[
                 formStyles.container,
                 {
-                    paddingTop: insets.top + 76,
+                    paddingTop: insets.top + 60,
                     paddingBottom: insets.bottom + 30,
                 },
             ]}

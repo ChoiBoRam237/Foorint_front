@@ -38,22 +38,23 @@ export const useControlLogin = () => {
                 "userInfo",
                 JSON.stringify({
                     code: data.code,
-                    customerServiceCode: data.customerServiceCode,
+                    customerRoomCode: data.customerRoomCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
-                    userType: data.userType,
+                    userRole: data.userRole,
                 })
             );
-
-            setLoginLoading(false);
 
             navigation.replace("Home");
         },
         onError: (error: AxiosError) => {
             console.error("카카오 로그인 에러 : ", error);
-        }
+        },
+        onSettled: () => {
+            setLoginLoading(false);
+        },
     });
 
     // 구글 로그인 api
@@ -70,21 +71,22 @@ export const useControlLogin = () => {
                 "userInfo",
                 JSON.stringify({
                     code: data.code,
-                    customerServiceCode: data.customerServiceCode,
+                    customerRoomCode: data.customerRoomCode,
                     name: data.name,
                     email: data.email,
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
-                    userType: data.userType,
+                    userRole: data.userRole,
                 })
             );
-
-            setLoginLoading(false);
 
             navigation.replace("Home");
         },
         onError: (error: AxiosError) => {
             console.error("구글 로그인 에러 : ", error);
+        },
+        onSettled: () => {
+            setLoginLoading(false);
         }
     });
 

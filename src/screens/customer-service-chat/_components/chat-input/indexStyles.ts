@@ -9,6 +9,7 @@ import { fonts } from "@/styles/fonts";
 export const chatInputStyles = StyleSheet.create({
     container: {
         position: "absolute",
+        bottom: 0,
         width: "100%",
         padding: 16,
     },
@@ -26,6 +27,7 @@ export const chatInputStyles = StyleSheet.create({
         borderRadius: 50,
         paddingLeft: 20,
         paddingRight: 8,
+        backgroundColor: colors.primary,
     },
 
     inputText: {

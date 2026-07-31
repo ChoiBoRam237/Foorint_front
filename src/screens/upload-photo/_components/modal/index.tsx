@@ -61,7 +61,7 @@ export const UploadPhotoModal = (props: Props) => {
                     <View style={uploadPhotoModalStyles.infoContainer}>
                         <Image
                             style={uploadPhotoModalStyles.image}
-                            src={`${BASE_URL}${props.data.imgList[0].folderName}${props.data.imgList[0].imgUrl}`}
+                            source={{ uri: `${BASE_URL}${props.data.imgList[0].folderName}${props.data.imgList[0].imgUrl}` }}
                         />
 
                         <View style={uploadPhotoModalStyles.infoWrapper}>

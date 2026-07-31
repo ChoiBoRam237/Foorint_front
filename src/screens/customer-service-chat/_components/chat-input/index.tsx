@@ -3,7 +3,6 @@ import { Pressable, TextInput, View } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from "@/styles/colors";
 import { chatInputStyles } from "./indexStyles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
  * @brief 채팅 인풋
@@ -16,15 +15,8 @@ interface Props {
 }
 
 export const ChatInput = (props: Props) => {
-    const insets = useSafeAreaInsets();
-
     return (
-        <View
-            style={[
-                chatInputStyles.container,
-                { bottom: insets.bottom }
-            ]}
-        >
+        <View style={chatInputStyles.container}>
             <View style={chatInputStyles.input}>
                 <TextInput
                     style={chatInputStyles.inputText}

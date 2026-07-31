@@ -28,7 +28,7 @@ export default function SearchScreen() {
             <View
                 style={[
                     searchStyles.wrapper,
-                    { paddingTop: insets.top + 60 + 16 }
+                    { paddingTop: insets.top + 60 }
                 ]}
             >
                 <View style={searchStyles.titleWrapper}>

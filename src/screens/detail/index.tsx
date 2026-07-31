@@ -124,7 +124,7 @@ export default function DetailScreen() {
                                     width: screenWidth,
                                     height: imageHeights[item.code] ?? carouselHeight
                                 }}
-                                src={`${BASE_URL}${item.folderName}${item.imgUrl}`}
+                                source={{ uri: `${BASE_URL}${item.folderName}${item.imgUrl}` }}
                                 resizeMode="contain"
                             />
                         ))}

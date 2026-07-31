@@ -26,7 +26,7 @@ export default function LocationScreen() {
                 style={[
                     locationStyles.container,
                     { 
-                        paddingTop: insets.top + 60 + 24,
+                        paddingTop: insets.top + 60,
                         paddingBottom: insets.bottom + 16,
                     }
                 ]}

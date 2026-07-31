@@ -6,12 +6,12 @@ import { CommonImgResponse } from "./common";
 
 export interface IUser {
     code: number;
-    customerServiceCode?: number;
+    customerRoomCode?: number;
     name: string;
     email: string;
     profileImgUrl: string;
     loginType: string;
-    userType: string;
+    userRole: string;
 }
 
 export interface IUserDetail {

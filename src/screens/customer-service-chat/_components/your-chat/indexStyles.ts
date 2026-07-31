@@ -21,6 +21,7 @@ export const yourChatStyles = StyleSheet.create({
     },
 
     messageWrapper: {
+        flex: 1,
         display: "flex",
         flexDirection: "row",
         alignItems: "flex-end",

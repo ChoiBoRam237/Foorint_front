@@ -17,7 +17,7 @@ import { AxiosError } from "axios";
 
 export const useControlMypage = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const { userCode } = useUserInfo();
+    const { userCode, userRole } = useUserInfo();
     const [mypageInfo, setMypageInfo] = useState<IUserDetail>();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -67,6 +67,7 @@ export const useControlMypage = () => {
 
     return {
         isLoading: isLoading || isFetching,
+        userRole,
         mypageInfo,
         bottomSheetModalRef,
         handlePresentModalPress,

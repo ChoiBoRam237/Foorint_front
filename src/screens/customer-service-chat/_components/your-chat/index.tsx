@@ -29,7 +29,7 @@ export const YourChat = (props: Props) => {
                 {props.showProfile && (
                     <Image
                         style={yourChatStyles.profile}
-                        src={props.user.profileImgUrl}
+                        source={{ uri: props.user.profileImgUrl }}
                     />
                 )}
 

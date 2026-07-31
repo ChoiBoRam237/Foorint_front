@@ -25,7 +25,7 @@ export default function UploadPhotoScreen() {
                 style={[
                     uploadPhotoStyles.container,
                     {
-                        paddingTop: insets.top + 60 + 24,
+                        paddingTop: insets.top + 60,
                         paddingBottom: insets.bottom + 16,
                     }
                 ]}
@@ -66,7 +66,7 @@ export default function UploadPhotoScreen() {
                                             >
                                                 <Image
                                                     style={uploadPhotoStyles.image}
-                                                    src={`${BASE_URL}${item.imgUrl.folderName}${item.imgUrl.imgUrl}`}
+                                                    source={{ uri: `${BASE_URL}${item.imgUrl.folderName}${item.imgUrl.imgUrl}` }}
                                                 />
                                             </Pressable>
                                         </View>

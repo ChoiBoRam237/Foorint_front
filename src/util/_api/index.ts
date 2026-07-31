@@ -37,4 +37,10 @@ export const commonApi = {
         await (
             await privateBase.get(`/v3/api/foorint/${footPrintCode}`)
         ).data.data,
+
+    // 고객센터 채팅방 생성
+    postGenerateCustomerRoom: async () =>
+        await (
+            await privateBase.post(`/v3/api/customer/room`)
+        ).data.data,
 }

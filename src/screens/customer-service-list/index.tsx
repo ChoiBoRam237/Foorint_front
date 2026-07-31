@@ -7,94 +7,84 @@ import { RootStackParamList } from "@/navigation/types";
 import { commonStyles } from "@/styles/common";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { chatListStyles } from "./indexStyles";
+import { useControlCustomerList } from "./index.control";
+import { LoadingComponent } from "@/components/loading";
 
 /**
  * @brief 고객센터 채팅 리스트
  */
 
-const data = [
-    {
-        code: 1,
-        user: {
-            code: 1,
-            name: "홍길동",
-            profileImgUrl: "aa.png",
-        },
-        lastMessage: "이미지 업로드가 안됩니다ㅜ",
-        lastMessageDate: new Date(2026, 7, 29),
-        unreadMessageCount: 2
-    },
-    {
-        code: 2,
-        user: {
-            code: 2,
-            name: "홍길순",
-            profileImgUrl: "aa.png",
-        },
-        lastMessage: "사진 업로드가 안되는데 왜 그런건가요? 사진 업로드가 안되는데 왜 그런건가요?",
-        lastMessageDate: new Date(2026, 7, 30),
-        unreadMessageCount: 0
-    },
-]
-
-export default function CustomerServiceChatListScreen() {
+export default function CustomerServiceListScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
+    const controller = useControlCustomerList();
 
     return (
         <SafeAreaView style={commonStyles.container}>
             <ArrowHeaderComponent title="고객센터 관리자" />
 
-            <FlatList
-                key={"1"}
-                style={[
-                    chatListStyles.list,
-                    { paddingTop: insets.top + 60 + 20 }
-                ]}
-                contentContainerStyle={{ gap: 8 }}
-                keyExtractor={item => item.code.toString()}
-                data={data}
-                numColumns={1}
-                renderItem={({ item }) => (
-                    <Pressable
-                        style={({ pressed }) => [
-                            chatListStyles.item,
-                            pressed && { backgroundColor: "#B7EBFF" }
-                        ]}
-                        onPress={() => navigation.navigate("Chat", { code: item.code })}
-                    >
-                        <Image
-                            style={chatListStyles.itemProfile}
-                            src={item.user.profileImgUrl}
-                        />
-
-                        <View style={chatListStyles.itemInfo}>
-                            <View style={chatListStyles.itemLeft}>
-                                <Text style={chatListStyles.itemUserName}>{item.user.name}</Text>
-                                <Text
-                                    style={chatListStyles.itemLastMessage}
-                                    numberOfLines={1}
-                                    ellipsizeMode="tail"
+            {!controller.isLoading ? (
+                <>
+                    {controller.customerList.length > 0 ? (
+                        <FlatList
+                            key={"1"}
+                            style={[
+                                chatListStyles.list,
+                                { paddingTop: insets.top + 60 }
+                            ]}
+                            contentContainerStyle={{ gap: 8 }}
+                            keyExtractor={item => item.code.toString()}
+                            data={controller.customerList}
+                            numColumns={1}
+                            renderItem={({ item }) => (
+                                <Pressable
+                                    style={({ pressed }) => [
+                                        chatListStyles.item,
+                                        pressed && { backgroundColor: "#B7EBFF" }
+                                    ]}
+                                    onPress={() => navigation.navigate("Chat", { code: item.code })}
                                 >
-                                    {item.lastMessage}
-                                </Text>
-                            </View>
-
-                            <View style={chatListStyles.itemRight}>
-                                <Text style={chatListStyles.itemDate}>
-                                    {format(item.lastMessageDate, "yyyy.MM.dd")}
-                                </Text>
-
-                                {item.unreadMessageCount > 0 && (
-                                    <View style={chatListStyles.itemMessageCount}>
-                                        <Text style={chatListStyles.itemMessageCountText}>{item.unreadMessageCount}</Text>
+                                    <Image
+                                        style={chatListStyles.itemProfile}
+                                        source={{ uri: item.user.profileImgUrl }}
+                                    />
+            
+                                    <View style={chatListStyles.itemInfo}>
+                                        <View style={chatListStyles.itemLeft}>
+                                            <Text style={chatListStyles.itemUserName}>{item.user.name}</Text>
+                                            <Text
+                                                style={chatListStyles.itemLastMessage}
+                                                numberOfLines={1}
+                                                ellipsizeMode="tail"
+                                            >
+                                                {item.lastMessage}
+                                            </Text>
+                                        </View>
+            
+                                        <View style={chatListStyles.itemRight}>
+                                            <Text style={chatListStyles.itemDate}>
+                                                {format(item.lastMessageCreatedAt, "yyyy.MM.dd")}
+                                            </Text>
+            
+                                            {item.unreadMessageCount > 0 && (
+                                                <View style={chatListStyles.itemMessageCount}>
+                                                    <Text style={chatListStyles.itemMessageCountText}>{item.unreadMessageCount}</Text>
+                                                </View>
+                                            )}
+                                        </View>
                                     </View>
-                                )}
-                            </View>
+                                </Pressable>
+                            )}
+                        />
+                    ) : (
+                        <View style={chatListStyles.noData}>
+                            <Text style={chatListStyles.noDataText}>아직 문의 내역이 없습니다.</Text>
                         </View>
-                    </Pressable>
-                )}
-            />
+                    )}
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
         </SafeAreaView>
     )
 }

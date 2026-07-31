@@ -24,7 +24,7 @@ export const TripItemComponent = (props: Props) => {
         >
             <Image
                 style={tripItemStyles.image}
-                src={`${BASE_URL}${props.data.imgUrl.folderName}${props.data.imgUrl.imgUrl}`}
+                source={{ uri: `${BASE_URL}${props.data.imgUrl.folderName}${props.data.imgUrl.imgUrl}` }}
             />
 
             <View style={tripItemStyles.content}>

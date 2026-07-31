@@ -2,7 +2,7 @@ import { RefObject, useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import Feather from 'react-native-vector-icons/Feather';
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -42,7 +42,11 @@ export const HomeBottomSheet = (props: BottomSheetProps) => {
             enableDynamicSizing={false}
             onChange={handleSheetPositionChange}
             backdropComponent={renderBackdrop}
-            backgroundStyle={{ backgroundColor: "#A8E7FF", borderRadius: 0 }}
+            backgroundStyle={{ 
+                backgroundColor: "#A8E7FF", 
+                borderRadius: 0, 
+                paddingBottom: insets.bottom
+            }}
             style={bottomSheetStyles.modalContainer}
         >
             <View style={bottomSheetStyles.titleWrapper}>
@@ -56,7 +60,7 @@ export const HomeBottomSheet = (props: BottomSheetProps) => {
                         <BottomSheetFlatList
                             key={"1"}
                             style={{ flex: 1 }}
-                            contentContainerStyle={{ gap: 4, paddingBottom: 16 }}
+                            contentContainerStyle={{ gap: 4 }}
                             keyExtractor={item => item.code.toString()}
                             data={controller.dayList}
                             numColumns={1}
@@ -94,7 +98,12 @@ export const HomeBottomSheet = (props: BottomSheetProps) => {
                             )}
                         />
                     ) : (
-                        <View style={bottomSheetStyles.noData}>
+                        <View
+                            style={[
+                                bottomSheetStyles.noData,
+                                { marginBottom: insets.bottom }
+                            ]}
+                        >
                             <Text style={bottomSheetStyles.noDataText}>아직 등록된 일정이 없습니다.</Text>
                         </View>
                     )}

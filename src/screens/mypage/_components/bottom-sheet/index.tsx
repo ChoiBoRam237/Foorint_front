@@ -1,10 +1,15 @@
 import { RefObject, useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "@/navigation/types";
+import { useUserInfo } from "@/hooks/useUserInfo";
 import useBottomSheetBackHandler from "@/hooks/useBottomSheetBakcHandler";
+import { useCustomerRoom } from "@/hooks/_api/useCustomerRoom";
 import { bottomSheetStyles } from "./indexStyles";
 
 /**
@@ -16,7 +21,18 @@ interface Props {
 }
 
 export const MypageBottomSheet = (props: Props) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const insets = useSafeAreaInsets();
+    const { customerRoomCode } = useUserInfo();
+    const {
+        onGenerateCustomerRoom
+    } = useCustomerRoom({ 
+        onSuccess: 
+            (customerRoomCode: number) => {
+                navigation.navigate("Chat", { code: customerRoomCode });
+                handleCloseModalPress();
+            }
+    });
 
     const handleCloseModalPress = () => {
         requestAnimationFrame(() => {
@@ -35,9 +51,10 @@ export const MypageBottomSheet = (props: Props) => {
         <BottomSheetModal
             ref={props.bottomSheetModalRef}
             enableDynamicSizing={true}
-            index={0}
+            index={1}
+            snapPoints={['40%', '50%']}
             onChange={handleSheetPositionChange}
-            backdropComponent={renderBackdrop}    
+            backdropComponent={renderBackdrop}
         >
             <BottomSheetView
                 style={[
@@ -68,7 +85,20 @@ export const MypageBottomSheet = (props: Props) => {
                             <Feather name="chevron-right" color="#A4ADB2" size={25} />
                         </Pressable>
 
-                        <Pressable style={bottomSheetStyles.item}>
+                        <Pressable
+                            style={({ pressed }) => [
+                                bottomSheetStyles.item,
+                                pressed && { backgroundColor: "#E7EDF1" }
+                            ]}
+                            onPress={() => {
+                                if (customerRoomCode) {
+                                    navigation.navigate("Chat", { code: customerRoomCode });
+                                    handleCloseModalPress();
+                                } else {
+                                    onGenerateCustomerRoom();
+                                }
+                            }}
+                        >
                             <View style={bottomSheetStyles.itemTextWrapper}>
                                 <View style={bottomSheetStyles.itemIcon}>
                                     <MaterialCommunityIcons name="comment-text-outline" color="white" size={20} />
