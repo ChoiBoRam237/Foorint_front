@@ -98,8 +98,23 @@ export default function MypageScreen() {
                             </View>
                         </View>
 
-                        {/* 고객센터, 버전 */}
+                        {/* 설정, 고객센터 */}
                         <View style={mypageStyles.box}>
+                            <Pressable
+                                style={({ pressed }) => [
+                                    mypageStyles.boxItem,
+                                    pressed && { backgroundColor: "#8BDFFF" }
+                                ]}
+                                onPress={() => navigation.navigate("Setting")}
+                            >
+                                <View style={mypageStyles.boxTextWrapper}>
+                                    <Ionicons name="settings-outline" color={colors.textPrimary} size={24} />
+                                    <Text style={mypageStyles.boxText}>설정</Text>
+                                </View>
+
+                                <Feather name="chevron-right" color={colors.textPrimary} size={25} />
+                            </Pressable>
+
                             <Pressable
                                 style={({ pressed }) => [
                                     mypageStyles.boxItem,
@@ -123,11 +138,6 @@ export default function MypageScreen() {
 
                                 <Feather name="chevron-right" color={colors.textPrimary} size={25} />
                             </Pressable>
-
-                            <View style={mypageStyles.boxItem}>
-                                <Text style={mypageStyles.boxText}>버전</Text>
-                                <Text style={mypageStyles.boxText}>v.{version}</Text>
-                            </View>
                         </View>
 
                         {/* 로그아웃, 계정 탈퇴 */}

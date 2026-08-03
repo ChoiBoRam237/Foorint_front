@@ -9,6 +9,7 @@ import { RootStackParamList } from "@/navigation/types";
 import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import { keychain } from "@/util/keychain";
 import { asyncStorage } from "@/util/asyncStorage";
+import { useFcmToken } from "@/hooks/useFcmToken";
 import { postLoginApi } from "./_api/POST"
 
 /**
@@ -23,10 +24,12 @@ GoogleSignin.configure({
 export const useControlLogin = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const [loginLoading, setLoginLoading] = useState<boolean>(false);
+    const fcmToken = useFcmToken();
 
     // 카카오 로그인 api
     const postKakaoLogin = useMutation({
-        mutationFn: async (accessToken: string) => await postLoginApi.postKakaoLogin(accessToken),
+        mutationFn: async ({ accessToken, fcmToken }: { accessToken: string, fcmToken: string }) => 
+            await postLoginApi.postKakaoLogin(accessToken, fcmToken),
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
@@ -44,6 +47,7 @@ export const useControlLogin = () => {
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
                     userRole: data.userRole,
+                    fcmToken: data.fcmToken,
                 })
             );
 
@@ -59,7 +63,8 @@ export const useControlLogin = () => {
 
     // 구글 로그인 api
     const postGoogleLogin = useMutation({
-        mutationFn: async (idToken: string) => await postLoginApi.postGoogleLogin(idToken),
+        mutationFn: async ({ idToken, fcmToken }: { idToken: string, fcmToken: string }) => 
+            await postLoginApi.postGoogleLogin(idToken, fcmToken),
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
@@ -77,6 +82,7 @@ export const useControlLogin = () => {
                     profileImgUrl: data.profileImgUrl,
                     loginType: data.loginType,
                     userRole: data.userRole,
+                    fcmToken: data.fcmToken,
                 })
             );
 
@@ -95,7 +101,10 @@ export const useControlLogin = () => {
         setLoginLoading(true);
         try {
             const token = await login();
-            postKakaoLogin.mutate(token.accessToken);
+            postKakaoLogin.mutate({ 
+                accessToken: token.accessToken, 
+                fcmToken: (await fcmToken.register()) || ""
+            });
         } catch (e) {
             console.error("카카오 로그인(라이브러리) 에러 : ", e);
         }
@@ -109,7 +118,10 @@ export const useControlLogin = () => {
             const user = await GoogleSignin.signIn();
             
             if (user.data?.idToken) {
-                postGoogleLogin.mutate(user.data?.idToken);
+                postGoogleLogin.mutate({ 
+                    idToken: user.data?.idToken, 
+                    fcmToken: (await fcmToken.register()) || ""
+                });
             }
         } catch (e) {
             console.error("구글 로그인(라이브러리) 에러 : ", e);

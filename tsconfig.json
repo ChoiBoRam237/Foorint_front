@@ -8,7 +8,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "jsx": "react-native",
   "include": ["**/*.ts", "**/*.tsx"],

@@ -12,4 +12,5 @@ export type RootStackParamList = {
     UploadPhoto: undefined;
     Chat: { code: number };
     ChatList: undefined;
+    Setting: undefined;
 }

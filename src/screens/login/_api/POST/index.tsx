@@ -6,14 +6,14 @@ import { publicBase } from "@/util/api";
 
 export const postLoginApi = {
     // 카카오 로그인
-    postKakaoLogin: async(accessToken: string) =>
+    postKakaoLogin: async(accessToken: string, fcmToken: string) =>
         await (
-            await publicBase.post(`/v3/api/login/kakao`, { accessToken })
+            await publicBase.post(`/v3/api/login/kakao`, { accessToken, fcmToken })
         ).data.data,
 
     // 구글 로그인
-    postGoogleLogin: async (idToken: string) =>
+    postGoogleLogin: async (idToken: string, fcmToken: string) =>
         await (
-            await publicBase.post(`/v3/api/login/google`, { idToken })
+            await publicBase.post(`/v3/api/login/google`, { idToken, fcmToken })
         ).data.data,
 }

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { Client } from "@stomp/stompjs";
+import { WEBSOCKET_URL } from "@env";
 
 /**
  * @brief 웹소켓 Hook
@@ -14,7 +15,7 @@ export const useWebSocket = () => {
         try {
             const client = new Client({
                 webSocketFactory: () => 
-                    new WebSocket("ws://192.168.219.108:8080/ws", ["v12.stomp"]),
+                    new WebSocket(WEBSOCKET_URL, ["v12.stomp"]),
 
                 connectHeaders: {
                     Authorization: `Bearer ${accessToken}`,
