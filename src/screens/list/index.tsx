@@ -27,7 +27,7 @@ export default function ListScreen() {
             <View
                 style={[
                     listStyles.wrapper,
-                    { paddingTop: insets.top + 60 }
+                    { paddingTop: insets.top + 60 + 20 }
                 ]}
             >
                 <View style={listStyles.titleWrapper}>

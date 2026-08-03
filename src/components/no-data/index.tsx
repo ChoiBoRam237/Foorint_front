@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleProp, Text, ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context"
 import { commonStyles } from "@/styles/common"
 import { noDataStyles } from "./indexStyles"
@@ -10,6 +10,7 @@ import { noDataStyles } from "./indexStyles"
 
 interface Props {
     text: string;
+    style?: StyleProp<ViewStyle>;
 }
 
 export const NoDataComponent = (props: Props) => {
@@ -17,7 +18,8 @@ export const NoDataComponent = (props: Props) => {
         <SafeAreaView
             style={[
                 commonStyles.container,
-                noDataStyles.container
+                noDataStyles.container,
+                props.style
             ]}
         >
             <Text style={noDataStyles.text}>{props.text}</Text>

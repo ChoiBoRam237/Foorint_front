@@ -9,9 +9,9 @@ import { FilterComponent } from "@/components/filter";
 import { TripItemComponent } from "@/components/trip-item";
 import { FooterComponent } from "@/components/footer";
 import { LoadingComponent } from "@/components/loading";
+import { NoDataComponent } from "@/components/no-data";
 import { searchStyles } from "./indexStyles";
 import { useControlSearch } from "./index.control";
-import { NoDataComponent } from "@/components/no-data";
 
 /**
  * @brief 검색 리스트
@@ -28,7 +28,7 @@ export default function SearchScreen() {
             <View
                 style={[
                     searchStyles.wrapper,
-                    { paddingTop: insets.top + 60 }
+                    { paddingTop: insets.top + 60 + 20 }
                 ]}
             >
                 <View style={searchStyles.titleWrapper}>

@@ -1,5 +1,6 @@
 import { RefObject, useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -8,10 +9,10 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { RootStackParamList } from "@/navigation/types";
 import useBottomSheetBackHandler from "@/hooks/useBottomSheetBakcHandler";
-import { bottomSheetStyles } from "./indexStyles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useControlHomeBottomSheet } from "./index.control";
 import { LoadingComponent } from "@/components/loading";
+import { NoDataComponent } from "@/components/no-data";
+import { bottomSheetStyles } from "./indexStyles";
+import { useControlHomeBottomSheet } from "./index.control";
 
 /**
  * @brief 홈화면 바텀 시트
@@ -98,14 +99,10 @@ export const HomeBottomSheet = (props: BottomSheetProps) => {
                             )}
                         />
                     ) : (
-                        <View
-                            style={[
-                                bottomSheetStyles.noData,
-                                { marginBottom: insets.bottom }
-                            ]}
-                        >
-                            <Text style={bottomSheetStyles.noDataText}>아직 등록된 일정이 없습니다.</Text>
-                        </View>
+                        <NoDataComponent
+                            text="아직 등록된 일정이 없습니다."
+                            style={{ marginBottom: insets.bottom }}
+                        />
                     )}
 
                     <Pressable

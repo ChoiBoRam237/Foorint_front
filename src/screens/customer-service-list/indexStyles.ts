@@ -85,16 +85,4 @@ export const chatListStyles = StyleSheet.create({
         fontSize: 10,
         color: "white",
     },
-
-    noData: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-
-    noDataText: {
-        fontFamily: fonts.PretendardMedium,
-        fontSize: 14,
-        color: colors.textPrimary,
-    },
 });

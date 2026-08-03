@@ -6,9 +6,10 @@ import { format } from "date-fns";
 import { RootStackParamList } from "@/navigation/types";
 import { commonStyles } from "@/styles/common";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
+import { LoadingComponent } from "@/components/loading";
+import { NoDataComponent } from "@/components/no-data";
 import { chatListStyles } from "./indexStyles";
 import { useControlCustomerList } from "./index.control";
-import { LoadingComponent } from "@/components/loading";
 
 /**
  * @brief 고객센터 채팅 리스트
@@ -30,7 +31,7 @@ export default function CustomerServiceListScreen() {
                             key={"1"}
                             style={[
                                 chatListStyles.list,
-                                { paddingTop: insets.top + 60 }
+                                { paddingTop: insets.top + 60 + 20 }
                             ]}
                             contentContainerStyle={{ gap: 8 }}
                             keyExtractor={item => item.code.toString()}
@@ -77,9 +78,7 @@ export default function CustomerServiceListScreen() {
                             )}
                         />
                     ) : (
-                        <View style={chatListStyles.noData}>
-                            <Text style={chatListStyles.noDataText}>아직 문의 내역이 없습니다.</Text>
-                        </View>
+                        <NoDataComponent text="아직 문의 내역이 없습니다." />
                     )}
                 </>
             ) : (

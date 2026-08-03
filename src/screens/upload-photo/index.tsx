@@ -1,10 +1,11 @@
-import { Dimensions, FlatList, Image, Pressable, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, Pressable, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { BASE_URL } from "@env";
 import { commonStyles } from "@/styles/common";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { YearSelectionComponent } from "@/components/year-selection";
 import { LoadingComponent } from "@/components/loading";
+import { NoDataComponent } from "@/components/no-data";
 import { UploadPhotoModal } from "./_components/modal";
 import { useControlUploadPhoto } from "./index.control";
 import { uploadPhotoStyles } from "./indexStyles";
@@ -25,7 +26,7 @@ export default function UploadPhotoScreen() {
                 style={[
                     uploadPhotoStyles.container,
                     {
-                        paddingTop: insets.top + 60,
+                        paddingTop: insets.top + 60 + 20,
                         paddingBottom: insets.bottom + 16,
                     }
                 ]}
@@ -74,9 +75,7 @@ export default function UploadPhotoScreen() {
                                 }}
                             />
                         ) : (
-                            <View style={uploadPhotoStyles.noData}>
-                                <Text style={uploadPhotoStyles.noDataText}>업로드된 이미지가 없습니다.</Text>
-                            </View>
+                            <NoDataComponent text="업로드된 이미지가 없습니다." />
                         )}
                     </>
                 ) : (

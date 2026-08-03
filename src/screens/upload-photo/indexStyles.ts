@@ -19,17 +19,4 @@ export const uploadPhotoStyles = StyleSheet.create({
         width: "100%",
         height: 130,
     },
-
-    noData: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-
-    noDataText: {
-        fontFamily: fonts.PretendardMedium,
-        fontSize: 16,
-        color: colors.textPrimary,
-    },
 });

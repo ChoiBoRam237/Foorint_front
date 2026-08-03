@@ -37,7 +37,7 @@ export const myChatStyles = StyleSheet.create({
 
     showTimeMessage: {
         width: "auto",
-        maxWidth: "87%",
+        maxWidth: "85%",
         height: "auto",
         borderTopLeftRadius: 11,
         borderTopRightRadius: 11,

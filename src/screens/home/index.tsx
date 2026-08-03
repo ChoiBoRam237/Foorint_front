@@ -31,8 +31,8 @@ export default function HomeScreen() {
                 contentContainerStyle={[
                     homeStyles.container,
                     {
-                        paddingTop: insets.top + 60,
-                        paddingBottom: insets.bottom + 50,
+                        paddingTop: insets.top + 60 + 20,
+                        paddingBottom: insets.bottom + 50 + 30,
                     }
                 ]}
             >

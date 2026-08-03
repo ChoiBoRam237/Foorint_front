@@ -22,7 +22,7 @@ export const YourChat = (props: Props) => {
             <View
                 style={[
                     yourChatStyles.wrapper,
-                    props.showProfile && { marginBottom: -20 },
+                    (props.showProfile && !props.showTime) && { marginBottom: -20 },
                     (!props.showProfile && props.showTime) && { marginLeft: 52 }
                 ]}
             >
@@ -39,7 +39,7 @@ export const YourChat = (props: Props) => {
                             style={[
                                 yourChatStyles.message,
                                 {
-                                    maxWidth: props.showTime ? "84%" : "91.5%",
+                                    maxWidth: props.showTime ? "82%" : "91.5%",
                                     borderTopRightRadius: 11,
                                     borderBottomLeftRadius: 11,
                                     borderBottomRightRadius: 11
@@ -53,7 +53,7 @@ export const YourChat = (props: Props) => {
                             style={[
                                 yourChatStyles.message,
                                 {
-                                    maxWidth: "84%",
+                                    maxWidth: "82%",
                                     borderRadius: 11
                                 }
                             ]}

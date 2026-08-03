@@ -6,6 +6,7 @@ import { colors } from "@/styles/colors";
 import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { YearSelectionComponent } from "@/components/year-selection";
 import { LoadingComponent } from "@/components/loading";
+import { NoDataComponent } from "@/components/no-data";
 import { LocationModal } from "./_components/modal";
 import { useControlLocation } from "./index.control";
 import { locationStyles } from "./indexStyles";
@@ -26,7 +27,7 @@ export default function LocationScreen() {
                 style={[
                     locationStyles.container,
                     { 
-                        paddingTop: insets.top + 60,
+                        paddingTop: insets.top + 60 + 20,
                         paddingBottom: insets.bottom + 16,
                     }
                 ]}
@@ -69,9 +70,7 @@ export default function LocationScreen() {
                                 )}
                             />
                         ) : (
-                            <View style={locationStyles.noData}>
-                                <Text style={locationStyles.noDataText}>발자국이 남겨진 장소가 없습니다.</Text>
-                            </View>
+                            <NoDataComponent text="발자국이 남겨진 장소가 없습니다." />
                         )}
                     </>
                 ) : (

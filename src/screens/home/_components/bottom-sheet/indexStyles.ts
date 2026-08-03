@@ -98,17 +98,4 @@ export const bottomSheetStyles = StyleSheet.create({
         shadowOpacity: 0.3,
         elevation: 8,
     },
-
-    noData: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-
-    noDataText: {
-        fontFamily: fonts.PretendardMedium,
-        fontSize: 16,
-        color: colors.textPrimary,
-    },
 });

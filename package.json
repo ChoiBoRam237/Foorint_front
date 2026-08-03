@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android:usb": "react-native run-android --device=5200812f5ebd150d",
-    "android:wifi": "react-native run-android --device=192.168.219.148:42213",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",

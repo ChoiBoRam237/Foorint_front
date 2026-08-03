@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { ICustomer } from "@/types/response/customer-service";
 import { getCustomerListApi } from "./_api/GET";
@@ -14,7 +15,8 @@ export const useControlCustomerList = () => {
     const {
         data,
         isLoading,
-        isFetching
+        isFetching,
+        refetch,
     } = useQuery({
         queryKey: ["customer-list"],
         queryFn: () => getCustomerListApi.getCustomerRoom(),
@@ -23,6 +25,12 @@ export const useControlCustomerList = () => {
     useEffect(() => {
         if (data && data.length > 0) setCustomerList(data);
     }, [data]);
+
+    useFocusEffect(
+        useCallback(() => {
+            refetch();
+        }, [])
+    );
 
     return {
         isLoading: isLoading || isFetching,

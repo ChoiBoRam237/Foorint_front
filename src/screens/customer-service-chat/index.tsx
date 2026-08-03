@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { Keyboard, ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { format, isSameDay } from "date-fns";
@@ -11,6 +11,7 @@ import { MyChat } from "./_components/my-chat";
 import { YourChat } from "./_components/your-chat";
 import { useControlChat } from "./index.control";
 import { chatStyles } from "./indexStyles";
+import { useEffect, useState } from "react";
 
 /**
  * @brief 고객센터 채팅
@@ -19,6 +20,28 @@ import { chatStyles } from "./indexStyles";
 export default function CustomerServiceChatScreen() {
     const insets = useSafeAreaInsets();
     const controller = useControlChat();
+    const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+
+    useEffect(() => {
+        const show = Keyboard.addListener(
+            "keyboardDidShow",
+            e => {
+                setKeyboardHeight(e.endCoordinates.height);
+            }
+        );
+
+        const hide = Keyboard.addListener(
+            "keyboardDidHide",
+            () => {
+                setKeyboardHeight(0);
+            }
+        );
+
+        return () => {
+            show.remove();
+            hide.remove();
+        };
+    }, []);
 
     return (
         <SafeAreaView style={commonStyles.container}>
@@ -29,7 +52,7 @@ export default function CustomerServiceChatScreen() {
                     <View
                         style={[
                             chatStyles.container,
-                            { paddingTop: insets.top + 60 }
+                            { paddingTop: insets.top + 60 + 20 }
                         ]}
                     >
                         <ScrollView
@@ -37,8 +60,9 @@ export default function CustomerServiceChatScreen() {
                             style={{ flex: 1 }}
                             contentContainerStyle={{ 
                                 gap: 24,
-                                // paddingBottom: insets.bottom + 80,
+                                paddingBottom: keyboardHeight,
                             }}
+                            onContentSizeChange={controller.scrollBottom}
                         >
                             {controller.messages.map((chat, index) => {
                                 const prev = controller.messages[index - 1];

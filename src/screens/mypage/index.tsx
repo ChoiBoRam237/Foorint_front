@@ -38,8 +38,8 @@ export default function MypageScreen() {
                     contentContainerStyle={[
                         mypageStyles.wrapper,
                         {
-                            paddingTop: insets.top + 60,
-                            paddingBottom: insets.bottom + 50
+                            paddingTop: insets.top + 60 + 24,
+                            paddingBottom: insets.bottom + 50 + 40,
                         }
                     ]}
                 >

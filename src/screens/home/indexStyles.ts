@@ -8,7 +8,6 @@ import { fonts } from "@/styles/fonts";
 
 export const homeStyles = StyleSheet.create({
     container: {
-        flex: 1,
         display: "flex",
         flexDirection: "column",
         rowGap: 16,
@@ -39,7 +38,7 @@ export const calendarStyles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "flex-end",
-        columnGap: 4,
+        columnGap: 8,
     },
 
     headerMonth: {

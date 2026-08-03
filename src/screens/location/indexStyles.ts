@@ -47,17 +47,4 @@ export const locationStyles = StyleSheet.create({
         fontSize: 12,
         color: colors.textPrimary,
     },
-
-    noData: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-
-    noDataText: {
-        fontFamily: fonts.PretendardMedium,
-        fontSize: 16,
-        color: colors.textPrimary,
-    },
 });

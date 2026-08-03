@@ -1,44 +1,50 @@
 import { useRef } from "react";
 import { Client } from "@stomp/stompjs";
-import { BASE_URL } from "@env";
-import { useTokenInfo } from "./useTokenInfo";
 
 /**
  * @brief 웹소켓 Hook
  */
 
 export const useWebSocket = () => {
-    const tokenInfo = useTokenInfo();
-
     const clientRef = useRef<Client | null>(null);
 
-    const connect = (onConnected: () => void) => {
+    const connect = (accessToken: string, onConnected: () => void) => {
         if (clientRef.current?.active) return;
 
-        const client = new Client({
-            brokerURL: `ws://${BASE_URL}/ws`,
-            connectHeaders: {
-                Authorization: `Bearer ${tokenInfo.accessToken}`,
-            },
+        try {
+            const client = new Client({
+                webSocketFactory: () => 
+                    new WebSocket("ws://192.168.219.108:8080/ws", ["v12.stomp"]),
 
-            reconnectDelay: 5000,
+                connectHeaders: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                forceBinaryWSFrames: true,
+                reconnectDelay: 5000,
+    
+                debug: (msg) => {
+                    console.log("STOMP", msg);
+                },
+    
+                onConnect: () => {
+                    console.log("WebSocket connect");
+                    onConnected();
+                },
+    
+                onStompError: (frame) => {
+                    console.error("Broker Error", frame);
+                },
+    
+                onWebSocketError: (event) => {
+                    console.error("WebSocket Error", event);
+                },
+            });
 
-            onConnect: () => {
-                console.log("WebSocket connect");
-                onConnected();
-            },
-
-            onStompError: (frame) => {
-                console.error("Broker Error", frame);
-            },
-
-            onWebSocketError: (event) => {
-                console.error("WebSocket Error", event);
-            },
-        });
-
-        client.activate();
-        clientRef.current = client;
+            clientRef.current = client;
+            client.activate();
+        } catch(e) {
+            console.error("STOMP 생성 에러", e);
+        }
     };
 
     const disconnect = () => {

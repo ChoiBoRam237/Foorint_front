@@ -69,7 +69,7 @@ export default function DetailScreen() {
                 contentContainerStyle={[
                     detailStyles.scrollContainer,
                     { 
-                        paddingTop: insets.top + 60,
+                        paddingTop: insets.top + 60 + 20,
                         paddingBottom: insets.bottom + 10
                     }
                 ]}

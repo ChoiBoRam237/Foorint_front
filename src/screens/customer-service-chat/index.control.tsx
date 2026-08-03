@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 import { RootStackParamList } from "@/navigation/types";
 import { ICustomerMessage } from "@/types/response/customer-service";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import { useTokenInfo } from "@/hooks/useTokenInfo";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { getCustomerChatApi } from "./_api/GET";
 
@@ -18,6 +19,7 @@ type DetailRouteProp = RouteProp<RootStackParamList, "Chat">;
 export const useControlChat = () => {
     const route = useRoute<DetailRouteProp>();
     const { userCode } = useUserInfo();
+    const { accessToken } = useTokenInfo();
     const client = useWebSocket();
     const [chatValue, setChatValue] = useState<string>("");
     const [messages, setMessages] = useState<ICustomerMessage[]>([]);
@@ -55,31 +57,32 @@ export const useControlChat = () => {
 
     // 메시지 보내면 화면 맨 아래로 스크롤
     const scrollBottom = () => {
-        scrollViewRef.current?.scrollToEnd({
-            animated: false,
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                scrollViewRef.current?.scrollToEnd({
+                    animated: true,
+                });
+            }, 100);
         });
     };
 
     useEffect(() => {
         getCustomerMessages.mutate();
+    }, []);
 
+    useEffect(() => {
+        if (!accessToken) return;
+        
         // socket 연결
-        client.connect(() => {
+        client.connect(accessToken, () => {
             client.getClient()?.subscribe(`/sub/room/${route.params.code}`, (msg) => {
                 const message = JSON.parse(msg.body);
                 setMessages(prev => [...prev, message]);
-
-                // 내가 보낸 메시지일 때만 실행
-                if (message.user.userCode === userCode) {
-                    requestAnimationFrame(() => {
-                        scrollBottom();
-                    });
-                }
             });
         });
 
         return () => client.disconnect();
-    }, []);
+    }, [accessToken]);
     
     return {
         userCode,
@@ -87,6 +90,6 @@ export const useControlChat = () => {
         scrollViewRef,
         messages,
         chatValue, setChatValue,
-        onSend,
+        scrollBottom, onSend,
     }
 }
