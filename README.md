@@ -1,5 +1,6 @@
 # Foorint_Front
-🗓️ 2026.07.07 ~
+🗓️(개발 기간) 2026.07.07 ~ 2026.08.04
+
 🎨(디자인): 2026.06.18 ~ 2026.07.08
 ```
 [모바일 앱] 푸린트
@@ -19,7 +20,7 @@
 ### Build Tool
 - Gradle
 
-### Social Login Library
+#### Social Login Library
 - @react-native-seoul/kakao-login
 - @react-native-google-signin/google-signin
 
