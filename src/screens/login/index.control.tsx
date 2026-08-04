@@ -10,6 +10,7 @@ import { GOOGLE_WEB_CLIENT_ID } from "@env";
 import { keychain } from "@/util/keychain";
 import { asyncStorage } from "@/util/asyncStorage";
 import { useFcmToken } from "@/hooks/useFcmToken";
+import { ILoginRequest } from "@/types/request/login";
 import { postLoginApi } from "./_api/POST"
 
 /**
@@ -28,8 +29,8 @@ export const useControlLogin = () => {
 
     // 카카오 로그인 api
     const postKakaoLogin = useMutation({
-        mutationFn: async ({ accessToken, fcmToken }: { accessToken: string, fcmToken: string }) => 
-            await postLoginApi.postKakaoLogin(accessToken, fcmToken),
+        mutationFn: async (request: ILoginRequest) => 
+            await postLoginApi.postKakaoLogin(request),
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
@@ -48,6 +49,7 @@ export const useControlLogin = () => {
                     loginType: data.loginType,
                     userRole: data.userRole,
                     fcmToken: data.fcmToken,
+                    notificationEnabled: data.notificationEnabled,
                 })
             );
 
@@ -63,8 +65,8 @@ export const useControlLogin = () => {
 
     // 구글 로그인 api
     const postGoogleLogin = useMutation({
-        mutationFn: async ({ idToken, fcmToken }: { idToken: string, fcmToken: string }) => 
-            await postLoginApi.postGoogleLogin(idToken, fcmToken),
+        mutationFn: async (request: ILoginRequest) => 
+            await postLoginApi.postGoogleLogin(request),
         onSuccess: async (data) => {
             await keychain.setKeychain(
                 JSON.stringify({
@@ -83,6 +85,7 @@ export const useControlLogin = () => {
                     loginType: data.loginType,
                     userRole: data.userRole,
                     fcmToken: data.fcmToken,
+                    notificationEnabled: data.notificationEnabled,
                 })
             );
 
@@ -101,10 +104,15 @@ export const useControlLogin = () => {
         setLoginLoading(true);
         try {
             const token = await login();
-            postKakaoLogin.mutate({ 
-                accessToken: token.accessToken, 
-                fcmToken: (await fcmToken.register()) || ""
-            });
+            const fcmTokenValue = await fcmToken.register();
+
+            if (token.accessToken) {
+                postKakaoLogin.mutate({ 
+                    accessToken: token.accessToken, 
+                    fcmToken: fcmTokenValue.token || "",
+                    notificationEnabled: fcmTokenValue.notificationEnabled,
+                });
+            }
         } catch (e) {
             console.error("카카오 로그인(라이브러리) 에러 : ", e);
         }
@@ -116,11 +124,13 @@ export const useControlLogin = () => {
         try {
             await GoogleSignin.hasPlayServices();
             const user = await GoogleSignin.signIn();
+            const fcmTokenValue = await fcmToken.register();
             
             if (user.data?.idToken) {
                 postGoogleLogin.mutate({ 
                     idToken: user.data?.idToken, 
-                    fcmToken: (await fcmToken.register()) || ""
+                    fcmToken: fcmTokenValue.token,
+                    notificationEnabled: fcmTokenValue.notificationEnabled,
                 });
             }
         } catch (e) {

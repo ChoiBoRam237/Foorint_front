@@ -49,7 +49,6 @@ export const AxiosComponent = () => {
         const setupInterceptor = async () => {
             const token = await keychain.getKeychain();
             if (token) tokenInfoRef.current = JSON.parse(token.password);
-            console.log(tokenInfoRef.current);
             
             const requestIntercept = privateBase.interceptors.request.use(
                 async (config) => {

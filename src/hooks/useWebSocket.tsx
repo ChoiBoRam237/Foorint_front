@@ -8,6 +8,7 @@ import { WEBSOCKET_URL } from "@env";
 
 export const useWebSocket = () => {
     const clientRef = useRef<Client | null>(null);
+    console.log(WEBSOCKET_URL)
 
     const connect = (accessToken: string, onConnected: () => void) => {
         if (clientRef.current?.active) return;
@@ -24,11 +25,11 @@ export const useWebSocket = () => {
                 reconnectDelay: 5000,
     
                 debug: (msg) => {
-                    console.log("STOMP", msg);
+                    console.debug("STOMP", msg);
                 },
     
                 onConnect: () => {
-                    console.log("WebSocket connect");
+                    console.debug("WebSocket connect");
                     onConnected();
                 },
     

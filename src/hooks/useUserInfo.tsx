@@ -29,6 +29,8 @@ export const useUserInfo = () => {
                     profileImgUrl: user.profileImgUrl,
                     loginType: user.loginType,
                     userRole: user.userRole,
+                    fcmToken: user.fcmToken,
+                    notificationEnabled: user.notificationEnabled,
                 });
             }
         };
@@ -44,5 +46,7 @@ export const useUserInfo = () => {
         userProfileUrl: userInfo?.profileImgUrl || "",
         userLoginType: userInfo?.loginType || "",
         userRole: userInfo?.userRole || "",
+        fcmToken: userInfo?.fcmToken || "",
+        notificationEnabled: userInfo?.notificationEnabled || false,
     }
 }

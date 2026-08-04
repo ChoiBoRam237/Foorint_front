@@ -6,28 +6,33 @@ import { getMessaging, getToken, deleteToken } from '@react-native-firebase/mess
  */
 
 export const useFcmToken = () => {
+    // FCM 토큰 발급
     const register = async () => {
-        if (Platform.OS === 'android' && Platform.Version >= 33) {
+        let notificationEnabled = true;
+
+        if (Platform.OS === "android" && Platform.Version >= 33) {
             const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
             );
-        
-            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-                return null;
+
+            notificationEnabled = granted === PermissionsAndroid.RESULTS.GRANTED;
+
+            if (!notificationEnabled) {
+                return {
+                    token: "",
+                    notificationEnabled: false,
+                };
             }
         }
         
         const messaging = getMessaging();
         const token = await getToken(messaging);
 
-        return token;
+        return {
+            token,
+            notificationEnabled: true,
+        };
     };
 
-    const unregister = async () => {
-        const messaging = getMessaging();
-        await deleteToken(messaging);
-        return "";
-    };
-
-    return { register, unregister };
+    return { register };
 }

@@ -101,7 +101,10 @@ export const HomeBottomSheet = (props: BottomSheetProps) => {
                     ) : (
                         <NoDataComponent
                             text="아직 등록된 일정이 없습니다."
-                            style={{ marginBottom: insets.bottom }}
+                            style={{ 
+                                marginBottom: insets.bottom,
+                                backgroundColor: "#A8E7FF"
+                            }}
                         />
                     )}
 

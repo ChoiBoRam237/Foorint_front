@@ -12,6 +12,8 @@ export interface IUser {
     profileImgUrl: string;
     loginType: string;
     userRole: string;
+    fcmToken: string;
+    notificationEnabled: boolean;
 }
 
 export interface IUserDetail {

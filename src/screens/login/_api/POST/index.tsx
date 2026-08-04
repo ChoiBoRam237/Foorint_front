@@ -1,4 +1,5 @@
 import { publicBase } from "@/util/api";
+import { ILoginRequest } from "@/types/request/login";
 
 /**
  * @brief 로그인 관련 GET API
@@ -6,14 +7,14 @@ import { publicBase } from "@/util/api";
 
 export const postLoginApi = {
     // 카카오 로그인
-    postKakaoLogin: async(accessToken: string, fcmToken: string) =>
+    postKakaoLogin: async(request: ILoginRequest) =>
         await (
-            await publicBase.post(`/v3/api/login/kakao`, { accessToken, fcmToken })
+            await publicBase.post(`/v3/api/login/kakao`, request)
         ).data.data,
 
     // 구글 로그인
-    postGoogleLogin: async (idToken: string, fcmToken: string) =>
+    postGoogleLogin: async (request: ILoginRequest) =>
         await (
-            await publicBase.post(`/v3/api/login/google`, { idToken, fcmToken })
+            await publicBase.post(`/v3/api/login/google`, request)
         ).data.data,
 }

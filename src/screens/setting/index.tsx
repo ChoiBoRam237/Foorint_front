@@ -1,13 +1,12 @@
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { commonStyles } from "@/styles/common";
-import { ArrowHeaderComponent } from "@/components/arrow-header";
 import { Pressable, Text, View } from "react-native";
-import { settingStyles } from "./indexStyles";
-import { colors } from "@/styles/colors";
-import { useControlSetting } from "./index.control";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import DeviceInfo from "react-native-device-info";
 import Animated from "react-native-reanimated";
-import { useFcmToken } from "@/hooks/useFcmToken";
+import { ArrowHeaderComponent } from "@/components/arrow-header";
+import { commonStyles } from "@/styles/common";
+import { colors } from "@/styles/colors";
+import { useControlSetting } from "./index.control";
+import { settingStyles } from "./indexStyles";
 
 /**
  * @brief 설정
@@ -17,7 +16,6 @@ export default function SettingScreen() {
     const insets = useSafeAreaInsets();
     const controller = useControlSetting();
     const version = DeviceInfo.getVersion();
-    const { register, unregister } = useFcmToken();
 
     return (
         <SafeAreaView style={commonStyles.container}>
@@ -34,12 +32,10 @@ export default function SettingScreen() {
                     <Pressable
                         style={[
                             settingStyles.track,
-                            controller.isPushNotification && { backgroundColor: colors.thirdDark }
+                            controller.notificationEnabled && { backgroundColor: colors.thirdDark }
                         ]}
                         onPress={async () => {
-                            controller.setIsPushNotification(prev => !prev);
-                            if (controller.isPushNotification) await register();
-                            else await unregister();
+                            await controller.onUpdatePushNotification();
                         }}
                     >
                         <Animated.View
